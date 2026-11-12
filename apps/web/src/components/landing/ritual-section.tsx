@@ -301,18 +301,6 @@ export function RitualSection({
                 <span>Loading contract state…</span>
               </div>
             )}
-            {error && (
-              <div className="notice notice-error" role="alert">
-                <strong>FAILED</strong>
-                <span>{error}</span>
-              </div>
-            )}
-            {notice && (
-              <div className="notice notice-success" role="status">
-                <strong>CONFIRMED</strong>
-                <span>{notice}</span>
-              </div>
-            )}
 
             <div className="rc-grid">
               <div className="rc">
@@ -379,6 +367,15 @@ export function RitualSection({
                 )}
 
                 <div className="rc-actions">
+                  {accountId && registered === true && (
+                    <Button
+                      className="btn btn-quiet btn-block"
+                      disabled={true}
+                      aria-label="Storage deposit already registered"
+                    >
+                      Storage registered ✓
+                    </Button>
+                  )}
                   {accountId && registered === false && (
                     <Button
                       className="btn btn-quiet btn-block"
@@ -396,6 +393,11 @@ export function RitualSection({
                       }
                     >
                       Register token storage
+                    </Button>
+                  )}
+                  {accountId && registered === null && (
+                    <Button className="btn btn-quiet btn-block" disabled={true}>
+                      Checking storage…
                     </Button>
                   )}
                   <Button

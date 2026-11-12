@@ -3,8 +3,10 @@
 import { RITUAL_CONTRACT_ID as CONTRACT_ID } from "@/constants/ritual";
 import { useRitualActions } from "@/hooks/use-ritual-actions";
 import { useRitualData } from "@/hooks/use-ritual-data";
+import { useTransactionSync } from "@/hooks/use-transaction-sync";
 import { PROPOSED_TREASURY, resolveRules } from "@/lib/ritual-params";
 import { useRitualUiStore } from "@/stores/ritual-ui-store";
+import { ToastContainer } from "@/components/ui/toast-container";
 import { EndSection } from "@/components/landing/closing-section";
 import { Hero } from "@/components/landing/hero";
 import { HistorySection } from "@/components/landing/history-section";
@@ -28,6 +30,7 @@ export default function Home() {
     signOut,
     act,
   } = useRitualActions();
+  useTransactionSync();
   const {
     historyLimit,
     showOlder,
@@ -58,6 +61,7 @@ export default function Home() {
 
   return (
     <div className="site">
+      <ToastContainer />
       <SceneStack />
       <SiteHeader
         accountId={signedAccountId}

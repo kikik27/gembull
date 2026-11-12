@@ -1,29 +1,101 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNearWallet } from "near-connect-hooks";
-import { RITUAL_CONTRACT_ID, RITUAL_GAS, RITUAL_STORAGE_DEPOSIT, ritualQueryKey } from "@/constants/ritual";
+import {
+  RITUAL_CONTRACT_ID,
+  RITUAL_GAS,
+  RITUAL_STORAGE_DEPOSIT,
+  ritualQueryKey,
+} from "@/constants/ritual";
 import { errorMessage } from "@/lib/ritual-format";
 import { useRitualUiStore } from "@/stores/ritual-ui-store";
 
-export type RitualAction = { label: string; method: string; args?: Record<string, unknown>; deposit?: string };
+export type RitualAction = {
+  label: string;
+  method: string;
+  args?: Record<string, unknown>;
+  deposit?: string;
+};
 
 export function useRitualActions() {
   const wallet = useNearWallet();
   const queryClient = useQueryClient();
-  const { setBusyAction, setActionError, setNotice } = useRitualUiStore();
+  const { setBusyAction, setActionError, setNotice, popToast } =
+    useRitualUiStore();
+
   const mutation = useMutation({
-    mutationFn: async ({ label, method, args = {}, deposit = RITUAL_STORAGE_DEPOSIT }: RitualAction) => {
-      if (!RITUAL_CONTRACT_ID || !wallet.signedAccountId || wallet.network !== "testnet") throw new Error("Connect a Testnet wallet to a configured GEMBULL contract");
-      setBusyAction(label); setActionError(null); setNotice(null);
-      const result = await wallet.callFunctionRaw({ contractId: RITUAL_CONTRACT_ID, method, args, gas: RITUAL_GAS, deposit });
-      if (typeof result.status === "object" && "Failure" in result.status) throw new Error(JSON.stringify(result.status.Failure));
-      return { label, hash: result.transaction.hash };
+    mutationFn: async ({
+      label,
+      method,
+      args = {},
+      deposit = RITUAL_STORAGE_DEPOSIT,
+    }: RitualAction) => {
+      if (
+        !RITUAL_CONTRACT_ID ||
+        !wallet.signedAccountId ||
+        wallet.network !== "testnet"
+      ) {
+        throw new Error(
+          "Connect a Testnet wallet to a configured GEMBULL contract"
+        );
+      }
+      setBusyAction(label);
+      setActionError(null);
+      setNotice(null);
+
+      const result = await wallet.callFunctionRaw({
+        contractId: RITUAL_CONTRACT_ID,
+        method,
+        args,
+        gas: RITUAL_GAS,
+        deposit,
+      });
+
+      if (typeof result.status === "object" && "Failure" in result.status) {
+        throw new Error(JSON.stringify(result.status.Failure));
+      }
+
+      return { label, hash: result.transaction?.hash };
     },
     onSuccess: async ({ label, hash }) => {
-      setNotice(`${label} confirmed${hash ? ` · ${hash}` : ""}`);
+      popToast({
+        type: "success",
+        title: `${label} Confirmed`,
+        message: "Your on-chain action completed successfully.",
+        txHash: hash,
+        durationMs: 7000,
+      });
+
+      // Immediate invalidation & refetch
       await queryClient.invalidateQueries({ queryKey: ritualQueryKey });
+      await queryClient.refetchQueries({ queryKey: ritualQueryKey });
+
+      // Staggered follow-ups to account for NEAR block indexing
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ritualQueryKey });
+        queryClient.refetchQueries({ queryKey: ritualQueryKey });
+      }, 1500);
+
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ritualQueryKey });
+        queryClient.refetchQueries({ queryKey: ritualQueryKey });
+      }, 3500);
     },
-    onError: (cause) => setActionError(errorMessage(cause)),
+    onError: (cause) => {
+      const msg = errorMessage(cause);
+      setActionError(msg);
+      popToast({
+        type: "error",
+        title: "Action Failed",
+        message: msg,
+        durationMs: 6000,
+      });
+    },
     onSettled: () => setBusyAction(null),
   });
-  return { ...wallet, act: mutation.mutate, isActionPending: mutation.isPending };
+
+  return {
+    ...wallet,
+    act: mutation.mutate,
+    isActionPending: mutation.isPending,
+  };
 }
