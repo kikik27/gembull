@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+node_modules/
+target/
+.next/
+dist/
+coverage/
+__pycache__/
+*.pyc
+.DS_Store
+.toolchain/
+.pnpm-store/
+.pnpm-state/
+.localappdata/
+**/target/
+*.zip
+*.tsbuildinfo
+
+
+# Local tooling and scratch
+.taste-skill/
+.agents/
+**/.redesign-backup/
+*.log

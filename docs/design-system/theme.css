@@ -1,0 +1,78 @@
+/* StonkRitual UI theme — import once in the app root. */
+:root {
+  color-scheme: dark;
+  --sr-bg: #070A08;
+  --sr-surface-1: #101611;
+  --sr-surface-2: #151E18;
+  --sr-surface-3: #1C2820;
+  --sr-border: #2B382E;
+  --sr-border-strong: #435246;
+  --sr-lime: #B7FF16;
+  --sr-lime-hover: #C9FF58;
+  --sr-green: #00B85A;
+  --sr-green-soft: #123B27;
+  --sr-text: #F4F7F2;
+  --sr-text-muted: #A4AEA6;
+  --sr-text-subtle: #78847B;
+  --sr-warning: #FFC857;
+  --sr-warning-soft: #3A2D13;
+  --sr-danger: #FF6B6B;
+  --sr-danger-soft: #3B1D1D;
+  --sr-info: #72B7FF;
+  --sr-info-soft: #142B42;
+
+  --sr-font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sr-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --sr-space-1: 4px;
+  --sr-space-2: 8px;
+  --sr-space-3: 12px;
+  --sr-space-4: 16px;
+  --sr-space-5: 20px;
+  --sr-space-6: 24px;
+  --sr-space-8: 32px;
+  --sr-space-10: 40px;
+  --sr-space-12: 48px;
+  --sr-space-16: 64px;
+  --sr-space-20: 80px;
+
+  --sr-radius-sm: 8px;
+  --sr-radius-md: 12px;
+  --sr-radius-lg: 16px;
+  --sr-radius-xl: 24px;
+  --sr-radius-2xl: 32px;
+  --sr-radius-pill: 999px;
+
+  --sr-shadow-card: 0 12px 32px rgba(0, 0, 0, .24);
+  --sr-shadow-focus: 0 0 0 3px rgba(183, 255, 22, .30);
+  --sr-motion-fast: 140ms;
+  --sr-motion-normal: 180ms;
+  --sr-motion-panel: 220ms;
+  --sr-ease: cubic-bezier(.2, .8, .2, 1);
+
+  --sr-container-marketing: 1200px;
+  --sr-container-app: 1360px;
+  --sr-sidebar-width: 248px;
+}
+
+html { background: var(--sr-bg); color: var(--sr-text); font-family: var(--sr-font-sans); }
+body { min-width: 320px; margin: 0; background: var(--sr-bg); color: var(--sr-text); font-variant-numeric: lining-nums; }
+button, input, textarea, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--sr-lime); outline-offset: 2px; box-shadow: var(--sr-shadow-focus); }
+::selection { color: var(--sr-bg); background: var(--sr-lime); }
+
+.sr-tabular { font-variant-numeric: tabular-nums; }
+.sr-card { border: 1px solid var(--sr-border); border-radius: var(--sr-radius-lg); background: var(--sr-surface-1); }
+.sr-card-raised { border: 1px solid var(--sr-border); border-radius: var(--sr-radius-lg); background: var(--sr-surface-2); box-shadow: var(--sr-shadow-card); }
+.sr-muted { color: var(--sr-text-muted); }
+.sr-subtle { color: var(--sr-text-subtle); }
+.sr-simulation-banner { border: 1px solid rgba(255, 200, 87, .45); border-radius: var(--sr-radius-md); background: var(--sr-warning-soft); color: var(--sr-warning); }
+.sr-primary-button { min-height: 44px; border: 0; border-radius: var(--sr-radius-md); background: var(--sr-lime); color: var(--sr-bg); font-weight: 700; transition: background var(--sr-motion-fast) var(--sr-ease), transform var(--sr-motion-fast) var(--sr-ease); }
+.sr-primary-button:hover { background: var(--sr-lime-hover); }
+.sr-primary-button:active { transform: translateY(1px); }
+.sr-primary-button:disabled { cursor: not-allowed; opacity: .48; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

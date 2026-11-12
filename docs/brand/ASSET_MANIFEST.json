@@ -1,0 +1,337 @@
+[
+  {
+    "path": "01-logos/compact-bull-mark-extracted.png",
+    "bytes": 137307,
+    "extension": ".png"
+  },
+  {
+    "path": "01-logos/horizontal-logo-tile-extracted.png",
+    "bytes": 331309,
+    "extension": ".png"
+  },
+  {
+    "path": "01-logos/round-bull-emblem-extracted.png",
+    "bytes": 804818,
+    "extension": ".png"
+  },
+  {
+    "path": "01-logos/stonkritual-brand-symbol-512.png",
+    "bytes": 35940,
+    "extension": ".png"
+  },
+  {
+    "path": "01-logos/stonkritual-brand-symbol.svg",
+    "bytes": 710,
+    "extension": ".svg"
+  },
+  {
+    "path": "01-logos/stonkritual-open-graph-1200x630.jpg",
+    "bytes": 79774,
+    "extension": ".jpg"
+  },
+  {
+    "path": "01-logos/stonkritual-primary-logo-lockup.png",
+    "bytes": 103105,
+    "extension": ".png"
+  },
+  {
+    "path": "01-logos/stonkritual-primary-logo.svg",
+    "bytes": 926,
+    "extension": ".svg"
+  },
+  {
+    "path": "01-logos/wordmark-and-tagline-extracted.png",
+    "bytes": 529908,
+    "extension": ".png"
+  },
+  {
+    "path": "02-mascots/bull-mascot-hero-with-vault.png",
+    "bytes": 1187011,
+    "extension": ".png"
+  },
+  {
+    "path": "02-mascots/bull-mascot-round-avatar.png",
+    "bytes": 807298,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/source-crops/sticker-gm.png",
+    "bytes": 443304,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/source-crops/sticker-hodl.png",
+    "bytes": 488592,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/source-crops/sticker-ngmi.png",
+    "bytes": 390754,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/source-crops/sticker-ritl-heart.png",
+    "bytes": 417645,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/source-crops/sticker-streak.png",
+    "bytes": 549284,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/source-crops/sticker-to-the-moon.png",
+    "bytes": 493220,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/sticker-gm.png",
+    "bytes": 443304,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/sticker-hodl.png",
+    "bytes": 488592,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/sticker-ngmi.png",
+    "bytes": 390754,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/sticker-ritl-heart.png",
+    "bytes": 417645,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/sticker-streak.png",
+    "bytes": 549284,
+    "extension": ".png"
+  },
+  {
+    "path": "03-stickers/sticker-to-the-moon.png",
+    "bytes": 493220,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/app-avatar-bull-green.png",
+    "bytes": 303966,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/app-avatar-bull-monochrome.png",
+    "bytes": 245619,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/icon-burn-256.png",
+    "bytes": 1958,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/icon-community-256.png",
+    "bytes": 1474,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/icon-daily-checkin-256.png",
+    "bytes": 1541,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/icon-growth-256.png",
+    "bytes": 905,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/icon-longest-streak-256.png",
+    "bytes": 854,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/icon-lp-lock-256.png",
+    "bytes": 1414,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/icon-stock-vault-256.png",
+    "bytes": 1787,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/ritl-token-icon-512.png",
+    "bytes": 284522,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/stonkritual-app-icon-1024.png",
+    "bytes": 786979,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/stonkritual-app-icon-512.png",
+    "bytes": 298922,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/stonkritual-apple-touch-icon-180.png",
+    "bytes": 52330,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/stonkritual-favicon-64.png",
+    "bytes": 9232,
+    "extension": ".png"
+  },
+  {
+    "path": "04-icons/stonkritual-pwa-icon-192.png",
+    "bytes": 58490,
+    "extension": ".png"
+  },
+  {
+    "path": "05-token-art/ritl-gold-token-badge.png",
+    "bytes": 288178,
+    "extension": ".png"
+  },
+  {
+    "path": "05-token-art/ritl-green-bull-token-badge.png",
+    "bytes": 230454,
+    "extension": ".png"
+  },
+  {
+    "path": "05-token-art/ritl-silver-token-badge.png",
+    "bytes": 188076,
+    "extension": ".png"
+  },
+  {
+    "path": "06-social/banners/discord-banner-960x540.jpg",
+    "bytes": 137499,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/banners/social-card-square-ish-extracted.png",
+    "bytes": 611475,
+    "extension": ".png"
+  },
+  {
+    "path": "06-social/banners/social-wide-banner-extracted.png",
+    "bytes": 636542,
+    "extension": ".png"
+  },
+  {
+    "path": "06-social/banners/x-banner-1500x500.jpg",
+    "bytes": 156384,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/INSTAGRAM_PLAYBOOK.md",
+    "bytes": 3664,
+    "extension": ".md"
+  },
+  {
+    "path": "06-social/instagram/posts/01-meet-stonkritual-1080x1350.jpg",
+    "bytes": 314898,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/posts/02-daily-checkin-1080x1350.jpg",
+    "bytes": 311183,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/posts/03-when-community-misses-1080x1350.jpg",
+    "bytes": 319576,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/posts/04-rules-onchain-1080x1350.jpg",
+    "bytes": 310540,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/posts/05-stock-reserve-layer-1080x1350.jpg",
+    "bytes": 311758,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/posts/06-sybil-limits-1080x1350.jpg",
+    "bytes": 314226,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/profile-avatar-1080.png",
+    "bytes": 901190,
+    "extension": ".png"
+  },
+  {
+    "path": "06-social/instagram/stories/story-01-intro-1080x1920.jpg",
+    "bytes": 402436,
+    "extension": ".jpg"
+  },
+  {
+    "path": "06-social/instagram/stories/story-02-daily-ritual-1080x1920.jpg",
+    "bytes": 401983,
+    "extension": ".jpg"
+  },
+  {
+    "path": "07-ui-elements/badge-streak-7-days-reference.png",
+    "bytes": 101850,
+    "extension": ".png"
+  },
+  {
+    "path": "07-ui-elements/button-check-in-reference.png",
+    "bytes": 99343,
+    "extension": ".png"
+  },
+  {
+    "path": "07-ui-elements/button-claim-reward-reference.png",
+    "bytes": 102426,
+    "extension": ".png"
+  },
+  {
+    "path": "07-ui-elements/button-view-vault-reference.png",
+    "bytes": 92327,
+    "extension": ".png"
+  },
+  {
+    "path": "08-guidelines/ASSET_MANIFEST.json",
+    "bytes": 7302,
+    "extension": ".json"
+  },
+  {
+    "path": "08-guidelines/BRAND_GUIDE.md",
+    "bytes": 3772,
+    "extension": ".md"
+  },
+  {
+    "path": "08-guidelines/palette-reference.png",
+    "bytes": 224230,
+    "extension": ".png"
+  },
+  {
+    "path": "09-source/stonkritual-original-brand-board.png",
+    "bytes": 2167399,
+    "extension": ".png"
+  },
+  {
+    "path": "AGENTS.md",
+    "bytes": 8473,
+    "extension": ".md"
+  },
+  {
+    "path": "AGENT_KNOWLEDGE.md",
+    "bytes": 321,
+    "extension": ".md"
+  },
+  {
+    "path": "ASSET_PACK_PREVIEW.jpg",
+    "bytes": 440742,
+    "extension": ".jpg"
+  },
+  {
+    "path": "README.md",
+    "bytes": 1785,
+    "extension": ".md"
+  }
+]

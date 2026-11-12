@@ -1,0 +1,103 @@
+{
+  "$schema": "https://design-tokens.github.io/community-group/format/",
+  "name": "StonkRitual Design Tokens",
+  "version": "1.0.0",
+  "color": {
+    "background": {
+      "canvas": "#070A08",
+      "surface1": "#101611",
+      "surface2": "#151E18",
+      "surface3": "#1C2820"
+    },
+    "border": { "default": "#2B382E", "strong": "#435246" },
+    "brand": { "lime": "#B7FF16", "limeHover": "#C9FF58", "green": "#00B85A" },
+    "text": { "primary": "#F4F7F2", "muted": "#A4AEA6", "subtle": "#78847B" },
+    "paper": {
+      "field": "#F4F7F2",
+      "field2": "#E4EAE1",
+      "ink": "#070A08",
+      "muted": "#46504A"
+    },
+    "semantic": {
+      "success": "#00B85A",
+      "successSoft": "#123B27",
+      "warning": "#FFC857",
+      "warningSoft": "#3A2D13",
+      "danger": "#FF6B6B",
+      "dangerSoft": "#3B1D1D",
+      "info": "#72B7FF",
+      "infoSoft": "#142B42"
+    }
+  },
+  "fontFamily": {
+    "sans": ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+    "mono": ["ui-monospace", "SFMono-Regular", "monospace"]
+  },
+  "fontSize": {
+    "xs": "12px",
+    "sm": "14px",
+    "base": "16px",
+    "lg": "18px",
+    "xl": "20px",
+    "2xl": "24px",
+    "3xl": "32px",
+    "4xl": "40px",
+    "5xl": "48px"
+  },
+  "lineHeight": { "tight": 1.15, "snug": 1.25, "normal": 1.5, "relaxed": 1.6 },
+  "fontWeight": {
+    "regular": 400,
+    "medium": 500,
+    "semibold": 600,
+    "bold": 700,
+    "extrabold": 800
+  },
+  "spacing": {
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "5": "20px",
+    "6": "24px",
+    "8": "32px",
+    "10": "40px",
+    "12": "48px",
+    "14": "56px",
+    "16": "64px",
+    "20": "80px",
+    "24": "96px"
+  },
+  "radius": {
+    "sm": "8px",
+    "md": "12px",
+    "lg": "16px",
+    "xl": "24px",
+    "2xl": "32px",
+    "pill": "999px"
+  },
+  "shadow": {
+    "card": "0 12px 32px rgba(0,0,0,.24)",
+    "focus": "0 0 0 3px rgba(183,255,22,.30)"
+  },
+  "motion": {
+    "fast": "140ms",
+    "normal": "180ms",
+    "panel": "220ms",
+    "ease": "cubic-bezier(.2,.8,.2,1)"
+  },
+  "breakpoint": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  },
+  "layout": {
+    "marketingMaxWidth": "1200px",
+    "appMaxWidth": "1360px",
+    "sidebarWidth": "248px",
+    "desktopGutter": "32px",
+    "tabletGutter": "24px",
+    "mobileGutter": "16px"
+  }
+}

@@ -1,12 +1,53 @@
 # StonkRitual
 
+![StonkRitual logo](apps/web/public/brand/stonkritual-primary-logo.svg)
+
 **Working name:** StonkRitual  
 **Meme token:** `RITL`  
 **Stock receipt demo token:** `rNVDA` (simulated only; not an equity or legal claim)  
 **Tagline:** *The meme runs on rituals. The rituals move the treasury.*  
 **NEAR Hackathon track:** `memecoins` — Memecoins With Mechanics
 
-> Status: product and implementation specification baseline. The name/ticker are provisional until the team completes name, domain, trademark, and on-chain symbol checks.
+> Status: RITL core deployed on NEAR **Testnet**. The name/ticker remain provisional until the team completes name, domain, trademark, and on-chain symbol checks.
+
+## Local development status
+
+The `ritl-core` Rust contract is deployed at `ritl-stonkritual.testnet`. Deployment and initialization succeeded in [transaction DFKKGqRvQKzuhLRAoj4VYpEWjWZhSUBkDj2KSCnpAg8P](https://explorer.testnet.near.org/transactions/DFKKGqRvQKzuhLRAoj4VYpEWjWZhSUBkDj2KSCnpAg8P). See the [Testnet deployment record](docs/deployments/RITL_TESTNET.md) for accounts, allocation, code hash, verification, and upgrade authority. The stock reserve and `rNVDA` remain **PLANNED / SIMULATED**; there is no hosted UI or mainnet contract.
+
+From `contracts/ritl-core`, use current stable Rust with the Wasm target and cargo-near:
+
+```bash
+cargo fmt --check
+cargo near check
+cargo test --lib
+cargo near build non-reproducible-wasm --no-abi
+cargo test --test ritual_sandbox
+```
+
+The Sandbox runner needs Linux or macOS. On Windows, run the last command in WSL with a Linux Rust toolchain; the contract unit tests and Wasm build also work with the Windows toolchain. The integration test advances 24-hour epochs by patching its local Sandbox state; the helper is excluded from production Wasm.
+The Testnet Wasm uses a non-reproducible host build. Its local SHA-256 and on-chain code hash were verified after deployment; a reproducible release build remains pending.
+
+From the repository root, regenerate and verify the deterministic simulation:
+
+```bash
+python scripts/simulate_60_days.py
+python scripts/simulate_60_days.py --check
+```
+
+The simulator uses integer `10^18` base units, floors burns at the base-unit boundary, and assumes every eligible successful-epoch reward is claimed. Its CSV expresses token amounts as exact decimal RITL strings. The 60-day final supplies are 1,002,028,928.981532810160431509 (optimistic), 1,000,370,312.149419827554214943 (base), and 997,872,073.295368507014737291 (pessimistic).
+
+Run the web app directly from the repository root:
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Open `http://localhost:3000`. Root scripts also provide `pnpm build`, `pnpm lint`, `pnpm typecheck`, and `pnpm check:sim`. The local, git-ignored `apps/web/.env.local` points at `ritl-stonkritual.testnet`, so contract views load from Testnet. Copy `apps/web/.env.example` when configuring another machine. `NEXT_PUBLIC_NEAR_RPC_URL` selects the Testnet JSON-RPC endpoint; `NEXT_PUBLIC_SITE_URL` is optional for public Open Graph imagery. The stock concept remains **SIMULATED — NO REAL EQUITY OWNERSHIP**.
+
+The web app uses the approved [brand guidance](docs/brand/BRAND_GUIDE.md) and [design system](docs/design-system/DESIGN_SYSTEM.md). Components are in `apps/web/src/components`, contract reads and Axios error handling in `services`, remote state in TanStack Query hooks, transient interface state in Zustand, validation in Zod schemas, and shared values in `constants` and `lib`. The epoch history uses TanStack Table and a React Hook Form input. Motion powers transitions and Three.js draws an optional decorative ritual orbit. No brand image or animation is required to understand the contract rules.
+
+Each NEAR account can check in once per epoch if it holds at least 1,000 RITL, but this is account-level friction only. One person can control multiple accounts; the demo does not provide proof of personhood or Sybil resistance beyond these limits.
 
 ## What it is
 
@@ -43,12 +84,12 @@ Receipt issuance is gated by a batch state machine and a trusted mock issuer acc
 
 The primary track is `memecoins`. The project is built around on-chain supply mechanics, daily rituals, immutable launch parameters, treasury burns, a visible streak, and a reproducible 60-day supply simulation. Do not claim the `defi` track unless a real cross-chain NEAR Intents settlement integration is implemented and demonstrated.
 
-## Repository layout (target)
+## Repository layout (current P0)
 
 ```text
 .
 ├── AGENTS.md
-├── CODEX_START_PROMPT.md
+├── CODEX.md
 ├── README.md
 ├── LICENSE
 ├── docs/
@@ -63,26 +104,21 @@ The primary track is `memecoins`. The project is built around on-chain supply me
 │   ├── UX_SPEC.md
 │   ├── SECURITY_AND_RISK.md
 │   ├── TEST_PLAN.md
-│   ├── CODEX_EXECUTION_PLAN.md
+│   ├── EXECUTION_PLAN.md
 │   ├── DECISION_LOG.md
 │   ├── HACKATHON_ALIGNMENT.md
 │   └── simulation/
 │       ├── 60_DAY_SIMULATION.md
 │       └── ritl-60-day-simulation.csv
 ├── contracts/
-│   ├── ritl-core/
-│   ├── mock-usdc/
-│   ├── stock-vault/
-│   └── receipt-token/
+│   └── ritl-core/
 ├── apps/
 │   └── web/
-├── services/
-│   └── stock-simulator/
 └── scripts/
     └── simulate_60_days.py
 ```
 
-This is a target layout, not a claim that the implementation already exists.
+The stock simulation components remain planned until the core Sandbox gate passes.
 
 ## Recommended implementation order
 
@@ -94,7 +130,7 @@ This is a target layout, not a claim that the implementation already exists.
 
 ## Judge walkthrough (target acceptance path)
 
-The final README must replace this target checklist with exact deployed contract IDs, commands, and transaction links after implementation.
+The RITL contract ID and deployment transaction are recorded above. The following end-to-end walkthrough still needs live Testnet participant activity and a hosted app; Sandbox covers time-travel outcomes locally.
 
 1. Open the hosted app and connect a NEAR Testnet wallet.
 2. Register storage for RITL and obtain test tokens from the documented faucet/distribution path.
@@ -133,4 +169,4 @@ The UI and docs must distinguish these states:
 - Meme.Cooking docs: <https://docs.meme.cooking/>
 
 Before submission, re-read the live `HACKATHON.md`. The project must be publicly reproducible, the X demo post must be published by the human, and a single submission must be sent only after the human reviews and approves the complete payload.
-# stocknritual
+
