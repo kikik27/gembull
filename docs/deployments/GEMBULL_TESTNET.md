@@ -37,3 +37,7 @@ Testnet RPC `final` views returned:
 The contract account has **one FullAccess key** (`ed25519:2hJvPF78gtfxsQ5bYtdepVPeggfjJBhMPcxKdGZVvnov`). Its holder can redeploy code, so the bytecode is **upgradeable**. The ritual parameters have no public setter, but this deployment must not be described as fully immutable.
 
 Before deployment, `cargo fmt --check`, `cargo near check`, 20 Rust unit tests, one Linux Sandbox integration test, and the 180-row simulation passed. No live-wallet check-in, successful-epoch claim, or missed-epoch burn has yet been recorded on this new Testnet account; those are the remaining demo steps.
+
+## Web integration
+
+The [production landing](https://web-cyan-three-62.vercel.app) uses `gembull-core.testnet` through `NEXT_PUBLIC_GEMBULL_CONTRACT_ID` and the Testnet RPC `https://test.rpc.fastnear.com`. The production page returned HTTP 200 with GemBull live copy, the contract account, and absolute Open Graph image metadata; the OG image returned HTTP 200 as `image/png`. A browser CORS preflight from the production origin to the RPC returned HTTP 200 with an allowed origin. A headless browser confirmed hydrated `get_rules()` data and the live 1,000,000,000 GEMBULL supply, with no "Awaiting contract" state. Run `pnpm verify:testnet` from the repository root to re-check public chain state without a signing key.
