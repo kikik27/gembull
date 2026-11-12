@@ -63,13 +63,13 @@ burn_amount = floor(ritual_treasury_balance * 5 / 10_000)
 
 The burn can never exceed the contract's ritual treasury balance. The corresponding NEP-141 `ft_burn` event must be emitted.
 
-## 6. Buy-to-stock reserve design (separate from ritual supply)
+## 6. Proposed two-source stock reserve (separate from ritual supply)
 
-The intended production route allocates **1.00% of purchases made through the GemBull application router** to a separate stock-acquisition vault. This does not apply to arbitrary NEP-141 transfers or trades routed through unrelated DEX contracts.
+The v0.2 product direction proposes **1.00% of eligible trade notional routed through a future GemBull application router** to a separate stock-acquisition vault. This does not apply to arbitrary NEP-141 transfers or trades routed through unrelated DEX contracts. No router or fee is deployed; all rates in this section are **PROPOSED** and require owner approval before implementation.
 
-Planned 2.00% application purchase fee:
+Proposed 2.00% fee on eligible app-routed trades:
 
-| Allocation | Share of routed purchase value |
+| Allocation | Share of eligible routed trade notional |
 |---|---:|
 | Stock acquisition reserve | 1.00% |
 | Buyback execution reserve | 0.50% |
@@ -79,7 +79,9 @@ Planned 2.00% application purchase fee:
 
 The buyback reserve is a future execution feature and must not be represented as a completed buyback until a real supported market route is integrated. The core missed-ritual treasury burn is implemented independently of this purchase fee.
 
-The hackathon stock-reserve demo uses mock stablecoins and a mock broker. `rNVDA` is an illustrative test receipt; it carries no real stock ownership, dividends, redemption, or other security rights.
+The second proposed source is **5% of net eligible bonding graduation surplus**, after refund liabilities, mandatory LP seed, settlement costs, minimum protocol reserve, and other disclosed obligations. If no protected surplus remains, the contribution is zero. No bonding curve or graduation flow is implemented. These stock sources never draw from the ritual treasury or change GEMBULL supply.
+
+The revised MVP would use non-transferable Ritual Points and **SIMULATED** allocation records, not an `rNVDA` receipt token. Proposed eligibility is five valid check-ins in the previous seven completed epochs and a 1,000-GEMBULL snapshot balance; points weight allocations rather than balance above the minimum. The deployed contract does not implement points, snapshots, or stock allocations. See [product model](PRODUCT_MODEL.md) and [open decisions](OPEN_DECISIONS.md).
 
 ## 7. LP policy
 

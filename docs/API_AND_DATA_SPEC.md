@@ -9,12 +9,14 @@
 | Epoch outcome and streaks | GEMBULL core contract |
 | Reward entitlement/claim status | GEMBULL core contract |
 | Ritual treasury balance/burn | GEMBULL core contract |
-| Stock reserve balance and contribution | Stock-vault contract |
-| Mock execution result | Mock broker service, explicitly simulated |
-| Mock receipt supply | Receipt-token contract |
+| Stock reserve balance and source-separated contributions | Planned simulator/vault; none deployed |
+| Mock execution result | Planned simulator, explicitly `SIMULATED`; none deployed |
+| Ritual Points and active-holder allocation | Planned non-transferable ledger; none deployed |
 | Stock price quote | Named market-data provider + timestamp; informational only |
 
 Backend/database records are cache/index data and must be reconstructible from chain events where applicable.
+
+The stock and points rows above are **planned** models, not live contract views or deployed APIs. The revised MVP has no stock receipt token. Proposed active-holder points require a documented start date and snapshot source; never infer verified historical points from a frontend cache.
 
 ## 2. Contract view interfaces
 

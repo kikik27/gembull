@@ -27,7 +27,7 @@ Build a polished, responsive, dark-first web application. The daily ritual is th
 - Never fake a wallet connection or transaction success.
 - Never hard-code a dynamic tokenomics value if it can be read from contract/config. Show source/network.
 - Actual on-chain supply and simulated 60-day projections must remain separate.
-- Every stock vault and stock receipt mock must display a persistent simulation disclosure.
+- Every stock vault, Ritual Points, and stock allocation mock must display a persistent simulation disclosure. No stock receipt token is part of the revised MVP.
 - Never call GEMBULL an NVIDIA-backed token or imply GEMBULL holders own NVIDIA shares.
 - Do not invent live account count, reserve amount, contract address, custody, audit, broker integration or partnership.
 

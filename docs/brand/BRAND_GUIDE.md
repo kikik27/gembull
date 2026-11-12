@@ -27,6 +27,6 @@ The [creative prompts](GEMBULL_CREATIVE_PROMPTS.md) record how these concepts we
 ## Claims and disclosure
 
 - The ritual is the primary product. Show actual chain values with their network/source, and label proposed values as preview.
-- The stock reserve, broker, and `rNVDA` receipt are **SIMULATED** until separate contracts and integrations are implemented and tested. No visual may imply real shares, verified custody, redemption, or dividends.
+- The stock reserve and any future points/allocation records are **SIMULATED** concepts until separate integrations are implemented and tested. No visual may imply real shares, verified custody, redemption, or dividends. The revised MVP has no stock receipt token.
 - Do not promise returns, APY, price targets, guaranteed rewards, or launch timing.
 - Do not present the generated campaign coin as the deployed token icon or as an investment product.

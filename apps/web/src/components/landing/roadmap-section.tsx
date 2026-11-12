@@ -14,7 +14,7 @@ const milestones = [
   {
     status: "PLANNED",
     title: "Stock-reserve simulation",
-    detail: "Build a separate mock vault and receipt flow. Any broker or equity figures stay visibly SIMULATED.",
+    detail: "Design a separate two-source mock reserve and activity-point allocations. Fees, graduation surplus, and stock rewards remain PROPOSED or SIMULATED; no receipt token in the MVP.",
   },
 ];
 

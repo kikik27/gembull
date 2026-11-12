@@ -2,14 +2,14 @@
 
 **Product:** GemBull<br>
 **Token:** GEMBULL<br>
-**Version:** 0.1 — Hackathon baseline<br>
+**Version:** 0.2 — Hackathon core plus planned stock direction<br>
 **Primary track:** NEAR Hackathon — `memecoins`
 
 ## 1. Executive summary
 
 GemBull is a community memecoin whose token supply reacts to a daily on-chain ritual. Holders check in once per 24-hour epoch. If at least 50 eligible accounts participate, the epoch succeeds, the community streak increases, and participants become eligible to claim a fixed GEMBULL mint. If the community misses the target, 5 basis points of the remaining ritual treasury balance is burned and the current streak resets.
 
-A secondary stock accumulation layer is designed to allocate 1% of eligible application-routed purchases into a segregated stock acquisition reserve. The hackathon prototype demonstrates this with test assets, a mock broker, and a simulated receipt token. Real equity custody is explicitly outside hackathon scope.
+A separate, **planned** stock acquisition treasury would receive proposed contributions from eligible app-routed trading fees and protected bonding graduation surplus. Active holders would receive points-weighted **simulated** allocation records in a later MVP phase. Neither funding route, points ledger, nor real equity custody is implemented in the deployed Testnet app.
 
 ## 2. Business context and problem
 
@@ -21,7 +21,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 2. Make the token's supply respond deterministically to community participation.
 3. Make all launch parameters publicly readable and immutable through contract interfaces.
 4. Provide an auditable history of check-ins, successful/missed epochs, reward mints, treasury burns, and streak records.
-5. Demonstrate a separate, transparent stock-acquisition reserve and simulated receipt lifecycle without misrepresenting legal ownership.
+5. Design a separate, source-auditable stock-acquisition reserve and simulated active-holder allocations without misrepresenting legal ownership.
 6. Deliver a reproducible project that a human judge and AI coding judge can inspect.
 
 ## 4. Stakeholders
@@ -47,7 +47,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 - Treasury burn and streak reset after a missed epoch.
 - Current progress, current streak, longest streak, supply, treasury balance, and event history UI.
 - Reproducible 60-day supply simulation for optimistic, base, and pessimistic behavior.
-- Test-only stock reserve, mock stablecoin, simulated broker execution, and clearly labeled simulated receipt lifecycle, subject to time.
+- Planned, time permitting: test-only stock reserve and simulated points/allocation ledger, with no custom stock receipt token.
 
 ### Planned / post-hackathon
 
@@ -58,6 +58,8 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 - LP lock integration or a dedicated LP locker after compatibility testing with the selected launch/liquidity venue.
 - Multi-ticker stock reserve and community governance.
 - Verified third-party proof of custody and independent audit.
+
+The proposed 2% routed fee split, 5% protected graduation-surplus contribution, and five-of-seven active-holder rule are tracked in [OPEN_DECISIONS.md](OPEN_DECISIONS.md). They are not deployed economic rules.
 
 ### Out of scope
 
@@ -81,7 +83,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 | BR-08 | Sybil resistance and limitations are disclosed | Must | README documents account-level limitations |
 | BR-09 | 60-day simulations cover multiple participation scenarios | Must | Script produces reproducible CSV and summary |
 | BR-10 | Stock reserve remains separate from GEMBULL and LP balances | Should | Separate contract/account and ledger |
-| BR-11 | Mock stock receipts are visibly identified as simulated | Must | No UI or doc claims real equity ownership |
+| BR-11 | Stock allocations and Ritual Points are visibly identified as simulated | Must for stock MVP | No UI or doc claims real equity ownership |
 
 ## 7. Business rules
 

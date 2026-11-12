@@ -215,7 +215,7 @@ Use subtle surface separation rather than large glows. The visual language shoul
 - `/app/supply` — current supply, mint/burn history and 60-day simulator; no price chart hero.
 - `/app/community` — participant leaderboard and streak records, with anti-Sybil limitations explained.
 - `/app/vault` — stock-reserve simulator only, with persistent `SIMULATION` disclosure.
-- `/app/portfolio` — GEMBULL balance, eligible rewards and simulated receipt balances clearly separated.
+- `/app/portfolio` — GEMBULL balance, eligible ritual rewards and future simulated stock allocations clearly separated.
 
 ### Global navigation
 
@@ -282,7 +282,7 @@ Mobile:
 ### Stock Vault `/app/vault`
 
 - Keep persistent banner: `SIMULATION — no real shares are held by this prototype`.
-- Show simulated contributions, simulated execution batches, simulated receipt issuance and timestamps.
+- Show source-separated simulated contributions, simulated execution batches, active-holder points/allocations and timestamps when implemented.
 - Use no “backed by NVIDIA” copy.
 - If no simulated batch exists, show “No simulated acquisition yet.”
 - Explain that GEMBULL does not itself represent NVIDIA ownership.

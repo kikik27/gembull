@@ -21,12 +21,11 @@ flowchart TD
     CORE --> EVT[NEP-297 + NEP-141 Events]
     EVT --> IDX[Read-only Indexer]
     IDX --> FE
-    FE --> SV[Stock Vault Contract]
-    MU[mockUSDC NEP-141] --> SV
-    SV --> MOCK[Mock Broker / Issuer Service]
-    MOCK -->|test-only attestation| SV
-    SV --> RT[rNVDA Receipt Token]
-    RT --> FE
+    FE -. planned .-> SV[SIMULATED Stock Reserve]
+    RF[Proposed routed trading fees] -.-> SV
+    GS[Proposed protected graduation surplus] -.-> SV
+    SV -.-> POINTS[SIMULATED Ritual Points and allocations]
+    POINTS -.-> FE
 ```
 
 ## 3. Components
@@ -46,17 +45,17 @@ One Rust contract combines:
 
 Combining the token and ritual mechanic ensures the supply-changing logic is not delegated to a replaceable backend.
 
-### 3.2 `mock-usdc`
+### 3.2 Planned mock settlement asset
 
-A clearly labeled Testnet-only NEP-141 faucet token used to fund stock-reserve demonstrations. It must not be confused with real USDC or have mainnet deployment defaults.
+A clearly labeled Testnet-only mock asset may fund reserve simulations. The settlement asset and route remain open decisions; no stock asset contract has been deployed.
 
-### 3.3 `stock-vault`
+### 3.3 Planned stock reserve
 
-Receives mockUSDC contributions, records contribution batches, enforces batch state transitions, and exposes reserve/batch views. This contract is independent of GEMBULL's ritual treasury.
+Tracks proposed routed-fee and protected graduation-surplus inflows separately, records simulated batches, and exposes reserve/batch views. Its ledger must be independent of GEMBULL's ritual treasury. No such contract is currently deployed.
 
-### 3.4 `receipt-token`
+### 3.4 Planned Ritual Points and allocation ledger
 
-A separate NEP-141 token with symbol `rNVDA` and metadata naming it a simulated receipt. Only the fixed mock issuer / stock-vault authority may mint it after a valid test attestation. It is not a representation of real equity.
+One non-transferable point per valid check-in is the v0.2 proposal. A fixed snapshot and rolling 5-of-7 eligibility calculation would weight simulated allocations. Neither points nor allocation ledger exists today, and the revised MVP does not mint a custom stock receipt token.
 
 ### 3.5 Stock simulator service
 
@@ -84,7 +83,7 @@ contracts/
   gembull-core/
   mock-usdc/
   stock-vault/
-  receipt-token/
+  ritual-points/          # planned, if contract-backed points are chosen
 apps/
   web/
 services/
@@ -147,14 +146,13 @@ sequenceDiagram
     C-->>Keeper: RitualDayFinalized(failed) + ft_burn
 ```
 
-### 5.4 Stock reserve simulation
+### 5.4 Planned stock reserve simulation
 
-1. User deposits mockUSDC to `stock-vault` through NEP-141 `ft_transfer_call`.
-2. Vault records contributor and batch amount.
-3. When a batch meets its configured test threshold, the mock broker produces a simulated fill result.
-4. The designated mock issuer calls the attestation method from its authorized test account.
-5. Vault marks the batch as simulated-executed and authorizes receipt minting.
-6. Receipt contract mints `rNVDA`; UI displays the simulation disclaimer.
+1. Record simulated routed trading-fee and protected graduation-surplus contributions in separate source ledgers.
+2. Aggregate an eligible simulated acquisition batch without using the ritual treasury or protected LP/refund assets.
+3. Produce a clearly labeled mock execution record; no live broker or issuer attestation is implied.
+4. Calculate points and active-holder eligibility from a defined, auditable start date and fixed snapshot.
+5. Show simulated, points-weighted allocations with a persistent no-equity disclaimer. No receipt token is minted.
 
 ## 6. Clock and epoch model
 

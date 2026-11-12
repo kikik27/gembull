@@ -86,9 +86,9 @@ Frontend must not infer finalized success/miss from a client-side countdown alon
 
 1. User opens Stock Vault (Simulation).
 2. Persistent simulation disclosure is visible before metrics.
-3. Display simulated batch/contribution/execution/receipt state.
+3. Display source-separated simulated batch/contribution/execution/active-holder allocation state when implemented.
 4. User can inspect the mocked broker flow and assumptions.
-5. Never include simulated receipts in the real on-chain token balance without a distinct section and explicit simulation label.
+5. Never include simulated allocations in the real on-chain token balance; use a distinct section and explicit simulation label.
 
 ## Route requirements
 

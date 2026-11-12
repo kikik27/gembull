@@ -40,13 +40,13 @@ The hackathon MVP uses one check-in per NEAR account per epoch and requires a mi
 
 The contract has no method for changing the configured ritual parameters after initialization. That is application-level immutability. A NEAR account with permission to redeploy the contract Wasm can still change code. Deployment must document access keys, multisig controls, and whether the code-upgrade authority has been removed or constrained. Do not equate absence of setters with fully immutable bytecode.
 
-## 5. RWA / stock-receipt risk statement
+## 5. RWA / simulated stock allocation risk statement
 
 - Price data is not proof that stock is held.
 - A broker order result is not necessarily final settlement or beneficial ownership.
 - A token wrapper does not automatically confer rights in the underlying security.
 - Real deployment requires an issuer, qualified broker/custodian, enforceable holder rights, transfer restrictions where needed, KYC/AML and jurisdictional assessment.
-- Hackathon `rNVDA` is a simulation-only artifact; it does not confer rights, dividends, voting, redemption, or beneficial ownership.
+- The revised MVP does not mint a stock receipt. Proposed Ritual Points and simulated allocation records confer no rights, dividends, voting, redemption, or beneficial ownership.
 
 ## 6. Operational controls
 

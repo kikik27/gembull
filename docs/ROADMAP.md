@@ -9,7 +9,7 @@ This is an engineering checklist for the NEAR Hackathon `memecoins` track, not a
 | Web app | Rules, wallet actions, progress, streaks, supply, and history | [Production landing](https://web-cyan-three-62.vercel.app) connected to `gembull-core.testnet`; build and public page pass | Live wallet flow verified |
 | GemBull Testnet | `ft_metadata() = GemBull / GEMBULL` | [Deployed and verified](deployments/GEMBULL_TESTNET.md); one FullAccess upgrade key remains | Account, transaction, code hash, allocations, authority, and live views recorded |
 | Demo evidence | Real wallet check-in, duplicate rejection, success claim, missed-epoch burn | Pending | Replayable instructions and video; Sandbox covers time travel |
-| Stock simulator | Separate mock vault, broker, issuer, and `rNVDA` receipt | Planned | Sandbox cross-contract/failure tests; every display says `SIMULATED` |
+| Stock simulator | Separate two-source mock reserve and activity-point allocation records; no receipt token in MVP | Planned | Source-separated accounting, eligibility tests, and persistent `SIMULATED` disclosure |
 | Routed purchase fee, LP lock, real custody | Optional future integrations | Not implemented | No claims until real integration, tests, and legal/operational review |
 
 ## Critical path before submission
@@ -23,5 +23,5 @@ This is an engineering checklist for the NEAR Hackathon `memecoins` track, not a
 
 - Preserve all tokenomics constants in [TOKENOMICS.md](TOKENOMICS.md); the rebrand changes name and ticker, not supply rules.
 - The backend remains read-only for ritual truth.
-- The stock reserve is separate and simulated. `rNVDA` confers no stock rights.
+- The stock reserve and Ritual Points are planned simulations; no stock receipt token is planned for the revised MVP. See [product model](PRODUCT_MODEL.md) and [open decisions](OPEN_DECISIONS.md).
 - The deployed contract's one FullAccess key can upgrade bytecode; do not call it fully immutable. The separate RITL account remains historical evidence.

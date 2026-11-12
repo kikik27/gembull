@@ -25,7 +25,7 @@ Hero:
 - Primary CTA: `Join today's ritual`
 - Secondary CTA: `Read the rules`
 - Network badge: `NEAR TESTNET`
-- Short disclosure: `GEMBULL is a community meme token. Stock receipts in this demo are simulated.`
+- Short disclosure: `GEMBULL is a community meme token. Stock allocations shown here are SIMULATED; no shares are held.`
 
 Key metrics:
 - Current streak
@@ -74,8 +74,8 @@ History table columns:
 - MockUSDC reserve balance.
 - Batch contribution progress.
 - Simulated broker fill details.
-- `rNVDA` receipt balance, if issued.
-- Explain that a quote is not proof of custody and this test receipt is not redeemable.
+- Simulated active-holder allocation and Ritual Points, only if that feature is implemented.
+- Explain that a quote or allocation is not proof of custody and is not redeemable.
 
 ## 7. Activity / event history
 

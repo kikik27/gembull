@@ -3,11 +3,12 @@ import { Reveal } from "./reveal";
 
 /**
  * SIMULATION — the stock reserve layer. Figures are the arithmetic example from docs/simulation/60_DAY_SIMULATION.md
- * ($5,000 routed per day, 1% planned reserve share, 60 days). They are not reserve performance and never merge with on-chain GEMBULL balances.
+ * ($5,000 routed per day, 1% proposed reserve share, 60 days). They are not reserve performance and never merge with on-chain GEMBULL balances.
  */
 export function VaultSection() {
   const rows = [
-    { label: "Planned reserve share", value: "1.00% of routed purchases" },
+    { label: "Proposed routed-fee share", value: "1.00% of eligible trades" },
+    { label: "Proposed graduation share", value: "5.00% of protected net surplus" },
     { label: "Example routed volume", value: "$5,000 / day" },
     { label: "Reserve per day", value: "$50" },
     { label: "Reserve after 60 days", value: "$3,000" },
@@ -24,9 +25,10 @@ export function VaultSection() {
             Stock reserve. Still a simulation.
           </h2>
           <p>
-            The planned stock flow runs on mock assets and a mock broker only.
-            No real equity is held, and no receipt represents shares, dividends,
-            redemption or legal ownership in this build.
+            Two funding sources are proposed: eligible routed trading fees and
+            protected bonding graduation surplus. Neither route is live. A future
+            MVP would use non-transferable Ritual Points and simulated active-holder
+            allocations, with no stock receipt token.
           </p>
           <p>
             GEMBULL itself does not represent ownership of any company. The reserve
@@ -35,7 +37,7 @@ export function VaultSection() {
         </Reveal>
         <Reveal className="slip" delay={0.12}>
           <div className="slip-head">
-            <span>rNVDA · Test receipt</span>
+            <span>Proposed reserve · Simulation</span>
             <Vault aria-hidden="true" size={28} strokeWidth={1.4} />
           </div>
           {rows.map((row) => (
@@ -46,8 +48,9 @@ export function VaultSection() {
           ))}
           <p className="slip-foot">
             Simulation — no real shares are held by this prototype. Arithmetic
-            example from the project docs, not reserve performance. Excludes
-            broker, custody, FX and transfer costs.
+            example for routed fees only, not reserve performance. It excludes
+            graduation surplus, broker, custody, FX and transfer costs. No real
+            shares, dividends, redemption or ownership are provided.
           </p>
         </Reveal>
       </div>

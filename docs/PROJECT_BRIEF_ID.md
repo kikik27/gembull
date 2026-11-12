@@ -4,11 +4,11 @@
 
 - **Nama proyek (working name):** GemBull
 - **Ticker meme token:** `$GEMBULL`
-- **Ticker receipt simulasi:** `rNVDA` (hanya untuk testnet/demo)
+- **Reward saham MVP:** Ritual Points dan catatan alokasi **SIMULATED** yang direncanakan; tanpa token receipt saham
 - **Tagline:** *The meme runs on rituals. The rituals move the treasury.*
 - **Track utama:** NEAR Hackathon — `memecoins` / Memecoins With Mechanics
 
-Nama dan ticker masih provisional. Belum dianggap lolos pemeriksaan merek dagang, domain, akun sosial, atau benturan simbol token.
+GemBull / GEMBULL sudah terdeploy di NEAR Testnet; pemeriksaan merek dagang, domain, akun sosial, dan benturan simbol token tetap belum selesai.
 
 ## Konsep dalam satu kalimat
 
@@ -22,9 +22,9 @@ GEMBULL adalah token komunitas. Memegang GEMBULL **tidak otomatis memberikan kep
 
 ### 2. Stock acquisition reserve — lapisan RWA terpisah
 
-Sebagian pembelian yang melewati router aplikasi direncanakan masuk ke stock acquisition vault. Untuk hackathon, seluruh pembelian dan receipt NVIDIA hanya simulasi. `rNVDA` bukan saham, bukan sekuritas yang diterbitkan secara sah, dan tidak memiliki hak dividen, redemption, atau beneficial ownership.
+Dua sumber pendanaan yang diusulkan untuk treasury saham terpisah adalah fee perdagangan yang melewati router aplikasi dan sebagian **surplus bersih** saat bonding graduation, setelah kewajiban refund, likuiditas, biaya, dan cadangan terlindungi. Keduanya belum diimplementasikan. Reward holder aktif di MVP nantinya berupa Ritual Points non-transferable dan catatan alokasi **SIMULATED**, bukan token saham atau receipt. Tidak ada hak dividen, redemption, atau beneficial ownership.
 
-## Mekanisme inti yang diusulkan
+## Mekanisme inti yang sudah terdeploy di Testnet
 
 | Parameter | Nilai awal |
 |---|---:|
@@ -38,7 +38,7 @@ Sebagian pembelian yang melewati router aplikasi direncanakan masuk ke stock acq
 | Maximum supply | 1.050.000.000 GEMBULL |
 | Ritual treasury awal | 150.000.000 GEMBULL |
 
-Semua parameter ini harus dibaca dari smart contract dan tidak memiliki fungsi setter setelah initialization.
+Semua parameter ini dibaca dari smart contract dan tidak memiliki fungsi setter setelah initialization. Akun kontrak masih memiliki FullAccess key sehingga kode tetap dapat di-upgrade.
 
 ## Mengapa sesuai dengan Track 11
 
@@ -59,7 +59,7 @@ Model mengasumsikan 100% reward yang berhak diklaim benar-benar diklaim. Angka b
 1. GEMBULL NEP-141 + ritual smart contract + tests.
 2. Script simulasi 60 hari dan CSV.
 3. Dashboard ritual: progress, current streak, longest streak, supply, treasury, event history.
-4. Stock vault + mockUSDC + mock broker + receipt `rNVDA`.
+4. Simulasi treasury saham dua sumber + Ritual Points dan alokasi holder aktif; belum dibangun.
 5. Routed purchase fee, buyback execution, dan LP locking setelah core stabil.
 
 ## Dokumen utama

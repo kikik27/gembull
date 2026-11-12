@@ -140,10 +140,10 @@ Separate fields:
 - simulated contribution pool;
 - mock order/batch status;
 - simulated shares acquired;
-- mock receipt amount;
+- simulated allocation amount and Ritual Points, if implemented;
 - data source/timestamp (simulation seed or API quote).
 
-Do not label the simulated receipt `verified`, `custodied`, `redeemable` or `ownership`.
+Do not label simulated allocations `verified`, `custodied`, `redeemable` or `ownership`.
 
 ## 4. Navigation and wallet components
 
@@ -184,7 +184,7 @@ Explain action, network, contract and expected effect. Do not ask the user to re
 
 ### Disclosure dialog
 
-Use for first visit to Stock Vault simulator and receipt simulation. Require acknowledgement before the user interprets simulated receipt balances as real holdings.
+Use for first visit to the Stock Vault and active-holder allocation simulators. Require acknowledgement before the user interprets simulated allocations as real holdings.
 
 ### Toasts
 

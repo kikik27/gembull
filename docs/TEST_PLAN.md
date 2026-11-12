@@ -42,7 +42,8 @@
 - Verify successful and failed epochs end to end.
 - Verify permissionless settlement from a non-admin account.
 - Verify a claim can be made after success and only once.
-- Verify stock-vault deposit, simulated execution, attestation, and receipt mint are isolated from GEMBULL ritual treasury.
+- When implemented, verify both simulated stock funding sources, protected-surplus calculation, points eligibility, and allocations remain isolated from GEMBULL ritual treasury; no custom receipt mint is in the revised MVP.
+- Test the proposed active-holder window at 4/7, 5/7, and 7/7 valid check-ins; a failed community day still gives its valid check-in point. Test a balance below/exactly at the proposed snapshot minimum, zero eligible holders, carry-forward, and rounding dust. These tests are pending until the points/simulation layer exists.
 - Verify mock broker failure does not impact ritual transactions.
 
 ## 3. Property / invariant tests
@@ -78,7 +79,7 @@ one_reward_claim_per_account_per_successful_epoch
 - Progress and countdown distinguish active from awaiting-settlement states.
 - Claim is shown only for eligible, unclaimed successful epochs.
 - Event history displays transaction hashes and event source.
-- Stock receipt screen shows a persistent simulated/no-equity disclaimer.
+- Simulated stock allocation and Ritual Points screens show a persistent simulated/no-equity disclaimer.
 
 ## 6. Release gate
 

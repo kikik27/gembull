@@ -2,7 +2,7 @@
 
 GemBull is a NEAR-native community memecoin whose supply reacts to a daily on-chain ritual. An eligible account checks in once per 24-hour epoch. A successful community day creates individual reward claims; a missed day burns a fixed slice of the ritual treasury and resets the current streak. The rules live in the token contract, not a backend.
 
-**Hackathon track:** `memecoins` — Memecoins With Mechanics. **Status:** **GemBull / GEMBULL is deployed on NEAR Testnet** at [`gembull-core.testnet`](docs/deployments/GEMBULL_TESTNET.md); metadata, rules, supply, and genesis balances were verified at finality. The [hosted landing](https://web-cyan-three-62.vercel.app) is connected to this contract. A live wallet check-in and recorded demo are still pending. The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) remains a separate legacy **StonkRitual / RITL** token. The stock reserve is **PLANNED / SIMULATED** and represents no real shares, custody, redemption, or broker execution.
+**Hackathon track:** `memecoins` — Memecoins With Mechanics. **Status:** **GemBull / GEMBULL is deployed on NEAR Testnet** at [`gembull-core.testnet`](docs/deployments/GEMBULL_TESTNET.md); metadata, rules, supply, and genesis balances were verified at finality. The [hosted landing](https://web-cyan-three-62.vercel.app) is connected to this contract. A live wallet check-in and recorded demo are still pending. The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) remains a separate legacy **StonkRitual / RITL** token. The stock reserve and active-holder rewards are **PLANNED / SIMULATED** and represent no real shares, custody, redemption, or broker execution. The v0.2 product direction retires the former mock stock-receipt MVP plan.
 
 ## Hackathon goal and evidence
 
@@ -89,7 +89,7 @@ The simulation uses `10^18` integer base units, floors burns at the base-unit bo
 ## Judge walkthrough
 
 1. Read `get_rules()`, `ft_metadata()`, and the recorded deployment transaction; confirm the account really reports **GemBull / GEMBULL**.
-2. Connect a NEAR Testnet wallet, register token storage, and obtain documented test tokens from the team's distribution path.
+2. Connect a NEAR Testnet wallet, register token storage, and receive at least 1,000 test GEMBULL from the `gembull-public.testnet` allocation via a team-operated transfer. There is no in-app token faucet.
 3. Check in once. Confirm the epoch count rises; a second check-in from the same account fails.
 4. Finalize a completed epoch in Sandbox with time travel. On success, claim once and inspect `ft_mint`; on a miss, inspect the treasury `ft_burn` and streak reset.
 5. Inspect the web history, actual supply, and separate 60-day simulation. Run the script above and compare its 180 CSV rows.
@@ -103,10 +103,14 @@ The roadmap is an implementation checklist. The landing page shows a short statu
 | Priority | Next outcome | Gate |
 |---|---|---|
 | P0 | Fund demo participants, record one real check-in, and capture a reproducible video on the hosted UI | End-to-end judge walkthrough works |
-| P1 | Build separate mockUSDC, stock vault, mock broker, and simulated receipt | Sandbox integration passes; UI always says `SIMULATED` |
+| P1 | Design a simulated two-source stock reserve and non-transferable Ritual Points/active-holder allocations | Open parameters reviewed; UI says `SIMULATED`; no stock receipt token in MVP |
 | Later | Evaluate routed purchase fee, launch venue, LP lock, and legal custody path | No production claim before implementation and review |
 
 The stock layer's proposed 1% reserve applies only to eligible purchases routed through a future app router. Transfers and external DEX trades do not automatically contribute. No actual equity is acquired in this hackathon build. NEAR Intents are outside the current implementation.
+
+## Test with a connected wallet
+
+Read the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) for the register → receive test GEMBULL → check-in → settle/claim flow. Connecting a wallet does not grant tokens. The revised v0.2 stock direction and unresolved parameters are in the [product model](docs/PRODUCT_MODEL.md) and [open decisions](docs/OPEN_DECISIONS.md). The [archive migration notes](docs/V0_2_ARCHIVE_MIGRATION.md) explain what was adopted or deferred.
 
 ## Repository map
 

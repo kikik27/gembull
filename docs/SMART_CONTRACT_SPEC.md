@@ -212,26 +212,9 @@ Use the exact NEP-297 event envelope and JSON fields. Do not emit non-standard e
 
 Define stable, descriptive errors for: not initialized, wrong epoch, epoch not ended, epoch already finalized, out-of-order finalization, already checked in, minimum balance not met, participant cap reached, storage not registered, reward not available, already claimed, missing reservation, max supply/reservation cap reached, and invalid caller.
 
-## 10. Stock contracts — mock-only interface
+## 10. Planned stock simulation interfaces (not deployed)
 
-### `stock-vault`
-
-- accepts mockUSDC via NEP-141 `ft_transfer_call`;
-- verifies the predecessor token contract is the configured mockUSDC contract;
-- records contributor amount and batch ID;
-- exposes `get_reserve_balance`, `get_batch`, and `get_contributor_allocation`;
-- supports explicit batch states: `COLLECTING`, `READY`, `SIMULATED_EXECUTED`, `ATTESTED`, `RECEIPT_MINTED`, `FAILED`;
-- only fixed mock issuer account may attest an execution in the Testnet demo;
-- no stock contract may call into or spend GEMBULL ritual treasury.
-
-### `receipt-token`
-
-- NEP-141 token symbol `rNVDA`, name `Simulated NVIDIA Receipt`;
-- no public mint method;
-- minter fixed at initialization to the stock-vault/mock issuer flow;
-- mint only once per attested batch and never above the batch's simulated fractional share amount;
-- UI and metadata reference must include a TEST / SIMULATED disclosure;
-- no redemption or dividend method in the hackathon MVP.
+The v0.2 archive supersedes the earlier `rNVDA` receipt-token plan. A future stock simulation must keep eligible routed-fee and protected graduation-surplus inflows separate; reject spending from the GEMBULL ritual treasury; expose batches and carry-forward balances; and label all mock execution and allocation data `SIMULATED`. Proposed non-transferable Ritual Points count valid check-ins, including failed community days. A proposed five-of-seven completed-epoch window and fixed 1,000-GEMBULL snapshot would determine active-holder eligibility. No point or stock claim is part of the deployed `gembull-core` interface. Exact snapshot, point storage, distributable fraction, and governance remain open in [OPEN_DECISIONS.md](OPEN_DECISIONS.md).
 
 ## 11. Deployment posture
 

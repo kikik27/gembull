@@ -1,7 +1,7 @@
 # Product Requirements Document (PRD)
 
 **Product:** GemBull<br>
-**Version:** 0.1 — Hackathon MVP<br>
+**Version:** 0.2 — Hackathon core plus planned stock direction<br>
 **Primary user journey:** Connect → Check in → Epoch settles → Claim reward / inspect burn
 
 ## 1. Product vision
@@ -13,7 +13,7 @@ Make a memecoin where community participation has deterministic on-chain consequ
 - **Meme community holder:** owns GEMBULL and wants to participate in a simple daily ritual.
 - **Mechanics-focused DeFi user:** wants to inspect contract rules, token supply, and treasury behavior.
 - **Hackathon judge/developer:** needs a quick, reproducible way to trigger and verify both success and failure paths.
-- **RWA-curious user:** wants to understand the future stock-reserve concept while being clearly informed that the hackathon receipt is simulated.
+- **RWA-curious user:** wants to understand the future simulated stock-reserve concept without an equity ownership claim.
 
 ## 3. MVP product surfaces
 
@@ -22,7 +22,7 @@ Make a memecoin where community participation has deterministic on-chain consequ
 3. **Reward page/panel:** successful epochs, unclaimed rewards, claim action, claimed status.
 4. **History page:** epoch outcomes, each mint/burn event, transaction hash, block height/time, account, amount.
 5. **Treasury page:** ritual treasury balance, cumulative burned amount, total minted, current total supply, remaining mint headroom.
-6. **Stock Reserve page (secondary):** mockUSDC balance, batch status, simulated ticker quote, simulated execution record, receipt issuance status, explicit SIMULATED banner.
+6. **Stock Reserve page (planned, secondary):** source-separated mock inflows, batch status, simulated execution, active-holder points/allocation records, explicit SIMULATED banner. The current landing shows a concept preview only.
 7. **Docs / How it works:** immutable rules, sybil limitations, contract IDs, links to explorer, reproduction steps.
 
 ## 4. Functional requirements
@@ -90,13 +90,14 @@ Display:
 - Provide explorer links where available.
 - History must distinguish contract events from backend-generated stock simulation records.
 
-### F-09 — Stock reserve (secondary MVP)
+### F-09 — Stock reserve and active-holder simulation (planned secondary MVP)
 
-- Use a mock stablecoin contract on Testnet only.
-- Accept contributions into a separate stock-vault contract.
-- Create a batch, simulate a broker fill, and record a mock issuer attestation.
-- Mint `rNVDA` only after the authorized mock issuer confirms the batch.
-- Display `SIMULATED — NO REAL EQUITY OWNERSHIP` on every screen showing mock receipt data.
+- Track proposed routed-fee and protected graduation-surplus inflows in separate mock ledgers; no such funding path exists in the deployed app.
+- Create simulated batches and execution records without claiming real broker fills or custody.
+- Give one non-transferable point per valid check-in only once a points implementation exists; no historical backfill is verified today.
+- Proposed stock eligibility: five valid check-ins in the previous seven completed epochs and 1,000 GEMBULL at a fixed snapshot. Weight simulated allocations by eligible points.
+- Do not mint a custom stock receipt token in the revised MVP.
+- Display `SIMULATED — NO REAL EQUITY OWNERSHIP` on every stock allocation screen.
 - Do not let stock-service downtime affect ritual functionality.
 
 ### F-10 — 60-day simulation
