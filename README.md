@@ -89,7 +89,7 @@ The simulation uses `10^18` integer base units, floors burns at the base-unit bo
 ## Judge walkthrough
 
 1. Read `get_rules()`, `ft_metadata()`, and the recorded deployment transaction; confirm the account really reports **GemBull / GEMBULL**.
-2. Connect a NEAR Testnet wallet, register token storage, and receive at least 1,000 test GEMBULL from the `gembull-public.testnet` allocation via a team-operated transfer. There is no in-app token faucet.
+2. Connect a NEAR Testnet wallet, register token storage, and receive at least 1,000 test GEMBULL from the `gembull-public.testnet` allocation via a team-operated transfer. There is no in-app token faucet or buy route. See the [distribution routes](docs/DISTRIBUTION_PLAN.md).
 3. Check in once. Confirm the epoch count rises; a second check-in from the same account fails.
 4. Finalize a completed epoch in Sandbox with time travel. On success, claim once and inspect `ft_mint`; on a miss, inspect the treasury `ft_burn` and streak reset.
 5. Inspect the web history, actual supply, and separate 60-day simulation. Run the script above and compare its 180 CSV rows.
@@ -110,7 +110,7 @@ The stock layer's proposed 1% reserve applies only to eligible purchases routed 
 
 ## Test with a connected wallet
 
-Read the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) for the register → receive test GEMBULL → check-in → settle/claim flow. Connecting a wallet does not grant tokens. The revised v0.2 stock direction and unresolved parameters are in the [product model](docs/PRODUCT_MODEL.md) and [open decisions](docs/OPEN_DECISIONS.md). The [archive migration notes](docs/V0_2_ARCHIVE_MIGRATION.md) explain what was adopted or deferred.
+Read the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) for the register → receive test GEMBULL → check-in → settle/claim flow. Connecting a wallet does not grant tokens. The [distribution plan](docs/DISTRIBUTION_PLAN.md) explains the public allocation, the separate liquidity inventory, and which routes are still unbuilt. The revised v0.2 stock direction and unresolved parameters are in the [product model](docs/PRODUCT_MODEL.md) and [open decisions](docs/OPEN_DECISIONS.md). The [archive migration notes](docs/V0_2_ARCHIVE_MIGRATION.md) explain what was adopted or deferred.
 
 ## Repository map
 
