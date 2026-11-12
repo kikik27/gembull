@@ -161,8 +161,10 @@ export function CoinCanvas() {
     const readingAreas = Array.from(
       document.querySelectorAll<HTMLElement>(READING_AREAS),
     ).filter((element) => !element.closest(".hero"));
+    const roadmapSection = document.getElementById("roadmap");
     let lastOverlapCheck = 0;
     let overlapsReadingArea = false;
+    let roadmapInView = false;
     let coinOpacity = 1;
 
     const coinTouchesReadingArea = (pose: Pose) => {
@@ -249,8 +251,14 @@ export function CoinCanvas() {
         lastOverlapCheck = now;
         overlapsReadingArea =
           window.scrollY > height * 0.65 && coinTouchesReadingArea(current);
+        const roadmapRect = roadmapSection?.getBoundingClientRect();
+        roadmapInView = Boolean(
+          roadmapRect &&
+            roadmapRect.top < height * 0.85 &&
+            roadmapRect.bottom > height * 0.15,
+        );
       }
-      const targetOpacity = overlapsReadingArea ? 0.12 : 1;
+      const targetOpacity = roadmapInView ? 0 : overlapsReadingArea ? 0.12 : 1;
       coinOpacity = reduced
         ? targetOpacity
         : coinOpacity + (targetOpacity - coinOpacity) * (1 - Math.exp(-dt * 8));
