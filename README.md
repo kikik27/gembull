@@ -118,7 +118,7 @@ The primary track is `memecoins`. The project is built around on-chain supply me
     └── simulate_60_days.py
 ```
 
-The stock simulation components remain planned until the core Sandbox gate passes.
+The core Sandbox integration test passed. Stock simulation components remain a separate planned milestone.
 
 ## Recommended implementation order
 
