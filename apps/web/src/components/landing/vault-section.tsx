@@ -1,58 +1,152 @@
-import { Vault } from "lucide-react";
-import { Reveal } from "./reveal";
+"use client";
 
-/**
- * SIMULATION — the stock reserve layer. Figures are the arithmetic example from docs/simulation/60_DAY_SIMULATION.md
- * ($5,000 routed per day, 1% proposed reserve share, 60 days). They are not reserve performance and never merge with on-chain GEMBULL balances.
- */
+import { useState } from "react";
+import {
+  calculateReserveScenario,
+  MAX_DAILY_ROUTED_VOLUME,
+  MAX_PROTECTED_SURPLUS,
+  RESERVE_SCENARIO_DAYS,
+} from "@/lib/reserve-simulation";
+import { Reveal } from "./reveal";
+import { VaultScene } from "./vault-scene";
+
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
+/** An educational model of proposed funding paths, kept separate from chain balances and ritual supply. */
 export function VaultSection() {
-  const rows = [
-    { label: "Proposed routed-fee share", value: "1.00% of eligible trades" },
-    { label: "Proposed graduation share", value: "5.00% of protected net surplus" },
-    { label: "Example routed volume", value: "$5,000 / day" },
-    { label: "Reserve per day", value: "$50" },
-    { label: "Reserve after 60 days", value: "$3,000" },
-    { label: "Real shares held", value: "None" },
-  ];
+  const [dailyRoutedVolume, setDailyRoutedVolume] = useState(5_000);
+  const [protectedNetSurplus, setProtectedNetSurplus] = useState(0);
+  const outcome = calculateReserveScenario({
+    dailyRoutedVolume,
+    protectedNetSurplus,
+  });
+
   return (
     <section className="section" id="vault" aria-labelledby="vault-title">
-      <div className="frame vault-grid">
-        <Reveal className="vault-copy">
-          <div>
-            <span className="tag tag-sim">Secondary concept · Simulation</span>
-          </div>
+      <div className="vault-intro">
+        <Reveal>
+          <span className="tag tag-sim">Secondary concept · SIMULATED</span>
+        </Reveal>
+        <Reveal delay={0.05}>
           <h2 className="h2" id="vault-title">
-            A future idea, clearly simulated.
+            Two possible paths. <em>One imagined reserve.</em>
           </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
           <p>
-            Two funding sources are proposed: eligible routed trading fees and
-            protected bonding graduation surplus. Neither route is live. A future
-            MVP would use non-transferable Ritual Points and simulated active-holder
-            allocations, with no stock receipt token.
-          </p>
-          <p>
-            GEMBULL itself does not represent ownership of any company. The reserve
-            never touches the ritual mechanic or the on-chain balances above.
+            Explore how a future stock reserve might be funded. Adjust the two
+            proposed sources below and watch the 3D model respond. No trade
+            router, graduation flow, stock purchase, or reserve custody is live.
           </p>
         </Reveal>
-        <Reveal className="slip" delay={0.12}>
-          <div className="slip-head">
-            <span>Proposed reserve · Simulation</span>
-            <Vault aria-hidden="true" size={28} strokeWidth={1.4} />
+      </div>
+
+      <Reveal className="vault-simulator" delay={0.12}>
+        <div className="vault-model">
+          <div className="vault-model-heading">
+            <span>SIMULATED FLOW</span>
+            <span>NO LIVE FUNDS</span>
           </div>
-          {rows.map((row) => (
-            <div className="slip-row" key={row.label}>
-              <span>{row.label}</span>
-              <strong>{row.value}</strong>
+          <VaultScene
+            routedContribution={outcome.routedOverPeriod}
+            graduationContribution={outcome.graduationOnce}
+          />
+          <div className="vault-model-labels" aria-hidden="true">
+            <span>01 / APP ROUTER</span>
+            <span>02 / GRADUATION</span>
+            <span>03 / RESERVE</span>
+          </div>
+        </div>
+
+        <div className="vault-console">
+          <div className="vault-console-head">
+            <span>Build a hypothetical scenario</span>
+            <strong>SIMULATED</strong>
+          </div>
+          <div className="vault-control">
+            <label htmlFor="vault-routed-volume">
+              <span>Eligible routed volume / day</span>
+              <output htmlFor="vault-routed-volume">
+                {currency.format(dailyRoutedVolume)}
+              </output>
+            </label>
+            <input
+              id="vault-routed-volume"
+              type="range"
+              min="0"
+              max={MAX_DAILY_ROUTED_VOLUME}
+              step="500"
+              value={dailyRoutedVolume}
+              onChange={(event) =>
+                setDailyRoutedVolume(Number(event.target.value))
+              }
+              aria-valuetext={`${currency.format(dailyRoutedVolume)} eligible routed volume per day`}
+            />
+            <p>
+              Proposed 1% stock-reserve share from a future app router, shown
+              over {RESERVE_SCENARIO_DAYS} illustrative days.
+            </p>
+          </div>
+          <div className="vault-control vault-control-gold">
+            <label htmlFor="vault-protected-surplus">
+              <span>Protected net graduation surplus</span>
+              <output htmlFor="vault-protected-surplus">
+                {currency.format(protectedNetSurplus)}
+              </output>
+            </label>
+            <input
+              id="vault-protected-surplus"
+              type="range"
+              min="0"
+              max={MAX_PROTECTED_SURPLUS}
+              step="5000"
+              value={protectedNetSurplus}
+              onChange={(event) =>
+                setProtectedNetSurplus(Number(event.target.value))
+              }
+              aria-valuetext={`${currency.format(protectedNetSurplus)} protected net surplus`}
+            />
+            <p>
+              Proposed 5% one-time share, only after refund, LP, settlement,
+              and reserve obligations are protected.
+            </p>
+          </div>
+          <dl className="vault-result" aria-live="polite">
+            <div>
+              <dt>Router share / day</dt>
+              <dd>{currency.format(outcome.routedPerDay)}</dd>
             </div>
-          ))}
-          <p className="slip-foot">
-            Simulation — no real shares are held by this prototype. Arithmetic
-            example for routed fees only, not reserve performance. It excludes
-            graduation surplus, broker, custody, FX and transfer costs. No real
-            shares, dividends, redemption or ownership are provided.
-          </p>
-        </Reveal>
+            <div>
+              <dt>Router share / {RESERVE_SCENARIO_DAYS} days</dt>
+              <dd>{currency.format(outcome.routedOverPeriod)}</dd>
+            </div>
+            <div>
+              <dt>Graduation share / once</dt>
+              <dd>{currency.format(outcome.graduationOnce)}</dd>
+            </div>
+            <div className="vault-result-total">
+              <dt>Illustrative reserve input</dt>
+              <dd>{currency.format(outcome.illustrativeTotal)}</dd>
+            </div>
+          </dl>
+        </div>
+      </Reveal>
+
+      <div className="vault-disclosures">
+        <p>
+          Arithmetic only, not actual reserve performance. No real shares,
+          broker execution, custody, dividends, redemption, or equity ownership.
+          Costs and market movements are excluded.
+        </p>
+        <p>
+          Proposed Ritual Points and active-holder allocations are a separate,
+          unimplemented simulation. This example never changes on-chain GEMBULL
+          supply or the ritual treasury.
+        </p>
       </div>
     </section>
   );

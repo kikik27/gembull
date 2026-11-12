@@ -49,6 +49,8 @@ pnpm dev
 
 Open `http://localhost:3000`. The example environment points to the verified `gembull-core.testnet` contract; the web app also uses that Testnet account by default. `NEXT_PUBLIC_NEAR_RPC_URL` selects the Testnet RPC endpoint. Set `NEXT_PUBLIC_SITE_URL` to the public origin before hosting so OG and X image URLs resolve correctly. No private keys belong in public environment variables.
 
+To explore the separate **SIMULATED** stock-reserve concept, scroll to `#vault` and adjust the eligible routed-volume and protected net-surplus sliders. The 3D router, graduation gate, and vessel illustrate proposed inputs: 1% of eligible app-routed volume per day over 60 illustrative days, plus a one-time 5% of protected net graduation surplus. The initial $5,000/day and $0 surplus example yields $3,000. These controls make no transaction and do not change GEMBULL balances, supply, or the ritual treasury; no real shares or reserve are held.
+
 Run frontend checks from the root:
 
 ```sh
