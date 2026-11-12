@@ -1,6 +1,6 @@
 # GemBull name and token symbol
 
-The project owner selected **GemBull** as the product name and approved the geometric bull logo for the landing page. New contract source initializes its NEP-148 token metadata as **GemBull / GEMBULL**. Name, symbol, domain, social handle, and trademark clearance remain open; this source change is not a live deployment.
+The project owner selected **GemBull** as the product name and approved the geometric bull logo for the landing page. The deployed [`gembull-core.testnet`](deployments/GEMBULL_TESTNET.md) contract reports NEP-148 token metadata **GemBull / GEMBULL**. Domain, social handle, and trademark clearance remain open; this Testnet deployment is not a mainnet launch.
 
 The previous prototype was named **StonkRitual / RITL**. Its existing [`ritl-stonkritual.testnet`](deployments/RITL_TESTNET.md) account retains that on-chain identity. It is historical evidence, not a GemBull deployment.
 

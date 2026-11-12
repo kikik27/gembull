@@ -23,3 +23,5 @@ __pycache__/
 .agents/
 **/.redesign-backup/
 *.log
+
+.vercel

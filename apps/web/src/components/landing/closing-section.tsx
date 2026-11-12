@@ -75,10 +75,10 @@ export function EndSection({ explorer }: { explorer: string }) {
               <BrandWord size={28} />
             </a>
             <p>
-              GemBull is a NEAR Testnet hackathon prototype. The new GEMBULL
-              contract is pending deployment; its token is a community meme,
-              not an equity claim. The stock reserve is a simulation with no
-              real shares, custody or redemption.
+              GemBull is a NEAR Testnet hackathon prototype at
+              gembull-core.testnet. Its token is a community meme, not an equity
+              claim. The stock reserve is a simulation with no real shares,
+              custody or redemption.
             </p>
             <span className={`tag tag-dot ${explorer ? "tag-live" : ""}`}>
               {explorer ? "NEAR Testnet" : "Local preview"}

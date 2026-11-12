@@ -33,7 +33,7 @@ export function Hero() {
             </span>
           </h1>
           <p className="hero-sub" data-intro="sub">
-            GemBull is built around one daily on-chain check-in. The new GEMBULL Testnet deployment is pending.
+            GemBull is live on NEAR Testnet. Check in once per daily epoch; the contract tracks progress, rewards, and treasury burns.
           </p>
           <div className="hero-actions" data-intro="actions">
             <a className="btn btn-lime" href="#dash">

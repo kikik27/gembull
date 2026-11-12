@@ -1,6 +1,6 @@
 # GemBull brand guide
 
-**Name:** GemBull. **New source token symbol:** GEMBULL. **Tagline:** “The meme runs on rituals.” The older RITL Testnet contract is a separate historical deployment. Name, domain, social handle, and trademark clearance remain open.
+**Name:** GemBull. **Testnet token symbol:** GEMBULL at `gembull-core.testnet`. **Tagline:** “The meme runs on rituals.” The older RITL Testnet contract is a separate historical deployment. Name, domain, social handle, and trademark clearance remain open.
 
 ## Visual identity
 

@@ -6,7 +6,7 @@ This specification defines the on-chain interfaces and invariants for the GemBul
 
 ## 2. Contract account and initialization
 
-The new GemBull contract account has not been chosen or deployed. Record the actual Testnet account and deployment evidence only after verification. No deployment or account creation is authorized by this document.
+The GemBull contract was deployed and initialized at [`gembull-core.testnet`](deployments/GEMBULL_TESTNET.md) on Testnet. The deployment record contains the actual account, transaction, code hash, allocations, and upgrade authority. This specification does not authorize any further deployment.
 
 Initialization is one-time and must set:
 

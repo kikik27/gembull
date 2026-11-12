@@ -9,7 +9,7 @@ Redesign the existing NEAR Testnet memecoin landing page as GemBull. Preserve th
 
 Art direction: meme-native premium fintech, dark #070A08, surface #101611, neon lime #B7FF16, off-white #F4F7F2, sparing gold #FFC857. Use the approved dark bull mascot without changing its identity. Strong editorial type, generous spacing, restrained chart/ring motion, accessible contrast, reduced-motion support, and clear mobile action placement. Avoid generic SaaS pricing cards, fake market charts, invented metrics, or investment-return language.
 
-Brand the product GemBull. The deployed Testnet contract currently identifies its token as StonkRitual / RITL, so label the on-chain ticker accurately; do not silently call that deployed token GEMBULL. Keep actual on-chain values separate from 60-day projections. Show stock reserve as SIMULATED — no real shares, custody, or redemption. Do not invent verified ownership, broker integration, contract upgrade immutability, or mainnet availability.
+Brand the product GemBull. The verified `gembull-core.testnet` contract identifies its token as GemBull / GEMBULL. The older `ritl-stonkritual.testnet` account is a separate StonkRitual / RITL deployment. Keep actual on-chain values separate from 60-day projections. Show stock reserve as SIMULATED — no real shares, custody, or redemption. Do not invent verified ownership, broker integration, contract upgrade immutability, or mainnet availability.
 ```
 
 ## 2. New logo concept prompt

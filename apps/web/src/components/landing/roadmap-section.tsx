@@ -2,14 +2,14 @@ import { Reveal } from "./reveal";
 
 const milestones = [
   {
-    status: "BUILT LOCALLY",
-    title: "Ritual contract and supply model",
-    detail: "NEP-141 contract source, daily check-in rules, reward claims, treasury burn, and the reproducible 60-day simulation.",
+    status: "LIVE ON TESTNET",
+    title: "GemBull contract and supply model",
+    detail: "Verified GEMBULL metadata and genesis balances at gembull-core.testnet. Daily check-ins, claims, and treasury burns are enforced by the contract.",
   },
   {
     status: "NEXT",
-    title: "Verify and deploy GemBull on Testnet",
-    detail: "Run Rust unit and Sandbox tests, deploy the new GEMBULL metadata, then document a real wallet check-in and claim.",
+    title: "Demonstrate the live ritual",
+    detail: "Fund eligible Testnet participants, record a real wallet check-in, and capture the transaction history. Sandbox covers success and missed days.",
   },
   {
     status: "PLANNED",
