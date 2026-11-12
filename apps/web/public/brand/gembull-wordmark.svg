@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="limeTextGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D4FF59" />
+      <stop offset="100%" stop-color="#B7FF16" />
+    </linearGradient>
+  </defs>
+  <style>
+    .wm-gem { font-family: system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif; font-size: 88px; font-weight: 800; fill: #F4F7F2; letter-spacing: -2px; }
+    .wm-bull { font-family: system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif; font-size: 88px; font-weight: 900; fill: url(#limeTextGrad); letter-spacing: -2px; }
+  </style>
+  <text x="10" y="88" class="wm-gem">Gem<tspan class="wm-bull">Bull</tspan></text>
+</svg>

@@ -14,12 +14,18 @@ export const metadata: Metadata = {
   description:
     "A NEAR-native meme token concept with contract-enforced daily check-ins, streaks and supply rules. Stock reserve visuals are simulated.",
   icons: {
-    icon: "/brand/icons/gembull-app-icon.png",
-    apple: "/brand/icons/gembull-app-icon.png",
+    icon: [
+      { url: "/brand/icons/favicon.svg", type: "image/svg+xml" },
+      { url: "/brand/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      { url: "/brand/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
-  ...(process.env.NEXT_PUBLIC_SITE_URL
-    ? { metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL) }
-    : {}),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://web-cyan-three-62.vercel.app"
+  ),
   openGraph: {
     title: "GemBull — The meme runs on rituals",
     description:

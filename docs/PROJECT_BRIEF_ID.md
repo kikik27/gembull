@@ -5,7 +5,7 @@
 - **Nama proyek (working name):** GemBull
 - **Ticker meme token:** `$GEMBULL`
 - **Reward saham MVP:** Ritual Points dan catatan alokasi **SIMULATED** yang direncanakan; tanpa token receipt saham
-- **Tagline:** *The meme runs on rituals. The rituals move the treasury.*
+- **Tagline:** _The meme runs on rituals. The rituals move the treasury._
 - **Track utama:** NEAR Hackathon — `memecoins` / Memecoins With Mechanics
 
 GemBull / GEMBULL sudah terdeploy di NEAR Testnet; pemeriksaan merek dagang, domain, akun sosial, dan benturan simbol token tetap belum selesai.
@@ -26,17 +26,17 @@ Dua sumber pendanaan yang diusulkan untuk treasury saham terpisah adalah fee per
 
 ## Mekanisme inti yang sudah terdeploy di Testnet
 
-| Parameter | Nilai awal |
-|---|---:|
-| Durasi epoch | 24 jam |
-| Target harian | 50 akun NEAR |
-| Minimum saldo saat check-in | 1.000 GEMBULL |
-| Batas peserta/epoch | 200 akun |
-| Reward per peserta jika sukses | 1.000 GEMBULL |
-| Burn jika target gagal | 5 bps (0,05%) dari sisa ritual treasury |
-| Initial supply | 1.000.000.000 GEMBULL |
-| Maximum supply | 1.050.000.000 GEMBULL |
-| Ritual treasury awal | 150.000.000 GEMBULL |
+| Parameter                      |                              Nilai awal |
+| ------------------------------ | --------------------------------------: |
+| Durasi epoch                   |                                  24 jam |
+| Target harian                  |                            50 akun NEAR |
+| Minimum saldo saat check-in    |                           1.000 GEMBULL |
+| Batas peserta/epoch            |                                200 akun |
+| Reward per peserta jika sukses |                           1.000 GEMBULL |
+| Burn jika target gagal         | 5 bps (0,05%) dari sisa ritual treasury |
+| Initial supply                 |                   1.000.000.000 GEMBULL |
+| Maximum supply                 |                   1.050.000.000 GEMBULL |
+| Ritual treasury awal           |                     150.000.000 GEMBULL |
 
 Semua parameter ini dibaca dari smart contract dan tidak memiliki fungsi setter setelah initialization. Akun kontrak masih memiliki FullAccess key sehingga kode tetap dapat di-upgrade.
 
@@ -46,11 +46,11 @@ Track 11 meminta token yang memiliki mekanisme nyata: supply merespons komunitas
 
 ## Hasil simulasi 60 hari
 
-| Skenario | Hari sukses | Hari gagal | Total mint | Total burn | Perubahan supply |
-|---|---:|---:|---:|---:|---:|
-| Optimistis | 45 | 15 | 3.150.000 | 1.121.071,018467189839568491 | +2.028.928,981532810160431509 |
-| Base | 36 | 24 | 2.160.000 | 1.789.687,850580172445785057 | +370.312,149419827554214943 |
-| Pesimistis | 18 | 42 | 990.000 | 3.117.926,704631492985262709 | -2.127.926,704631492985262709 |
+| Skenario   | Hari sukses | Hari gagal | Total mint |                   Total burn |              Perubahan supply |
+| ---------- | ----------: | ---------: | ---------: | ---------------------------: | ----------------------------: |
+| Optimistis |          45 |         15 |  3.150.000 | 1.121.071,018467189839568491 | +2.028.928,981532810160431509 |
+| Base       |          36 |         24 |  2.160.000 | 1.789.687,850580172445785057 |   +370.312,149419827554214943 |
+| Pesimistis |          18 |         42 |    990.000 | 3.117.926,704631492985262709 | -2.127.926,704631492985262709 |
 
 Model mengasumsikan 100% reward yang berhak diklaim benar-benar diklaim. Angka bukan forecast adopsi, harga, atau keuntungan.
 

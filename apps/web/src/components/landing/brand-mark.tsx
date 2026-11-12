@@ -4,10 +4,10 @@ import Image from "next/image";
 export function BrandMark({ size = 34 }: { size?: number }) {
   return (
     <Image
-      src="/brand/icons/gembull-app-icon.png"
+      src="/brand/icons/gembull-app-icon.svg"
       width={size}
       height={size}
-      alt=""
+      alt="GemBull emblem"
       className="brand-mark"
     />
   );

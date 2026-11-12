@@ -1,0 +1,86 @@
+{
+  "brand": "GemBull",
+  "version": "1.0.0",
+  "contract_id": "gembull-core.testnet",
+  "network": "testnet",
+  "license": "MIT",
+  "assets": {
+    "vector_masters": [
+      {
+        "file": "01-logos/gembull-symbol.svg",
+        "description": "Geometric bull emblem vector master with horns, faceted crown, ritual pulse ring and jaw chevron",
+        "viewBox": "0 0 1000 1000",
+        "format": "SVG"
+      },
+      {
+        "file": "01-logos/gembull-logo.svg",
+        "description": "Primary horizontal logo lockup (Emblem + GemBull wordmark + Tagline)",
+        "viewBox": "0 0 840 220",
+        "format": "SVG"
+      },
+      {
+        "file": "01-logos/gembull-logo-vertical.svg",
+        "description": "Vertical brand lockup with centered emblem and wordmark",
+        "viewBox": "0 0 600 640",
+        "format": "SVG"
+      },
+      {
+        "file": "01-logos/gembull-wordmark.svg",
+        "description": "Pure typographic wordmark in Inter Display Bold styling",
+        "viewBox": "0 0 520 120",
+        "format": "SVG"
+      },
+      {
+        "file": "01-logos/gembull-token-badge.svg",
+        "description": "Circular token coin badge vector for DEX and explorer listings",
+        "viewBox": "0 0 512 512",
+        "format": "SVG"
+      },
+      {
+        "file": "01-logos/gembull-symbol-mono-white.svg",
+        "description": "Monochrome white emblem for dark backgrounds",
+        "viewBox": "0 0 1000 1000",
+        "format": "SVG"
+      },
+      {
+        "file": "01-logos/gembull-symbol-mono-lime.svg",
+        "description": "Monochrome neon lime emblem for dark backgrounds",
+        "viewBox": "0 0 1000 1000",
+        "format": "SVG"
+      },
+      {
+        "file": "01-logos/gembull-symbol-mono-dark.svg",
+        "description": "Monochrome dark emblem for light backgrounds",
+        "viewBox": "0 0 1000 1000",
+        "format": "SVG"
+      }
+    ],
+    "icons_and_favicons": [
+      { "file": "02-icons/favicon.svg", "dimensions": "128x128", "format": "SVG" },
+      { "file": "02-icons/favicon-16x16.png", "dimensions": "16x16", "format": "PNG" },
+      { "file": "02-icons/favicon-32x32.png", "dimensions": "32x32", "format": "PNG" },
+      { "file": "02-icons/favicon-48x48.png", "dimensions": "48x48", "format": "PNG" },
+      { "file": "02-icons/apple-touch-icon.png", "dimensions": "180x180", "format": "PNG" },
+      { "file": "02-icons/android-chrome-192x192.png", "dimensions": "192x192", "format": "PNG" },
+      { "file": "02-icons/android-chrome-512x512.png", "dimensions": "512x512", "format": "PNG" },
+      { "file": "02-icons/gembull-app-icon.svg", "dimensions": "512x512", "format": "SVG" },
+      { "file": "02-icons/gembull-token-128.png", "dimensions": "128x128", "format": "PNG" },
+      { "file": "02-icons/gembull-token-256.png", "dimensions": "256x256", "format": "PNG" },
+      { "file": "02-icons/gembull-token-512.png", "dimensions": "512x512", "format": "PNG" }
+    ],
+    "social_kit": [
+      { "file": "03-social/x-banner-1500x500.png", "dimensions": "1500x500", "format": "PNG", "use": "X (Twitter) Profile Header" },
+      { "file": "03-social/discord-banner-1200x500.png", "dimensions": "1200x500", "format": "PNG", "use": "Discord / Telegram Community Banner" },
+      { "file": "03-social/social-avatar-1080x1080.png", "dimensions": "1080x1080", "format": "PNG", "use": "Social Profile Picture" }
+    ],
+    "stickers": [
+      { "file": "04-stickers/gembull-gm.png", "description": "Transparent GM community greeting sticker with hoodie bull", "dimensions": "1312x1199", "format": "PNG" },
+      { "file": "04-stickers/gembull-streak.png", "description": "Transparent streak celebration bull sticker", "dimensions": "1254x1254", "format": "PNG" }
+    ],
+    "marketing_and_concepts": [
+      { "file": "05-marketing/gembull-campaign-coin.png", "description": "3D campaign artwork coin illustration (not on-chain token metadata)", "dimensions": "1254x1254", "format": "PNG" },
+      { "file": "05-marketing/gembull-commercial-board-v1.png", "description": "Full 3x3 commercial campaign concept board", "dimensions": "1254x1254", "format": "PNG" },
+      { "file": "05-marketing/gembull-logo-concept-v1.png", "description": "Owner-approved initial raster concept", "dimensions": "1536x1024", "format": "PNG" }
+    ]
+  }
+}

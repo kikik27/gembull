@@ -360,6 +360,24 @@ export function RitualSection({
                   </strong>
                 </div>
 
+                {account?.checked_in && (
+                  <div className="rc-checked-banner">
+                    <Image
+                      src="/brand/stickers/gembull-gm.png"
+                      width={52}
+                      height={48}
+                      alt="GemBull greeting sticker"
+                      className="rc-gm-sticker"
+                    />
+                    <div>
+                      <strong>GM Ritualist!</strong>
+                      <p>
+                        Checked in for Day {global?.current_day_id ?? "—"}. Streak preserved!
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 <div className="rc-actions">
                   {accountId && registered === false && (
                     <Button
@@ -416,15 +434,24 @@ export function RitualSection({
               </div>
 
               <div className="kpis">
-                <div className="kpi">
-                  <span className="kpi-label">
-                    <Flame aria-hidden="true" size={16} /> Current streak
-                  </span>
-                  <strong className="tabular">
-                    {global?.current_streak ?? "—"}
-                    <small>days</small>
-                  </strong>
-                  <p>Consecutive successful epochs. A miss resets it.</p>
+                <div className="kpi kpi-streak">
+                  <div className="kpi-streak-content">
+                    <span className="kpi-label">
+                      <Flame aria-hidden="true" size={16} /> Current streak
+                    </span>
+                    <strong className="tabular">
+                      {global?.current_streak ?? "—"}
+                      <small>days</small>
+                    </strong>
+                    <p>Consecutive successful epochs. A miss resets it.</p>
+                  </div>
+                  <Image
+                    src="/brand/stickers/gembull-streak.png"
+                    width={64}
+                    height={64}
+                    alt="Streak celebration sticker"
+                    className="kpi-streak-sticker"
+                  />
                 </div>
                 <div className="kpi">
                   <span className="kpi-label">

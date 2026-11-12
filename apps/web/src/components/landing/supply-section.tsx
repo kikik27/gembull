@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { formatRitl } from "@/lib/ritual-format";
 import type { ResolvedRules } from "@/lib/ritual-params";
 import type { GlobalState } from "@/schemas/ritual";
@@ -93,6 +94,26 @@ export function SupplySection({ global, resolved }: Props) {
             </p>
           </Reveal>
         </div>
+
+        <Reveal className="panel-campaign-coin glass" delay={0.15}>
+          <Image
+            src="/brand/coins/gembull-campaign-coin.png"
+            width={96}
+            height={96}
+            alt="GemBull campaign coin artwork"
+            className="campaign-coin-img"
+          />
+          <div className="campaign-coin-body">
+            <div className="campaign-coin-head">
+              <strong>GemBull Genesis Artwork</strong>
+              <span className="tag tag-sim">Campaign artwork · Not token metadata</span>
+            </div>
+            <p>
+              The 3D campaign coin represents the ritual narrative. On-chain token metadata at{" "}
+              <code>gembull-core.testnet</code> is verified NEP-141 / NEP-148 <b>GemBull</b> (18 decimals).
+            </p>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
