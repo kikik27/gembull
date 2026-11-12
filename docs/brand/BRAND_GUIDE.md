@@ -19,7 +19,7 @@ The authoritative web file list is [`apps/web/public/brand/manifest.json`](../..
 | `/brand/gembull-symbol.svg` | Standalone geometric bull emblem vector master |
 | `/brand/gembull-logo.png` | Landing hero raster fallback |
 | `/brand/icons/favicon.svg` | Scalable browser favicon vector |
-| `/brand/icons/gembull-app-icon.svg` | Header, small mark, favicon, squircle app icon |
+| `/brand/icons/gembull-app-icon.svg` | Header, small mark, square app icon matching the approved PNG |
 | `/brand/coins/gembull-token-badge.svg` | Vector token badge / coin face for explorer and DEX listings |
 | `/brand/coins/gembull-campaign-coin.png` | Promotional illustration only; not on-chain token metadata |
 | `/brand/stickers/gembull-gm.png` | Community greeting |

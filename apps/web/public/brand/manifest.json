@@ -8,7 +8,7 @@
     { "url": "/brand/gembull-logo-vertical.svg", "source": "vector vertical brand lockup", "placement": "vertical lockup, poster, hero" },
     { "url": "/brand/gembull-wordmark.svg", "source": "vector typographic wordmark", "placement": "wordmark lockups" },
     { "url": "/brand/gembull-logo.png", "source": "owner-approved raster logo", "placement": "landing hero fallback" },
-    { "url": "/brand/icons/gembull-app-icon.svg", "source": "vector app icon squircle", "placement": "app icon, dashboard mark" },
+    { "url": "/brand/icons/gembull-app-icon.svg", "source": "vector match of approved square raster icon", "placement": "app icon, dashboard mark" },
     { "url": "/brand/icons/gembull-app-icon.png", "source": "high-res raster app icon", "placement": "header, favicon, decorative coin face" },
     { "url": "/brand/icons/favicon.svg", "source": "scalable vector favicon", "placement": "browser favicon" },
     { "url": "/brand/icons/apple-touch-icon.png", "source": "180x180 app icon", "placement": "iOS home screen" },

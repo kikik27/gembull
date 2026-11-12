@@ -1,128 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-labelledby="title desc">
+  <title id="title">GemBull app icon</title>
+  <desc id="desc">Geometric bull with neon lime horns, a ritual pulse, white muzzle, and a black square background.</desc>
   <defs>
-    <linearGradient id="squircleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#152018" />
-      <stop offset="50%" stop-color="#0E1610" />
-      <stop offset="100%" stop-color="#070A08" />
-    </linearGradient>
-    <radialGradient id="iconRadialGlow" cx="50%" cy="45%" r="60%">
-      <stop offset="0%" stop-color="#B7FF16" stop-opacity="0.18" />
-      <stop offset="60%" stop-color="#B7FF16" stop-opacity="0.03" />
-      <stop offset="100%" stop-color="#B7FF16" stop-opacity="0" />
+    <radialGradient id="background">
+      <stop offset="0" stop-color="#050905" />
+      <stop offset="1" stop-color="#010302" />
     </radialGradient>
-  </defs>
-  
-  <defs>
-    <linearGradient id="limeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#D4FF59" />
-      <stop offset="50%" stop-color="#B7FF16" />
-      <stop offset="100%" stop-color="#8FD405" />
+    <linearGradient id="lime" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#CEFF0A" />
+      <stop offset="1" stop-color="#AFFF00" />
     </linearGradient>
-    <linearGradient id="hornLeftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#D9FF66" />
-      <stop offset="40%" stop-color="#B7FF16" />
-      <stop offset="100%" stop-color="#7AC200" />
+    <linearGradient id="white" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#F5F5F3" />
     </linearGradient>
-    <linearGradient id="hornRightGrad" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#D9FF66" />
-      <stop offset="40%" stop-color="#B7FF16" />
-      <stop offset="100%" stop-color="#7AC200" />
-    </linearGradient>
-    <linearGradient id="darkHeadGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#141E16" />
-      <stop offset="50%" stop-color="#0E1610" />
-      <stop offset="100%" stop-color="#070A08" />
-    </linearGradient>
-    <linearGradient id="whiteFacetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="70%" stop-color="#F4F7F2" />
-      <stop offset="100%" stop-color="#C5CCC2" />
-    </linearGradient>
-    <linearGradient id="whiteFacetRightGrad" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="70%" stop-color="#F4F7F2" />
-      <stop offset="100%" stop-color="#C5CCC2" />
-    </linearGradient>
-    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="8" result="blur" />
-      <feMerge>
-        <feMergeNode in="blur" />
-        <feMergeNode in="SourceGraphic" />
-      </feMerge>
-    </filter>
   </defs>
 
-  <!-- GEMBULL SYMBOL - GEOMETRIC BULL WITH HORNS, GEM FACETS & RITUAL PULSE -->
-  <g id="gembull-emblem">
-    <!-- 1. BASE DARK HEAD SILHOUETTE (FACETED) -->
-    <polygon points="500,230 635,270 705,370 740,490 690,670 610,790 500,895 390,790 310,670 260,490 295,370 365,270" fill="url(#darkHeadGrad)" stroke="#1B2B1E" stroke-width="3" stroke-linejoin="round" />
+  <rect width="1254" height="1254" fill="url(#background)" />
 
-    <!-- 2. LEFT HORN (GEOMETRIC & SWEEPING) -->
-    <path d="M 185 140 C 235 220 250 310 265 420 C 275 490 295 540 330 580 C 315 520 305 450 300 380 C 290 260 255 185 185 140 Z" fill="url(#hornLeftGrad)" stroke="#B7FF16" stroke-width="1.5" />
-    <polygon points="185,140 250,260 300,380 265,420 240,300" fill="#E6FF85" opacity="0.45" />
-
-    <!-- 3. RIGHT HORN (SYMMETRIC) -->
-    <path d="M 815 140 C 765 220 750 310 735 420 C 725 490 705 540 670 580 C 685 520 695 450 700 380 C 710 260 745 185 815 140 Z" fill="url(#hornRightGrad)" stroke="#B7FF16" stroke-width="1.5" />
-    <polygon points="815,140 750,260 700,380 735,420 760,300" fill="#E6FF85" opacity="0.45" />
-
-    <!-- 4. FOREHEAD GEM CROWN FACETS -->
-    <polygon points="500,245 420,285 500,345 580,285" fill="#0C140D" stroke="#1F3323" stroke-width="2" />
-    <!-- Outer temple facets (white) -->
-    <polygon points="415,290 355,340 395,395 445,345" fill="url(#whiteFacetGrad)" />
-    <polygon points="585,290 645,340 605,395 555,345" fill="url(#whiteFacetRightGrad)" />
-
-    <!-- Brow ridge facets -->
-    <polygon points="445,350 495,355 495,435 435,425" fill="#18241B" stroke="#25382A" stroke-width="1.5" />
-    <polygon points="555,350 505,355 505,435 565,425" fill="#141E16" stroke="#25382A" stroke-width="1.5" />
-
-    <!-- 5. CENTRAL RITUAL PULSE & EYE DIAMONDS -->
-    <!-- Forehead gem diamond -->
-    <polygon points="500,355 525,410 500,465 475,410" fill="url(#limeGrad)" filter="url(#neonGlow)" />
-    <!-- Pulse ring aura -->
-    <circle cx="500" cy="410" r="42" fill="none" stroke="#B7FF16" stroke-width="3" opacity="0.8" stroke-dasharray="6 4" />
-    <circle cx="500" cy="410" r="16" fill="#FFFFFF" />
-
-    <!-- Left & Right Eyes (Faceted Angled Slits) -->
-    <polygon points="410,435 470,445 440,470 395,455" fill="#FFFFFF" />
-    <polygon points="590,435 530,445 560,470 605,455" fill="#FFFFFF" />
-    <polygon points="415,440 455,448 435,465 405,453" fill="#B7FF16" />
-    <polygon points="585,440 545,448 565,465 595,453" fill="#B7FF16" />
-
-    <!-- 6. CHEEK / TEMPLE LIME ACCENTS -->
-    <polygon points="325,510 380,525 365,580 315,560" fill="url(#limeGrad)" />
-    <polygon points="675,510 620,525 635,580 685,560" fill="url(#limeGrad)" />
-
-    <!-- 7. SNOUT & MUZZLE GEM FACET (CENTRAL FACETED SHIELD) -->
-    <!-- Upper bridge -->
-    <polygon points="500,475 460,540 500,595 540,540" fill="#162218" stroke="#263A29" stroke-width="2" />
-    <!-- Large muzzle shield (white facet) -->
-    <polygon points="500,605 425,690 445,775 500,815 555,775 575,690" fill="url(#whiteFacetGrad)" stroke="#E1E8DD" stroke-width="2" stroke-linejoin="round" />
-    <polygon points="500,615 445,690 460,760 500,795" fill="#FFFFFF" opacity="0.6" />
-    <polygon points="500,615 555,690 540,760 500,795" fill="#D3DCD0" opacity="0.6" />
-
-    <!-- Outer cheek shields (white facets) -->
-    <polygon points="360,595 415,680 390,765 340,685" fill="url(#whiteFacetGrad)" />
-    <polygon points="640,595 585,680 610,765 660,685" fill="url(#whiteFacetRightGrad)" />
-
-    <!-- Nostrils (geometric cuts) -->
-    <polygon points="475,745 490,750 485,768 470,760" fill="#070A08" />
-    <polygon points="525,745 510,750 515,768 530,760" fill="#070A08" />
-
-    <!-- 8. CHIN / JAW CHEVRON GEM (NEON LIME ANCHOR) -->
-    <polygon points="500,825 550,865 500,925 450,865" fill="url(#limeGrad)" stroke="#B7FF16" stroke-width="2" filter="url(#neonGlow)" />
-    <polygon points="500,835 535,865 500,910" fill="#E8FFA3" opacity="0.7" />
+  <!-- White facets sit behind the horns and the central ritual mark. -->
+  <g fill="url(#white)">
+    <path d="M397 430 483 407 433 527Z" />
+    <path d="M857 430 771 407 821 527Z" />
+    <path d="M484 359 618 319 568 421 532 422Z" />
+    <path d="M770 359 636 319 686 421 722 422Z" />
+    <path d="M270 653 422 768 439 945Z" />
+    <path d="M984 653 832 768 815 945Z" />
   </g>
 
-
-  <!-- App Icon Squircle Background -->
-  <rect x="8" y="8" width="496" height="496" rx="118" ry="118" fill="url(#squircleGrad)" stroke="#233526" stroke-width="4" />
-  <rect x="8" y="8" width="496" height="496" rx="118" ry="118" fill="url(#iconRadialGlow)" />
-
-  <!-- Inner subtle border -->
-  <rect x="14" y="14" width="484" height="484" rx="112" ry="112" fill="none" stroke="#B7FF16" stroke-width="1.5" stroke-opacity="0.25" />
-
-  <!-- Emblem Scaled -->
-  <g transform="translate(56, 56) scale(0.40)">
-    <use href="#gembull-emblem" />
+  <!-- Mirrored angular horns from the approved raster icon. -->
+  <g fill="url(#lime)">
+    <path d="M425 110 191 258Q187 261 184 267L109 418 215 539H421Q437 539 434 525L406 445Q403 435 392 431L261 367Z" />
+    <path d="M829 110 1063 258Q1067 261 1070 267L1145 418 1039 539H833Q817 539 820 525L848 445Q851 435 862 431L993 367Z" />
   </g>
+
+  <!-- White circular ritual mark, lime forehead gem, and pulse. -->
+  <circle cx="627" cy="586" r="154" fill="url(#white)" />
+  <circle cx="627" cy="586" r="114" fill="url(#background)" />
+  <path d="M627 340 669 411 627 489 585 411Z" fill="url(#lime)" />
+  <path d="M526 572H583L590 577 628 498 655 601 667 571H726V592H680L649 654 624 556 598 609 581 592H526Z" fill="url(#lime)" />
+
+  <!-- Lower lime cheek facets. -->
+  <g fill="url(#lime)">
+    <path d="M341 586 481 684Q489 690 483 695Q479 700 467 697L389 682Z" />
+    <path d="M913 586 773 684Q765 690 771 695Q775 700 787 697L865 682Z" />
+  </g>
+
+  <!-- The muzzle is one broad white facet with two dark nostrils. -->
+  <path d="M534 804H720L789 883 739 978H515L465 883Z" fill="url(#white)" />
+  <g fill="#010302">
+    <path d="M506 872 585 895 604 935H547Z" />
+    <path d="M748 872 669 895 650 935H707Z" />
+  </g>
+  <path d="M535 1000H719L627 1114Z" fill="url(#lime)" />
 </svg>

@@ -63,7 +63,7 @@
       { "file": "02-icons/apple-touch-icon.png", "dimensions": "180x180", "format": "PNG" },
       { "file": "02-icons/android-chrome-192x192.png", "dimensions": "192x192", "format": "PNG" },
       { "file": "02-icons/android-chrome-512x512.png", "dimensions": "512x512", "format": "PNG" },
-      { "file": "02-icons/gembull-app-icon.svg", "dimensions": "512x512", "format": "SVG" },
+      { "file": "02-icons/gembull-app-icon.svg", "dimensions": "1254x1254", "format": "SVG" },
       { "file": "02-icons/gembull-token-128.png", "dimensions": "128x128", "format": "PNG" },
       { "file": "02-icons/gembull-token-256.png", "dimensions": "256x256", "format": "PNG" },
       { "file": "02-icons/gembull-token-512.png", "dimensions": "512x512", "format": "PNG" }

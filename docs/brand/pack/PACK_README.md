@@ -25,7 +25,7 @@ docs/brand/pack/
 │   ├── apple-touch-icon.png            # iOS Home Screen icon (180px)
 │   ├── android-chrome-192x192.png      # PWA / Android launcher icon (192px)
 │   ├── android-chrome-512x512.png      # PWA / Android splash icon (512px)
-│   ├── gembull-app-icon.svg            # Squircle app icon vector
+│   ├── gembull-app-icon.svg            # Square vector matching the approved PNG
 │   ├── gembull-token-128.png           # DEX / Wallet token icon (128px)
 │   ├── gembull-token-256.png           # DEX / Explorer token icon (256px)
 │   └── gembull-token-512.png           # CoinGecko / CMC token icon (512px)

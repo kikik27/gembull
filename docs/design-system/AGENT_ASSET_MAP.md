@@ -8,7 +8,7 @@ Use only files listed in [`apps/web/public/brand/manifest.json`](../../apps/web/
 | `/brand/gembull-symbol.svg` | Standalone emblem mark | Vector master with horns, pulse ring & gem facets |
 | `/brand/gembull-logo.png` | Landing hero | Owner-approved raster logo fallback |
 | `/brand/icons/favicon.svg` | Browser favicon | Crisp vector icon for modern browsers |
-| `/brand/icons/gembull-app-icon.svg` | Dashboard, header mark, favicon, app icon | Vector squircle mark with neon border |
+| `/brand/icons/gembull-app-icon.svg` | Dashboard, header mark, app icon | Square vector recreation of the approved PNG icon |
 | `/brand/icons/gembull-app-icon.png` | Header, dashboard mark, favicon, decorative 3D coin face | High-resolution raster derivative |
 | `/brand/coins/gembull-token-badge.svg` | Token badge / coin face | Official vector circular badge |
 | `/brand/gembull-open-graph.png` | Social metadata | Set `NEXT_PUBLIC_SITE_URL` before hosting |
