@@ -9,6 +9,7 @@
     "lint": "pnpm --filter web lint",
     "typecheck": "pnpm --filter web exec tsc --noEmit",
     "check:sim": "python scripts/simulate_60_days.py --check",
-    "verify:testnet": "node scripts/verify_gembull_testnet.mjs"
+    "verify:testnet": "node scripts/verify_gembull_testnet.mjs",
+    "distribute:testnet": "node scripts/distribute_testnet.mjs"
   }
 }
