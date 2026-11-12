@@ -6,13 +6,13 @@ Official track tagline: **The joke needs rules.**
 
 The official prompt asks for a streak coin with a contract-enforced daily check-in, a target, reward mint on success, treasury burn and streak reset on failure, immutable launch parameters, demo-suitable Sybil resistance, a current streak/progress/event page, and a 60-day supply simulation.
 
-| Official expectation | StonkRitual implementation |
+| Official expectation | GemBull implementation |
 |---|---|
-| NEP-141 token | RITL contract implements NEP-141 |
-| Mechanic in contract | Ritual methods and supply changes are inside `ritl-core` |
+| NEP-141 token | GEMBULL contract implements NEP-141 |
+| Mechanic in contract | Ritual methods and supply changes are inside `gembull-core` |
 | Daily check-in | One check-in per account per 24h epoch |
 | Community target | 50 unique NEAR accounts |
-| Success reward mint | 1,000 RITL per successful-epoch participant, claimed individually |
+| Success reward mint | 1,000 GEMBULL per successful-epoch participant, claimed individually |
 | Miss burn | 5 bps of remaining ritual treasury balance |
 | Streak reset | Current streak resets on missed epoch |
 | Longest streak | High-water mark persists |
@@ -24,11 +24,11 @@ The official prompt asks for a streak coin with a contract-enforced daily check-
 
 ## Meme.Cooking
 
-Meme.Cooking is listed as a launchpad partner and its public docs describe an auction-based fair launch, a Ref Finance liquidity pool, and LP locking. The docs do not establish that a custom RITL contract containing our own state machine can be deployed through its standard launch flow. Therefore:
+Meme.Cooking is listed as a launchpad partner and its public docs describe an auction-based fair launch, a Ref Finance liquidity pool, and LP locking. The docs do not establish that a custom GEMBULL contract containing our own state machine can be deployed through its standard launch flow. Therefore:
 
 - Treat Meme.Cooking as a reference/possible integration, not a guaranteed dependency.
 - Verify custom-contract compatibility before making it part of the MVP.
-- Do not replace the custom RITL contract with a generic token implementation if doing so removes the ritual mechanic from the token contract.
+- Do not replace the custom GEMBULL contract with a generic token implementation if doing so removes the ritual mechanic from the token contract.
 
 ## NEAR implementation references
 

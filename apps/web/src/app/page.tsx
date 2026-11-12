@@ -5,18 +5,19 @@ import { useRitualActions } from "@/hooks/use-ritual-actions";
 import { useRitualData } from "@/hooks/use-ritual-data";
 import { PROPOSED_TREASURY, resolveRules } from "@/lib/ritual-params";
 import { useRitualUiStore } from "@/stores/ritual-ui-store";
-import { ClosingSection } from "@/components/landing/closing-section";
+import { EndSection } from "@/components/landing/closing-section";
 import { Hero } from "@/components/landing/hero";
 import { HistorySection } from "@/components/landing/history-section";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { RitualCalculator } from "@/components/landing/ritual-calculator";
 import { RitualSection } from "@/components/landing/ritual-section";
+import { RolesSection } from "@/components/landing/roles-section";
+import { RoadmapSection } from "@/components/landing/roadmap-section";
 import { RulesSection } from "@/components/landing/rules-section";
-import { SiteFooter } from "@/components/landing/site-footer";
 import { SiteHeader } from "@/components/landing/site-header";
 import { SupplySection } from "@/components/landing/supply-section";
-import { TickerTape } from "@/components/landing/ticker-tape";
 import { VaultSection } from "@/components/landing/vault-section";
+import { SceneStack } from "@/components/scene/scene-stack";
 
 export default function Home() {
   const {
@@ -57,16 +58,16 @@ export default function Home() {
 
   return (
     <div className="site">
+      <SceneStack />
       <SiteHeader
         accountId={signedAccountId}
         loading={walletLoading}
         signIn={signIn}
         signOut={signOut}
       />
-      <TickerTape resolved={resolved} />
 
-      <main>
-        <Hero resolved={resolved} />
+      <main className="page">
+        <Hero />
         <RitualSection
           rules={rules}
           resolved={resolved}
@@ -78,6 +79,7 @@ export default function Home() {
           balance={balance}
           registered={registered}
           storageMin={storageMin}
+          history={history}
           busy={busy}
           error={error}
           notice={notice}
@@ -90,33 +92,36 @@ export default function Home() {
           treasury={treasury}
           treasuryIsLive={Boolean(global)}
         />
-        <SupplySection global={global} resolved={resolved} />
-        <HistorySection
-          rows={history}
-          lastDay={global?.last_finalized_day}
-          historyLimit={historyLimit}
-          rewardPerCheckin={rules?.reward_per_checkin}
-          busy={Boolean(busy)}
-          explorer={explorer}
-          loading={data.isLoading}
-          onClaim={(dayId) =>
-            act({
-              label: `Claim day ${dayId}`,
-              method: "claim_reward",
-              args: { day_id: dayId },
-            })
-          }
-          onShowOlder={showOlder}
-          onJumpToDay={(dayId) => {
-            if (global?.last_finalized_day != null)
-              showThroughDay(global.last_finalized_day, dayId);
-          }}
-        />
-        <RulesSection resolved={resolved} />
-        <VaultSection />
-        <ClosingSection />
+        <RolesSection />
+        <div id="under">
+          <SupplySection global={global} resolved={resolved} />
+          <HistorySection
+            rows={history}
+            lastDay={global?.last_finalized_day}
+            historyLimit={historyLimit}
+            rewardPerCheckin={rules?.reward_per_checkin}
+            busy={Boolean(busy)}
+            explorer={explorer}
+            loading={data.isLoading}
+            onClaim={(dayId) =>
+              act({
+                label: `Claim day ${dayId}`,
+                method: "claim_reward",
+                args: { day_id: dayId },
+              })
+            }
+            onShowOlder={showOlder}
+            onJumpToDay={(dayId) => {
+              if (global?.last_finalized_day != null)
+                showThroughDay(global.last_finalized_day, dayId);
+            }}
+          />
+          <RulesSection resolved={resolved} />
+          <VaultSection />
+          <RoadmapSection />
+        </div>
+        <EndSection explorer={explorer} />
       </main>
-      <SiteFooter explorer={explorer} />
     </div>
   );
 }

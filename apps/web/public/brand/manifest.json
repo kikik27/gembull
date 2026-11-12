@@ -1,22 +1,14 @@
 {
-  "source": "stonkritual-brand-pack (originals retained in root ZIP archive)",
-  "status": "approved visual baseline; name and ticker remain working candidates",
+  "brand": "GemBull",
+  "status": "current local asset pack",
   "assets": [
-    { "source": "01-logos/stonkritual-primary-logo.svg", "url": "/brand/stonkritual-primary-logo.svg", "placement": "header and footer" },
-    { "source": "01-logos/stonkritual-brand-symbol.svg", "url": "/brand/stonkritual-brand-symbol.svg", "placement": "ritual scene and compact mark" },
-    { "source": "01-logos/stonkritual-open-graph-1200x630.jpg", "url": "/brand/stonkritual-open-graph-1200x630.jpg", "placement": "Open Graph preview" },
-    { "source": "02-mascots/bull-mascot-hero-with-vault.png", "url": "/brand/mascots/bull-mascot-hero-with-vault.png", "placement": "landing hero; vault imagery labeled simulated" },
-    { "source": "02-mascots/bull-mascot-round-avatar.png", "url": "/brand/mascots/bull-mascot-round-avatar.png", "placement": "community visual" },
-    { "source": "04-icons/stonkritual-favicon-64.png", "url": "/brand/icons/stonkritual-favicon-64.png", "placement": "favicon" },
-    { "source": "04-icons/stonkritual-pwa-icon-192.png", "url": "/brand/icons/stonkritual-pwa-icon-192.png", "placement": "small app icon" },
-    { "source": "04-icons/stonkritual-app-icon-512.png", "url": "/brand/icons/stonkritual-app-icon-512.png", "placement": "large app icon" },
-    { "source": "04-icons/ritl-token-icon-512.png", "url": "/brand/icons/ritl-token-icon-512.png", "placement": "illustrative testnet token balance only" },
-    { "source": "04-icons/icon-daily-checkin-256.png", "url": "/brand/icons/icon-daily-checkin-256.png", "placement": "ritual card" },
-    { "source": "04-icons/icon-stock-vault-256.png", "url": "/brand/icons/icon-stock-vault-256.png", "placement": "simulated vault card" },
-    { "source": "04-icons/icon-community-256.png", "url": "/brand/icons/icon-community-256.png", "placement": "community illustration" },
-    { "source": "04-icons/icon-burn-256.png", "url": "/brand/icons/icon-burn-256.png", "placement": "burn metric" },
-    { "source": "04-icons/icon-growth-256.png", "url": "/brand/icons/icon-growth-256.png", "placement": "supply metric; never price appreciation" },
-    { "source": "04-icons/icon-longest-streak-256.png", "url": "/brand/icons/icon-longest-streak-256.png", "placement": "streak card" },
-    { "source": "04-icons/icon-lp-lock-256.png", "url": "/brand/icons/icon-lp-lock-256.png", "placement": "reserved for verified LP lock information" }
+    { "url": "/brand/gembull-logo.png", "source": "owner-approved generated logo", "placement": "landing hero" },
+    { "url": "/brand/icons/gembull-app-icon.png", "source": "generated square logo derivative", "placement": "header, favicon, app icon, decorative coin face" },
+    { "url": "/brand/gembull-open-graph.png", "source": "generated GemBull social preview", "placement": "Open Graph and X card" },
+    { "url": "/brand/coins/gembull-campaign-coin.png", "source": "generated GemBull coin", "placement": "promotional illustration; not deployed token metadata" },
+    { "url": "/brand/stickers/gembull-gm.png", "source": "generated GemBull bull sticker", "placement": "community greeting" },
+    { "url": "/brand/stickers/gembull-streak.png", "source": "generated GemBull bull sticker", "placement": "streak celebration" },
+    { "url": "/brand/scene/ritual-day.svg", "source": "project scene asset", "placement": "landing day scene" },
+    { "url": "/brand/scene/ritual-night.svg", "source": "project scene asset", "placement": "landing night scene" }
   ]
 }

@@ -1,9 +1,9 @@
-# Ringkasan Proyek — StonkRitual
+# Ringkasan Proyek — GemBull
 
 ## Identitas
 
-- **Nama proyek (working name):** StonkRitual
-- **Ticker meme token:** `$RITL`
+- **Nama proyek (working name):** GemBull
+- **Ticker meme token:** `$GEMBULL`
 - **Ticker receipt simulasi:** `rNVDA` (hanya untuk testnet/demo)
 - **Tagline:** *The meme runs on rituals. The rituals move the treasury.*
 - **Track utama:** NEAR Hackathon — `memecoins` / Memecoins With Mechanics
@@ -12,13 +12,13 @@ Nama dan ticker masih provisional. Belum dianggap lolos pemeriksaan merek dagang
 
 ## Konsep dalam satu kalimat
 
-StonkRitual adalah memecoin native NEAR yang supply-nya merespons partisipasi komunitas melalui ritual check-in harian; keberhasilan komunitas menghasilkan mint reward, kegagalan membakar sebagian ritual treasury dan mereset streak, sementara lapisan terpisah mengakumulasi dana untuk simulasi pembelian saham.
+GemBull adalah memecoin native NEAR yang supply-nya merespons partisipasi komunitas melalui ritual check-in harian; keberhasilan komunitas menghasilkan mint reward, kegagalan membakar sebagian ritual treasury dan mereset streak, sementara lapisan terpisah mengakumulasi dana untuk simulasi pembelian saham.
 
 ## Dua lapisan produk
 
-### 1. RITL — community meme token
+### 1. GEMBULL — community meme token
 
-RITL adalah token komunitas. Memegang RITL **tidak otomatis memberikan kepemilikan saham**. Nilai utamanya adalah mekanisme ritual, streak, dan treasury.
+GEMBULL adalah token komunitas. Memegang GEMBULL **tidak otomatis memberikan kepemilikan saham**. Nilai utamanya adalah mekanisme ritual, streak, dan treasury.
 
 ### 2. Stock acquisition reserve — lapisan RWA terpisah
 
@@ -30,13 +30,13 @@ Sebagian pembelian yang melewati router aplikasi direncanakan masuk ke stock acq
 |---|---:|
 | Durasi epoch | 24 jam |
 | Target harian | 50 akun NEAR |
-| Minimum saldo saat check-in | 1.000 RITL |
+| Minimum saldo saat check-in | 1.000 GEMBULL |
 | Batas peserta/epoch | 200 akun |
-| Reward per peserta jika sukses | 1.000 RITL |
+| Reward per peserta jika sukses | 1.000 GEMBULL |
 | Burn jika target gagal | 5 bps (0,05%) dari sisa ritual treasury |
-| Initial supply | 1.000.000.000 RITL |
-| Maximum supply | 1.050.000.000 RITL |
-| Ritual treasury awal | 150.000.000 RITL |
+| Initial supply | 1.000.000.000 GEMBULL |
+| Maximum supply | 1.050.000.000 GEMBULL |
+| Ritual treasury awal | 150.000.000 GEMBULL |
 
 Semua parameter ini harus dibaca dari smart contract dan tidak memiliki fungsi setter setelah initialization.
 
@@ -56,7 +56,7 @@ Model mengasumsikan 100% reward yang berhak diklaim benar-benar diklaim. Angka b
 
 ## Prioritas pengerjaan
 
-1. RITL NEP-141 + ritual smart contract + tests.
+1. GEMBULL NEP-141 + ritual smart contract + tests.
 2. Script simulasi 60 hari dan CSV.
 3. Dashboard ritual: progress, current streak, longest streak, supply, treasury, event history.
 4. Stock vault + mockUSDC + mock broker + receipt `rNVDA`.
@@ -72,4 +72,4 @@ Model mengasumsikan 100% reward yang berhak diklaim benar-benar diklaim. Angka b
 - `API_AND_DATA_SPEC.md` — interface read/write, event, dan API simulasi.
 - `SECURITY_AND_RISK.md` — threat model, sybil, immutability, dan batas RWA.
 - `TEST_PLAN.md` — test matrix dan release gate.
-- `EXECUTION_PLAN.md` — urutan implementasi untuk Codex.
+- `ROADMAP.md` — status, urutan implementasi, dan gerbang rilis.

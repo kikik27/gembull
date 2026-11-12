@@ -2,12 +2,12 @@
 
 ## Parameters
 
-- Initial supply: 1,000,000,000 RITL
-- Maximum supply: 1,050,000,000 RITL
-- Ritual treasury at genesis: 150,000,000 RITL
-- Arithmetic: integer base units (`10^18` per RITL); burn floors only at the base-unit boundary
+- Initial supply: 1,000,000,000 GEMBULL
+- Maximum supply: 1,050,000,000 GEMBULL
+- Ritual treasury at genesis: 150,000,000 GEMBULL
+- Arithmetic: integer base units (`10^18` per GEMBULL); burn floors only at the base-unit boundary
 - Daily target: 50 accounts
-- Reward per eligible check-in on successful day: 1,000 RITL
+- Reward per eligible check-in on successful day: 1,000 GEMBULL
 - Maximum participants per day: 200
 - Missed-day burn: 5 bps (0.05%) of the remaining ritual treasury
 - Epoch count: 60 days
@@ -57,7 +57,7 @@ These are illustrative behavior profiles to test the mechanic, not a forecast of
 
 ## Separate stock-reserve illustration
 
-This reserve model is not part of the RITL supply simulation. Assuming the application router allocates 1% of eligible purchase volume to the stock vault:
+This reserve model is not part of the GEMBULL supply simulation. Assuming the application router allocates 1% of eligible purchase volume to the stock vault:
 
 | Illustrative routed purchase volume/day | Reserve/day | Reserve after 60 days |
 |---:|---:|---:|
@@ -76,4 +76,4 @@ python scripts/simulate_60_days.py
 python scripts/simulate_60_days.py --check
 ```
 
-The script writes `docs/simulation/ritl-60-day-simulation.csv` and prints scenario summaries. The checked-in CSV is generated from the parameters above.
+The script writes `docs/simulation/gembull-60-day-simulation.csv` and prints scenario summaries. The checked-in CSV is generated from the parameters above.

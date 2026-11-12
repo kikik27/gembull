@@ -1,6 +1,6 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "name": "StonkRitual Design Tokens",
+  "name": "GemBull Design Tokens",
   "version": "1.0.0",
   "color": {
     "background": { "canvas": "#070A08", "surface1": "#101611", "surface2": "#151E18", "surface3": "#1C2820" },

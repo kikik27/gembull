@@ -10,31 +10,26 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "StonkRitual — The meme runs on rituals",
+  title: "GemBull — The meme runs on rituals",
   description:
     "A NEAR-native meme token concept with contract-enforced daily check-ins, streaks and supply rules. Stock reserve visuals are simulated.",
   icons: {
-    icon: "/brand/icons/stonkritual-favicon-64.png",
-    apple: "/brand/icons/stonkritual-app-icon-512.png",
+    icon: "/brand/icons/gembull-app-icon.png",
+    apple: "/brand/icons/gembull-app-icon.png",
   },
   ...(process.env.NEXT_PUBLIC_SITE_URL
     ? { metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL) }
     : {}),
   openGraph: {
-    title: "StonkRitual — The meme runs on rituals",
+    title: "GemBull — The meme runs on rituals",
     description:
       "The rituals move the treasury. A NEAR Hackathon prototype with contract-enforced daily rules.",
-    ...(process.env.NEXT_PUBLIC_SITE_URL
-      ? {
-          images: [
-            {
-              url: "/brand/stonkritual-open-graph-1200x630.jpg",
-              width: 1200,
-              height: 630,
-            },
-          ],
-        }
-      : {}),
+    images: [{ url: "/brand/gembull-open-graph.png", width: 1734, height: 907, alt: "GemBull — The meme runs on rituals" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GemBull — The meme runs on rituals",
+    images: ["/brand/gembull-open-graph.png"],
   },
 };
 

@@ -28,7 +28,7 @@ export function RulesSection({ resolved }: { resolved: ResolvedRules }) {
     {
       label: "Minimum holding",
       note: "Required at the moment of check-in",
-      value: `${formatRitl(rules.min_holding)} RITL`,
+      value: `${formatRitl(rules.min_holding)} GEMBULL`,
     },
     {
       label: "Missed-day burn",
@@ -38,16 +38,12 @@ export function RulesSection({ resolved }: { resolved: ResolvedRules }) {
     {
       label: "Reward per claim",
       note: "Minted only after a successful epoch",
-      value: `${formatRitl(rules.reward_per_checkin)} RITL`,
+      value: `${formatRitl(rules.reward_per_checkin)} GEMBULL`,
     },
   ];
 
   return (
-    <section
-      className="section field-paper"
-      id="rules"
-      aria-labelledby="rules-title"
-    >
+    <section className="section" id="rules" aria-labelledby="rules-title">
       <div className="frame">
         <SectionHead
           title={<span id="rules-title">Set once. Seen by everyone.</span>}

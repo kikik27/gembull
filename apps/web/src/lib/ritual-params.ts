@@ -18,8 +18,8 @@ export const PROPOSED_RULES: Rules = {
   initial_supply: ritl(1_000_000_000),
   max_supply: ritl(1_050_000_000),
   max_mint_per_epoch: ritl(200_000),
-  name: "StonkRitual",
-  symbol: "RITL",
+  name: "GemBull",
+  symbol: "GEMBULL",
   decimals: RITUAL_DECIMALS,
 };
 
@@ -58,7 +58,7 @@ export function formatUnits(amount: bigint, places = 2): string {
   return `${new Intl.NumberFormat("en-US").format(whole)}${fraction ? `.${fraction}` : ""}`;
 }
 
-/** Compact whole-RITL figure for big display type, e.g. 1,050,000,000 -> "1.05B". */
+/** Compact whole-GEMBULL figure for big display type, e.g. 1,050,000,000 -> "1.05B". */
 export function compactUnits(amount: bigint): string {
   const whole = Number(amount / unit);
   return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 2 }).format(whole);

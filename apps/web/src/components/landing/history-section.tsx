@@ -81,7 +81,7 @@ export function HistorySection({
       {
         accessorKey: "treasury_burned",
         header: "Burned",
-        cell: (info) => `${formatRitl(info.getValue<string>())} RITL`,
+        cell: (info) => `${formatRitl(info.getValue<string>())} GEMBULL`,
       },
       {
         id: "reward",
@@ -135,11 +135,7 @@ export function HistorySection({
   };
 
   return (
-    <section
-      className="section field-ground"
-      id="history"
-      aria-labelledby="history-title"
-    >
+    <section className="section" id="history" aria-labelledby="history-title">
       <div className="frame">
         <SectionHead
           title={<span id="history-title">Proof in the pattern.</span>}

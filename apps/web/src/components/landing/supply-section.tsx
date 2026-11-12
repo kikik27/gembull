@@ -12,22 +12,22 @@ export function SupplySection({ global, resolved }: Props) {
   const rows: Array<{ label: string; note: string; value: string }> = [
     {
       label: "Total supply",
-      note: "RITL in circulation",
+      note: "GEMBULL in circulation",
       value: formatRitl(global?.total_supply),
     },
     {
       label: "Ritual treasury",
-      note: "RITL held by the contract",
+      note: "GEMBULL held by the contract",
       value: formatRitl(global?.ritual_treasury_balance),
     },
     {
       label: "Rewards minted",
-      note: "RITL claimed by participants",
+      note: "GEMBULL claimed by participants",
       value: formatRitl(global?.cumulative_rewards_minted),
     },
     {
       label: "Treasury burned",
-      note: "RITL removed after misses",
+      note: "GEMBULL removed after misses",
       value: formatRitl(global?.cumulative_treasury_burned),
     },
     {
@@ -48,11 +48,7 @@ export function SupplySection({ global, resolved }: Props) {
   ];
 
   return (
-    <section
-      className="section field-1"
-      id="treasury"
-      aria-labelledby="supply-title"
-    >
+    <section className="section" id="treasury" aria-labelledby="supply-title">
       <div className="frame">
         <SectionHead
           title={<span id="supply-title">The numbers don’t bluff.</span>}
@@ -75,7 +71,7 @@ export function SupplySection({ global, resolved }: Props) {
                   </dt>
                   <dd>
                     {row.value}
-                    {row.value !== "—" && <small>RITL</small>}
+                    {row.value !== "—" && <small>GEMBULL</small>}
                   </dd>
                 </div>
               ))}
@@ -91,7 +87,7 @@ export function SupplySection({ global, resolved }: Props) {
             <p className="sim-foot">
               Deterministic participation patterns from{" "}
               <code>docs/simulation</code>, run on the displayed rules from a
-              150,000,000 RITL treasury. Every eligible participant is assumed
+              150,000,000 GEMBULL treasury. Every eligible participant is assumed
               to claim. This is supply movement, not a price chart or a
               forecast.
             </p>

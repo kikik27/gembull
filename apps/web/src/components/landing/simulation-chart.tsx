@@ -54,7 +54,7 @@ export function SimulationChart({ resolved }: { resolved: ResolvedRules }) {
   const zeroY = y(0n);
   const niceBig = BigInt(nice) * UNIT;
   const summary = results
-    .map((r) => `${r.scenario.label}: ${signed(r.net)} RITL`)
+    .map((r) => `${r.scenario.label}: ${signed(r.net)} GEMBULL`)
     .join(". ");
 
   return (
@@ -148,7 +148,7 @@ export function SimulationChart({ resolved }: { resolved: ResolvedRules }) {
               <i style={{ background: COLORS[result.scenario.id] }} />
               {result.scenario.label}
             </span>
-            <strong>{signed(result.net)} RITL</strong>
+            <strong>{signed(result.net)} GEMBULL</strong>
             <small>
               {result.successDays} hit days · {result.missedDays} missed ·{" "}
               {formatUnits(result.minted, 0)} minted ·{" "}

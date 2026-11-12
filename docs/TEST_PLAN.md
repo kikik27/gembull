@@ -1,6 +1,6 @@
 # Test Plan and Acceptance Matrix
 
-## 1. Unit tests — RITL core
+## 1. Unit tests — GEMBULL core
 
 | ID | Scenario | Expected result |
 |---|---|---|
@@ -16,14 +16,14 @@
 | T-10 | 200 accounts check in | Accepted up to cap |
 | T-11 | 201st account checks in | Revert with participant-cap error |
 | T-12 | Claim after failed epoch | Revert |
-| T-13 | Successful participant claims once | Exactly 1,000 RITL minted |
+| T-13 | Successful participant claims once | Exactly 1,000 GEMBULL minted |
 | T-14 | Same participant claims twice | Second call reverts |
 | T-15 | Nonparticipant claims | Revert |
 | T-16 | Finalize before epoch end | Revert |
 | T-17 | Finalize future/out-of-order epoch | Revert |
 | T-18 | Finalize already finalized epoch | Revert |
 | T-19 | Missed epoch after a streak | Current streak resets; longest persists |
-| T-20 | First check-in reserves full epoch mint budget | 200,000 RITL is reserved exactly once per epoch |
+| T-20 | First check-in reserves full epoch mint budget | 200,000 GEMBULL is reserved exactly once per epoch |
 | T-21 | Additional check-in in same epoch | No additional epoch budget is reserved |
 | T-22 | Successful finalization with fewer than 200 check-ins | Unused reservation is released; liabilities equal `count × reward` |
 | T-23 | Failed finalization | Full daily reservation is released |
@@ -36,13 +36,13 @@
 
 ## 2. Sandbox integration tests
 
-- Deploy RITL and mock accounts in local Sandbox.
-- Register holders and distribute test RITL.
+- Deploy GEMBULL and mock accounts in local Sandbox.
+- Register holders and distribute test GEMBULL.
 - Use Sandbox fast-forward/time-travel to cross epoch boundaries.
 - Verify successful and failed epochs end to end.
 - Verify permissionless settlement from a non-admin account.
 - Verify a claim can be made after success and only once.
-- Verify stock-vault deposit, simulated execution, attestation, and receipt mint are isolated from RITL ritual treasury.
+- Verify stock-vault deposit, simulated execution, attestation, and receipt mint are isolated from GEMBULL ritual treasury.
 - Verify mock broker failure does not impact ritual transactions.
 
 ## 3. Property / invariant tests
@@ -68,7 +68,7 @@ one_reward_claim_per_account_per_successful_epoch
 - Verify base scenario produces a smaller net increase than optimistic.
 - Verify pessimistic scenario decreases supply net over 60 days.
 - Verify all three remain within max supply.
-- Compare the output CSV with `docs/simulation/ritl-60-day-simulation.csv`.
+- Compare the output CSV with `docs/simulation/gembull-60-day-simulation.csv`.
 
 ## 5. Frontend acceptance
 

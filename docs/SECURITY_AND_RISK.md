@@ -34,7 +34,7 @@
 
 ## 3. Sybil-resistance statement
 
-The hackathon MVP uses one check-in per NEAR account per epoch and requires a minimum RITL balance of 1,000 at check-in. This is a low-friction anti-spam mechanism. It does not establish one-human-one-account: a user can create multiple NEAR accounts and fund each. The system must not claim proof-of-personhood or Sybil-proof behavior.
+The hackathon MVP uses one check-in per NEAR account per epoch and requires a minimum GEMBULL balance of 1,000 at check-in. This is a low-friction anti-spam mechanism. It does not establish one-human-one-account: a user can create multiple NEAR accounts and fund each. The system must not claim proof-of-personhood or Sybil-proof behavior.
 
 ## 4. Contract immutability statement
 

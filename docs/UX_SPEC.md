@@ -20,12 +20,12 @@
 ## 3. Home page
 
 Hero:
-- `StonkRitual`
+- `GemBull`
 - `The meme runs on rituals. The rituals move the treasury.`
 - Primary CTA: `Join today's ritual`
 - Secondary CTA: `Read the rules`
 - Network badge: `NEAR TESTNET`
-- Short disclosure: `RITL is a community meme token. Stock receipts in this demo are simulated.`
+- Short disclosure: `GEMBULL is a community meme token. Stock receipts in this demo are simulated.`
 
 Key metrics:
 - Current streak

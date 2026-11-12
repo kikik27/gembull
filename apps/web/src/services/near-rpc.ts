@@ -21,10 +21,10 @@ const rpcSchema = z.object({
 });
 
 export async function viewContract<T>(method: string, args: Record<string, unknown>, schema: z.ZodType<T>): Promise<T> {
-  if (!RITUAL_CONTRACT_ID) throw new Error("RITL contract is not configured");
+  if (!RITUAL_CONTRACT_ID) throw new Error("GEMBULL contract is not configured");
   const argsBase64 = btoa(String.fromCharCode(...new TextEncoder().encode(JSON.stringify(args))));
   const response = await client.post("", {
-    jsonrpc: "2.0", id: "stonkritual-web", method: "query",
+    jsonrpc: "2.0", id: "gembull-web", method: "query",
     params: { request_type: "call_function", finality: "final", account_id: RITUAL_CONTRACT_ID, method_name: method, args_base64: argsBase64 },
   });
   const envelope = rpcSchema.parse(response.data);

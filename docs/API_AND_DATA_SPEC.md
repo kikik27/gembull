@@ -4,11 +4,11 @@
 
 | Data | Authoritative source |
 |---|---|
-| RITL balance and total supply | RITL NEP-141 contract |
-| Check-in eligibility and count | RITL core contract |
-| Epoch outcome and streaks | RITL core contract |
-| Reward entitlement/claim status | RITL core contract |
-| Ritual treasury balance/burn | RITL core contract |
+| GEMBULL balance and total supply | GEMBULL NEP-141 contract |
+| Check-in eligibility and count | GEMBULL core contract |
+| Epoch outcome and streaks | GEMBULL core contract |
+| Reward entitlement/claim status | GEMBULL core contract |
+| Ritual treasury balance/burn | GEMBULL core contract |
 | Stock reserve balance and contribution | Stock-vault contract |
 | Mock execution result | Mock broker service, explicitly simulated |
 | Mock receipt supply | Receipt-token contract |
@@ -18,7 +18,7 @@ Backend/database records are cache/index data and must be reconstructible from c
 
 ## 2. Contract view interfaces
 
-The frontend should call the following RITL read methods:
+The frontend should call the following GEMBULL read methods:
 
 ```text
 get_rules() -> RitualConfigView
@@ -48,7 +48,7 @@ The exact JSON serialization and method signatures must match the selected NEAR 
 Consume:
 
 - NEP-141 `ft_mint`, `ft_burn`, `ft_transfer`;
-- custom `stonkritual` `ritual_check_in`, `ritual_day_finalized`, `ritual_reward_claimed`.
+- custom `gembull` `ritual_check_in`, `ritual_day_finalized`, `ritual_reward_claimed`.
 
 Recommended indexed table:
 

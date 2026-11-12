@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic 60-day StonkRitual token supply simulator (stdlib only)."""
+"""Deterministic 60-day GemBull token supply simulator (stdlib only)."""
 from __future__ import annotations
 
 import argparse
@@ -17,7 +17,7 @@ TREASURY_BURN_BPS = 5
 DAYS = 60
 
 
-def as_ritl(amount: int) -> str:
+def as_gembull(amount: int) -> str:
     """Format exact base units without rounding through a float."""
     whole, fraction = divmod(amount, BASE_UNITS)
     if fraction == 0:
@@ -74,8 +74,8 @@ def simulate(scenario: str) -> list[dict[str, int | str]]:
                 "checkins": checkins,
                 "target": DAILY_TARGET,
                 "outcome": outcome,
-                "minted_ritl": minted,
-                "burned_ritl": burned,
+                "minted_gembull": minted,
+                "burned_gembull": burned,
                 "total_supply": supply,
                 "ritual_treasury_balance": treasury,
                 "current_streak": current_streak,
@@ -89,17 +89,17 @@ def simulate(scenario: str) -> list[dict[str, int | str]]:
 def summarize(rows: list[dict[str, int | str]]) -> dict[str, int | str]:
     success_days = sum(1 for row in rows if row["outcome"] == "SUCCESS")
     missed_days = DAYS - success_days
-    minted = sum(int(row["minted_ritl"]) for row in rows)
-    burned = sum(int(row["burned_ritl"]) for row in rows)
+    minted = sum(int(row["minted_gembull"]) for row in rows)
+    burned = sum(int(row["burned_gembull"]) for row in rows)
     final = rows[-1]
     return {
         "success_days": success_days,
         "missed_days": missed_days,
-        "total_minted_ritl": as_ritl(minted),
-        "total_burned_ritl": as_ritl(burned),
-        "net_supply_change_ritl": ("-" if minted < burned else "") + as_ritl(abs(minted - burned)),
-        "final_supply_ritl": as_ritl(int(final["total_supply"])),
-        "final_treasury_ritl": as_ritl(int(final["ritual_treasury_balance"])),
+        "total_minted_gembull": as_gembull(minted),
+        "total_burned_gembull": as_gembull(burned),
+        "net_supply_change_gembull": ("-" if minted < burned else "") + as_gembull(abs(minted - burned)),
+        "final_supply_gembull": as_gembull(int(final["total_supply"])),
+        "final_treasury_gembull": as_gembull(int(final["ritual_treasury_balance"])),
         "longest_streak": int(final["longest_streak"]),
         "current_streak": int(final["current_streak"]),
     }
@@ -109,8 +109,8 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--output",
-        default="docs/simulation/ritl-60-day-simulation.csv",
-        help="CSV output path (default: docs/simulation/ritl-60-day-simulation.csv)",
+        default="docs/simulation/gembull-60-day-simulation.csv",
+        help="CSV output path (default: docs/simulation/gembull-60-day-simulation.csv)",
     )
     parser.add_argument(
         "--check",
@@ -134,8 +134,8 @@ def main() -> None:
         "checkins",
         "target",
         "outcome",
-        "minted_ritl",
-        "burned_ritl",
+        "minted_gembull",
+        "burned_gembull",
         "total_supply",
         "ritual_treasury_balance",
         "current_streak",
@@ -144,8 +144,8 @@ def main() -> None:
     csv_rows = []
     for row in all_rows:
         csv_row = row.copy()
-        for key in ("minted_ritl", "burned_ritl", "total_supply", "ritual_treasury_balance"):
-            csv_row[key] = as_ritl(int(row[key]))
+        for key in ("minted_gembull", "burned_gembull", "total_supply", "ritual_treasury_balance"):
+            csv_row[key] = as_gembull(int(row[key]))
         csv_rows.append(csv_row)
 
     if args.check:

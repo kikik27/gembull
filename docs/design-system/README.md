@@ -1,6 +1,6 @@
-# StonkRitual Design System Package
+# GemBull Design System Package
 
-This directory is the source of truth for the StonkRitual web UI/UX.
+This directory is the source of truth for the GemBull web UI/UX.
 
 | File | Purpose |
 |---|---|
@@ -12,4 +12,4 @@ This directory is the source of truth for the StonkRitual web UI/UX.
 | `design-tokens.json` | Machine-readable tokens |
 | `theme.css` | CSS variables and base styles to import in the application |
 
-Read `../AGENTS.md` first, then `CODEX_UI_INSTRUCTIONS.md` before implementing any frontend UI.
+Read [`AGENTS.md`](../../AGENTS.md) first, then `CODEX_UI_INSTRUCTIONS.md` before implementing any frontend UI.

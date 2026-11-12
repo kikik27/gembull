@@ -12,7 +12,7 @@ export function useRitualActions() {
   const { setBusyAction, setActionError, setNotice } = useRitualUiStore();
   const mutation = useMutation({
     mutationFn: async ({ label, method, args = {}, deposit = RITUAL_STORAGE_DEPOSIT }: RitualAction) => {
-      if (!RITUAL_CONTRACT_ID || !wallet.signedAccountId || wallet.network !== "testnet") throw new Error("Connect a Testnet wallet to a configured RITL contract");
+      if (!RITUAL_CONTRACT_ID || !wallet.signedAccountId || wallet.network !== "testnet") throw new Error("Connect a Testnet wallet to a configured GEMBULL contract");
       setBusyAction(label); setActionError(null); setNotice(null);
       const result = await wallet.callFunctionRaw({ contractId: RITUAL_CONTRACT_ID, method, args, gas: RITUAL_GAS, deposit });
       if (typeof result.status === "object" && "Failure" in result.status) throw new Error(JSON.stringify(result.status.Failure));

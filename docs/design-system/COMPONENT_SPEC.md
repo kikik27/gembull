@@ -1,4 +1,4 @@
-# StonkRitual Component Specification
+# GemBull Component Specification
 
 This document is the implementation contract for frontend components. Component names are suggestions; adapt to the repository's existing conventions without changing behaviour or visual tokens.
 
@@ -204,34 +204,7 @@ Use for first visit to Stock Vault simulator and receipt simulation. Require ack
 
 ## 8. Feature asset mapping
 
-Use these exact files from the brand pack:
-
-| Asset path | UI placement | Function |
-|---|---|---|
-| `02-mascots/bull-mascot-hero-with-vault.png` | Landing hero, About, pitch deck | Main brand illustration; large only |
-| `02-mascots/bull-mascot-round-avatar.png` | Profile, community cards, compact empty states | Character avatar |
-| `03-stickers/sticker-gm.png` | Community greeting, onboarding | Decorative greeting |
-| `03-stickers/sticker-ritl-heart.png` | Community appreciation | Decorative appreciation |
-| `03-stickers/sticker-to-the-moon.png` | Campaign/social only | Meme expression; not a price promise |
-| `03-stickers/sticker-streak.png` | Streak milestone card | Achievement decoration |
-| `03-stickers/sticker-ngmi.png` | Social content only | Avoid shaming users in product UI |
-| `03-stickers/sticker-hodl.png` | Community/social content | Decorative meme; not investment advice |
-| `04-icons/icon-daily-checkin-256.png` | Ritual feature card | Daily ritual concept |
-| `04-icons/icon-longest-streak-256.png` | Longest streak panel | Record/achievement |
-| `04-icons/icon-burn-256.png` | Burn mechanics explanation and burn event detail | Treasury burn illustration |
-| `04-icons/icon-community-256.png` | Community overview | Participant/community concept |
-| `04-icons/icon-growth-256.png` | Supply progress / milestone card | Supply/streak progress; not token price |
-| `04-icons/icon-stock-vault-256.png` | `/app/vault` | Stock reserve simulator; always paired with Simulation label |
-| `04-icons/icon-lp-lock-256.png` | Liquidity information / docs | LP lock illustration |
-| `04-icons/ritl-token-icon-512.png` | Token balance and token identity in demo | Only when token deployment/metadata is labelled correctly |
-| `04-icons/stonkritual-favicon-64.png` | Browser tab | Favicon |
-| `04-icons/stonkritual-pwa-icon-192.png` | PWA manifest | Install icon |
-| `04-icons/stonkritual-app-icon-512.png` | App install/app launcher | App icon |
-| `05-token-art/ritl-gold-token-badge.png` | Achievement/gallery | Decorative collectible, not token backing |
-| `05-token-art/ritl-silver-token-badge.png` | Achievement/gallery | Decorative collectible |
-| `05-token-art/ritl-green-bull-token-badge.png` | Achievement/gallery | Decorative collectible |
-| `07-ui-elements/*-reference.png` | Design reference only | Never use as a live button or control |
-
+Use the current files in [AGENT_ASSET_MAP.md](AGENT_ASSET_MAP.md) and the app's `public/brand/manifest.json`. The GemBull app icon is the compact mark. The campaign coin is promotional artwork, not deployed token metadata. GM and streak stickers are decorative; real controls and all disclosures remain HTML text.
 ## 9. Component acceptance checklist
 
 - [ ] Components implement all listed loading/error/disabled states.

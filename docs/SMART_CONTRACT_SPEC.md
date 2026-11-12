@@ -2,15 +2,15 @@
 
 ## 1. Scope
 
-This specification defines the on-chain interfaces and invariants for the StonkRitual hackathon MVP. The `ritl-core` contract must implement NEP-141, NEP-145, NEP-148, and the daily ritual mechanic in the same deployed contract.
+This specification defines the on-chain interfaces and invariants for the GemBull hackathon MVP. The `gembull-core` contract must implement NEP-141, NEP-145, NEP-148, and the daily ritual mechanic in the same deployed contract.
 
 ## 2. Contract account and initialization
 
-Proposed contract account: `ritl-token.testnet` (placeholder only; actual account must be created by the human/team). No deployment or account creation is authorized by this document.
+The new GemBull contract account has not been chosen or deployed. Record the actual Testnet account and deployment evidence only after verification. No deployment or account creation is authorized by this document.
 
 Initialization is one-time and must set:
 
-- token metadata (`name`, `symbol=RITL`, `decimals=18`);
+- token metadata (`name`, `symbol=GEMBULL`, `decimals=18`);
 - initial supply and initial allocation recipients;
 - `max_supply=1_050_000_000 × 10^18` base units;
 - launch timestamp from chain block timestamp;
@@ -75,8 +75,8 @@ Required indexed state:
 - `current_streak: u64`;
 - `longest_streak: u64`;
 - `last_finalized_day: Option<u64>`;
-- `ritual_treasury_balance` is the RITL balance held by the contract account and must reconcile with the NEP-141 ledger;
-- the contract account cannot use `ft_transfer` or `ft_transfer_call` to spend the ritual treasury; missed-epoch settlement is its only outgoing RITL path;
+- `ritual_treasury_balance` is the GEMBULL balance held by the contract account and must reconcile with the NEP-141 ledger;
+- the contract account cannot use `ft_transfer` or `ft_transfer_call` to spend the ritual treasury; missed-epoch settlement is its only outgoing GEMBULL path;
 - `reserved_mint_capacity: u128`;
 - `ritual_ended: bool`;
 - cumulative mint/burn metrics.
@@ -107,7 +107,7 @@ Preconditions:
 
 - caller has NEP-141 storage registration;
 - current time maps to an active epoch;
-- caller has at least `min_holding` RITL;
+- caller has at least `min_holding` GEMBULL;
 - caller has not checked in in that epoch;
 - participant count is below `max_participants`;
 - if this is the first check-in in the epoch, enough free mint headroom remains to reserve the full `max_participants × reward_per_checkin` daily budget.
@@ -116,7 +116,7 @@ Effects:
 
 - mark caller as checked in for current day;
 - increment epoch participant count;
-- if this is the first check-in in the epoch, reserve the full `max_participants × reward_per_checkin` budget (200,000 RITL) against max-supply headroom; subsequent check-ins use the same epoch reservation;
+- if this is the first check-in in the epoch, reserve the full `max_participants × reward_per_checkin` budget (200,000 GEMBULL) against max-supply headroom; subsequent check-ins use the same epoch reservation;
 - emit `RitualCheckIn` with day ID, account ID, and count.
 
 ### `finalize_day(day_id: u64)`
@@ -133,7 +133,7 @@ Success effects (`checkin_count >= daily_target`):
 - set status `Successful`;
 - increment current streak;
 - update longest streak;
-- reduce the epoch reservation from the full 200,000 RITL budget to `checkin_count × reward_per_checkin`, releasing unused capacity; keep the remaining reservation for claimants;
+- reduce the epoch reservation from the full 200,000 GEMBULL budget to `checkin_count × reward_per_checkin`, releasing unused capacity; keep the remaining reservation for claimants;
 - emit `RitualDayFinalized` with outcome, count, target, streak values, and reserved reward.
 
 Failure effects (`checkin_count < daily_target`):
@@ -163,16 +163,16 @@ Effects:
 
 - mark reward as claimed before any external interaction (there should be no external interaction required);
 - reduce `reserved_mint_capacity` by reward amount;
-- mint exactly `reward_per_checkin` RITL to caller;
+- mint exactly `reward_per_checkin` GEMBULL to caller;
 - increase total supply;
 - emit NEP-141 `ft_mint` and custom `RitualRewardClaimed` events.
 
 ## 6. Emission reservation lifecycle
 
-- On the first check-in of an epoch, require free capacity of at least `MAX_PARTICIPANTS × REWARD_PER_CHECKIN` and reserve the full daily budget (200,000 RITL).
+- On the first check-in of an epoch, require free capacity of at least `MAX_PARTICIPANTS × REWARD_PER_CHECKIN` and reserve the full daily budget (200,000 GEMBULL).
 - Later check-ins in the same epoch do not reserve additional capacity.
 - On successful finalization, reduce the reservation to `checkin_count × reward_per_checkin`; release the unused portion.
-- On failed finalization, release the full 200,000-RITL reservation.
+- On failed finalization, release the full 200,000-GEMBULL reservation.
 - Each claim converts 1,000 reserved units into 1,000 minted units, keeping `total_supply + reserved_mint_capacity` unchanged.
 - If another full daily budget cannot be reserved after the current day is settled, set `ritual_ended=true`, emit `RitualEnded`, and reject future check-ins/settlements without further treasury burns. Existing successful-epoch claims remain available.
 
@@ -199,7 +199,7 @@ Standard NEP-141 events:
 - `ft_burn` for missed-epoch treasury burns;
 - `ft_transfer` for token transfers.
 
-Custom NEP-297 events (standard=`stonkritual`, version=`1.0.0`):
+Custom NEP-297 events (standard=`gembull`, version=`1.0.0`):
 
 - `ritual_check_in`: `{day_id, account_id, checkin_count}`;
 - `ritual_day_finalized`: `{day_id, outcome, checkin_count, target, reward_reserved, burn_amount, current_streak, longest_streak}`;
@@ -222,7 +222,7 @@ Define stable, descriptive errors for: not initialized, wrong epoch, epoch not e
 - exposes `get_reserve_balance`, `get_batch`, and `get_contributor_allocation`;
 - supports explicit batch states: `COLLECTING`, `READY`, `SIMULATED_EXECUTED`, `ATTESTED`, `RECEIPT_MINTED`, `FAILED`;
 - only fixed mock issuer account may attest an execution in the Testnet demo;
-- no stock contract may call into or spend RITL ritual treasury.
+- no stock contract may call into or spend GEMBULL ritual treasury.
 
 ### `receipt-token`
 

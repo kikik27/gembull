@@ -1,19 +1,19 @@
 # Business Requirements Document (BRD)
 
-**Product:** StonkRitual  
-**Token:** RITL  
-**Version:** 0.1 — Hackathon baseline  
+**Product:** GemBull<br>
+**Token:** GEMBULL<br>
+**Version:** 0.1 — Hackathon baseline<br>
 **Primary track:** NEAR Hackathon — `memecoins`
 
 ## 1. Executive summary
 
-StonkRitual is a community memecoin whose token supply reacts to a daily on-chain ritual. Holders check in once per 24-hour epoch. If at least 50 eligible accounts participate, the epoch succeeds, the community streak increases, and participants become eligible to claim a fixed RITL mint. If the community misses the target, 5 basis points of the remaining ritual treasury balance is burned and the current streak resets.
+GemBull is a community memecoin whose token supply reacts to a daily on-chain ritual. Holders check in once per 24-hour epoch. If at least 50 eligible accounts participate, the epoch succeeds, the community streak increases, and participants become eligible to claim a fixed GEMBULL mint. If the community misses the target, 5 basis points of the remaining ritual treasury balance is burned and the current streak resets.
 
 A secondary stock accumulation layer is designed to allocate 1% of eligible application-routed purchases into a segregated stock acquisition reserve. The hackathon prototype demonstrates this with test assets, a mock broker, and a simulated receipt token. Real equity custody is explicitly outside hackathon scope.
 
 ## 2. Business context and problem
 
-Conventional memecoins often concentrate attention on price, trading volume, and short-lived social momentum. StonkRitual makes community participation economically legible: a daily ritual deterministically changes supply and streak state on NEAR. The separate stock reserve creates a longer-term product direction without making the meme token itself a claim on equity.
+Conventional memecoins often concentrate attention on price, trading volume, and short-lived social momentum. GemBull makes community participation economically legible: a daily ritual deterministically changes supply and streak state on NEAR. The separate stock reserve creates a longer-term product direction without making the meme token itself a claim on equity.
 
 ## 3. Business objectives
 
@@ -40,7 +40,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 
 ### In scope — hackathon MVP
 
-- NEAR Testnet deployment of a NEP-141 RITL token with embedded ritual state machine.
+- NEAR Testnet deployment of a NEP-141 GEMBULL token with embedded ritual state machine.
 - Immutable genesis parameters and hard maximum-supply cap.
 - One check-in per account per epoch, minimum holding check, daily target, participant cap, and permissionless epoch settlement.
 - Claim-per-account rewards after a successful epoch.
@@ -61,7 +61,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 
 ### Out of scope
 
-- Claiming that RITL is backed by, redeemable for, or represents NVIDIA shares.
+- Claiming that GEMBULL is backed by, redeemable for, or represents NVIDIA shares.
 - Actual broker account opening, securities execution, or custody during the hackathon.
 - Public sale, investment solicitation, APY promises, or revenue guarantees.
 - Mainnet launch and real-money trading.
@@ -80,22 +80,22 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 | BR-07 | UI exposes progress, streak, supply, and mint/burn history | Must | Judge can verify each state and event |
 | BR-08 | Sybil resistance and limitations are disclosed | Must | README documents account-level limitations |
 | BR-09 | 60-day simulations cover multiple participation scenarios | Must | Script produces reproducible CSV and summary |
-| BR-10 | Stock reserve remains separate from RITL and LP balances | Should | Separate contract/account and ledger |
+| BR-10 | Stock reserve remains separate from GEMBULL and LP balances | Should | Separate contract/account and ledger |
 | BR-11 | Mock stock receipts are visibly identified as simulated | Must | No UI or doc claims real equity ownership |
 
 ## 7. Business rules
 
 1. One epoch is exactly 24 hours, anchored to the contract's initialization timestamp.
-2. A user must hold at least 1,000 RITL at the moment of check-in.
+2. A user must hold at least 1,000 GEMBULL at the moment of check-in.
 3. An account can check in only once per epoch.
 4. A maximum of 200 accounts may be recorded per epoch in the demo.
 5. An epoch succeeds at 50 or more check-ins.
-6. Every participant in a successful epoch is entitled to 1,000 RITL.
+6. Every participant in a successful epoch is entitled to 1,000 GEMBULL.
 7. Reward minting is executed by each participant through a one-time claim after settlement.
 8. A missed epoch burns 5 bps of the remaining ritual treasury balance.
 9. A missed epoch resets current streak to zero; longest streak remains unchanged.
 10. No admin may modify these rules after initialization.
-11. Stock reserve balances, buyback balances, RITL treasury balances, and liquidity reserves must never be mixed.
+11. Stock reserve balances, buyback balances, GEMBULL treasury balances, and liquidity reserves must never be mixed.
 
 ## 8. Business assumptions and constraints
 
@@ -108,7 +108,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 ## 9. Risks and dependencies
 
 - Smart contract implementation must comply with NEP-141/145/148 and NEAR SDK security guidance.
-- Current compatibility between a bespoke RITL contract and Meme.Cooking's launch flow is not established. Meme.Cooking is a reference/possible partner, not a required dependency for MVP.
+- Current compatibility between a bespoke GEMBULL contract and Meme.Cooking's launch flow is not established. Meme.Cooking is a reference/possible partner, not a required dependency for MVP.
 - External price APIs may rate-limit or change schemas; stock display must not block on-chain ritual operations.
 - Actual equity receipt issuance requires issuer/custodian, legal, jurisdictional, and investor-eligibility design.
 

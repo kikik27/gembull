@@ -1,17 +1,17 @@
-# StonkRitual UI/UX Design System
+# GemBull UI/UX Design System
 
-**Version:** 1.0.0  
-**Project:** StonkRitual (working name)  
-**Working ticker:** `$RITL`  
-**Tagline:** The meme runs on rituals.  
-**Primary experience:** Daily community ritual, on-chain supply mechanics, transparent rules.  
+**Version:** 1.0.0<br>
+**Project:** GemBull (working name)<br>
+**Working ticker:** `$GEMBULL`<br>
+**Tagline:** The meme runs on rituals.<br>
+**Primary experience:** Daily community ritual, on-chain supply mechanics, transparent rules.<br>
 **Secondary experience:** Stock-reserve simulator (clearly labelled simulation in the hackathon MVP).
 
 ---
 
 ## 1. Product design direction
 
-StonkRitual should feel like a **meme-native protocol dashboard**, not a generic DeFi trading terminal. The personality comes from the bull mascot, compact irreverent copy, achievement moments and neon-lime highlights. Trust comes from visible contract rules, honest network/status labels, auditable event history and restrained financial language.
+GemBull should feel like a **meme-native protocol dashboard**, not a generic DeFi trading terminal. The personality comes from the bull mascot, compact irreverent copy, achievement moments and neon-lime highlights. Trust comes from visible contract rules, honest network/status labels, auditable event history and restrained financial language.
 
 ### Core design principle
 
@@ -53,7 +53,7 @@ Prefer:
 
 Avoid:
 - “Guaranteed rewards”, “risk-free”, “guaranteed gains”.
-- “RITL is backed by NVIDIA” or “holding RITL means owning NVIDIA”.
+- “GEMBULL is backed by NVIDIA” or “holding GEMBULL means owning NVIDIA”.
 - Fake live metrics, fabricated custody claims or unverified audit claims.
 - Price prediction, FOMO countdowns or APR/APY claims without a real mechanism and evidence.
 
@@ -170,9 +170,9 @@ Use subtle surface separation rather than large glows. The visual language shoul
 ## 8. Iconography and illustration
 
 - Use Lucide React for functional interface icons: wallet, chevron, clock, external link, copy, info, check, alert, menu, settings, search, arrow, calendar.
-- Use packaged StonkRitual PNG illustrations for feature identity, not as a replacement for semantic icons or text labels.
+- Use packaged GemBull PNG illustrations for feature identity, not as a replacement for semantic icons or text labels.
 - Feature asset map is specified in `COMPONENT_SPEC.md` and `AGENT_ASSET_MAP.md`.
-- Do not use the extracted NEAR mark or N-like chest mark as the StonkRitual product logo.
+- Do not use the extracted NEAR mark or N-like chest mark as the GemBull product logo.
 - Mascot is a decorative/brand layer. It must not replace labels, status icons, buttons or data visualizations.
 - Never put a raster UI button image in the application as a clickable control. Rebuild it as a real semantic button.
 
@@ -215,11 +215,11 @@ Use subtle surface separation rather than large glows. The visual language shoul
 - `/app/supply` — current supply, mint/burn history and 60-day simulator; no price chart hero.
 - `/app/community` — participant leaderboard and streak records, with anti-Sybil limitations explained.
 - `/app/vault` — stock-reserve simulator only, with persistent `SIMULATION` disclosure.
-- `/app/portfolio` — RITL balance, eligible rewards and simulated receipt balances clearly separated.
+- `/app/portfolio` — GEMBULL balance, eligible rewards and simulated receipt balances clearly separated.
 
 ### Global navigation
 
-Desktop sidebar: Overview, Daily Ritual, Activity, Supply, Community, Stock Vault (Simulation), Rules.  
+Desktop sidebar: Overview, Daily Ritual, Activity, Supply, Community, Stock Vault (Simulation), Rules.<br>
 Mobile bottom navigation: Home, Ritual, Activity, Vault, Menu. Place `SIM` badge on the Vault item.
 
 ## 12. Page-level UX direction
@@ -285,7 +285,7 @@ Mobile:
 - Show simulated contributions, simulated execution batches, simulated receipt issuance and timestamps.
 - Use no “backed by NVIDIA” copy.
 - If no simulated batch exists, show “No simulated acquisition yet.”
-- Explain that RITL does not itself represent NVIDIA ownership.
+- Explain that GEMBULL does not itself represent NVIDIA ownership.
 
 ## 13. Data truth and visible states
 

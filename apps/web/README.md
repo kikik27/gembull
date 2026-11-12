@@ -1,17 +1,9 @@
-# StonkRitual Ritual UI
+# GemBull web app
 
-Next.js 16 App Router dashboard for the RITL daily ritual on NEAR Testnet. It reads `get_rules`, `get_global_state`, `get_epoch`, account status, token balance, and storage status directly from the RITL contract. Check-in, settlement, registration, and claims are wallet-signed contract calls.
+Next.js landing and ritual interface for the GemBull NEAR Testnet prototype. Run it from the repository root with `pnpm dev`; root scripts also provide `pnpm typecheck`, `pnpm lint`, and `pnpm build`.
 
-Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_RITL_CONTRACT_ID` to a real, reviewed Testnet deployment account. An empty value renders a local preview with no fabricated on-chain figures. Do not put keys or secrets in this variable or any public Next.js environment variable.
+Copy `.env.example` to `.env.local`. Leave `NEXT_PUBLIC_GEMBULL_CONTRACT_ID` empty for a local preview with proposed rules and no fabricated chain metrics. Set it only after a new GemBull Testnet deployment has been verified. The old `ritl-stonkritual.testnet` contract is **StonkRitual / RITL** and is not a GemBull deployment. `NEXT_PUBLIC_SITE_URL` should be the public origin when hosted, so Open Graph and X image URLs resolve correctly.
 
-```sh
-pnpm install
-pnpm exec tsc --noEmit
-pnpm lint
-pnpm build
-pnpm dev
-```
+The UI reads rules, balances, epochs, streaks, supply, and treasury state from the configured contract. Wallet writes call `check_in`, `finalize_day`, or `claim_reward`. The 60-day simulation is labelled separately from chain data. The stock reserve is a **SIMULATED** concept; no shares or receipt rights are represented.
 
-The UI labels epoch history as contract view data. Mint/burn event receipts and transaction hashes require a read-only event indexer or the linked explorer; the UI does not invent them. The stock concept is labeled **SIMULATED — NO REAL EQUITY OWNERSHIP** and has no live broker integration.
-
-Ritual actions currently attach 0.05 Testnet NEAR to cover contract storage; excess remains on the contract account. Review this cost model before Testnet deployment.
+See the [root README](../../README.md) for the hackathon goal, verification commands, status, and roadmap.

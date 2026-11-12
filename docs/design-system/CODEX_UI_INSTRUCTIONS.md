@@ -1,13 +1,13 @@
-# Codex UI Implementation Instructions — StonkRitual
+# Codex UI Implementation Instructions — GemBull
 
 Before implementing or refactoring any UI, read:
-1. `AGENTS.md` at the asset pack/repository root.
-2. `08-guidelines/BRAND_GUIDE.md`.
-3. `10-design-system/DESIGN_SYSTEM.md`.
-4. `10-design-system/COMPONENT_SPEC.md`.
-5. `10-design-system/PAGE_SPEC.md`.
-6. `10-design-system/AGENT_ASSET_MAP.md`.
-7. `10-design-system/design-tokens.json` and `10-design-system/theme.css`.
+1. `../../AGENTS.md` at the repository root.
+2. `../brand/BRAND_GUIDE.md`.
+3. `DESIGN_SYSTEM.md`.
+4. `COMPONENT_SPEC.md`.
+5. `PAGE_SPEC.md`.
+6. `AGENT_ASSET_MAP.md` and `../../apps/web/public/brand/manifest.json`.
+7. `design-tokens.json` and `theme.css`.
 
 ## Implementation goals
 
@@ -19,7 +19,7 @@ Build a polished, responsive, dark-first web application. The daily ritual is th
 - Use TypeScript and semantic React components.
 - Use CSS variables from `theme.css` as the source of truth. Do not scatter raw color hex values across components.
 - Use a shared component library for Button, Card, Badge, StatCard, ProgressBar, EventTimeline, WalletButton, RitualHeroCard and disclosure banners.
-- Use Lucide React for generic UI icons. Use supplied PNG feature illustrations only where the asset map specifies.
+- Use Lucide React for generic UI icons. Use current brand assets only where the asset map specifies.
 - Use real buttons/links/forms, not static image buttons.
 - Implement responsive behaviour at 360, 768, 1024 and 1440 px.
 - Implement empty, loading, stale, unavailable, pending, success and error states.
@@ -28,7 +28,7 @@ Build a polished, responsive, dark-first web application. The daily ritual is th
 - Never hard-code a dynamic tokenomics value if it can be read from contract/config. Show source/network.
 - Actual on-chain supply and simulated 60-day projections must remain separate.
 - Every stock vault and stock receipt mock must display a persistent simulation disclosure.
-- Never call RITL an NVIDIA-backed token or imply RITL holders own NVIDIA shares.
+- Never call GEMBULL an NVIDIA-backed token or imply GEMBULL holders own NVIDIA shares.
 - Do not invent live account count, reserve amount, contract address, custody, audit, broker integration or partnership.
 
 ## Build order

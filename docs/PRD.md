@@ -1,7 +1,7 @@
 # Product Requirements Document (PRD)
 
-**Product:** StonkRitual  
-**Version:** 0.1 — Hackathon MVP  
+**Product:** GemBull<br>
+**Version:** 0.1 — Hackathon MVP<br>
 **Primary user journey:** Connect → Check in → Epoch settles → Claim reward / inspect burn
 
 ## 1. Product vision
@@ -10,7 +10,7 @@ Make a memecoin where community participation has deterministic on-chain consequ
 
 ## 2. Target users
 
-- **Meme community holder:** owns RITL and wants to participate in a simple daily ritual.
+- **Meme community holder:** owns GEMBULL and wants to participate in a simple daily ritual.
 - **Mechanics-focused DeFi user:** wants to inspect contract rules, token supply, and treasury behavior.
 - **Hackathon judge/developer:** needs a quick, reproducible way to trigger and verify both success and failure paths.
 - **RWA-curious user:** wants to understand the future stock-reserve concept while being clearly informed that the hackathon receipt is simulated.
@@ -124,7 +124,7 @@ Display:
 | Wrong network | Switch to NEAR Testnet |
 | Storage not registered | Explain and request storage deposit |
 | Already checked in | Show successful prior check-in; no second transaction |
-| Balance below 1,000 RITL | Show exact minimum balance and current balance |
+| Balance below 1,000 GEMBULL | Show exact minimum balance and current balance |
 | Epoch full (200 accounts) | Show participant cap reached |
 | Epoch still active | Disable settlement and show countdown |
 | Prior epoch not finalized | Ask user to call permissionless settlement |

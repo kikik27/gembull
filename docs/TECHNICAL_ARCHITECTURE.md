@@ -2,7 +2,7 @@
 
 ## 1. Architecture principles
 
-- NEAR is the source of truth for RITL supply, check-ins, epoch results, streaks, rewards, and ritual treasury burns.
+- NEAR is the source of truth for GEMBULL supply, check-ins, epoch results, streaks, rewards, and ritual treasury burns.
 - Backend services are not allowed to modify ritual state.
 - Stock-reserve accounting is isolated from the ritual token balance and liquidity inventory.
 - The stock integration is a mock adapter in the hackathon MVP.
@@ -14,7 +14,7 @@
 flowchart TD
     U[Holder / NEAR Wallet] --> FE[Next.js Web App]
     FE --> RPC[NEAR RPC / Testnet]
-    FE --> CORE[RITL Core Contract]
+    FE --> CORE[GEMBULL Core Contract]
     CORE --> FT[NEP-141 Token Ledger]
     CORE --> RITUAL[Daily Ritual State Machine]
     CORE --> TR[On-chain Ritual Treasury]
@@ -31,7 +31,7 @@ flowchart TD
 
 ## 3. Components
 
-### 3.1 `ritl-core`
+### 3.1 `gembull-core`
 
 One Rust contract combines:
 - NEP-141 fungible token behavior;
@@ -52,7 +52,7 @@ A clearly labeled Testnet-only NEP-141 faucet token used to fund stock-reserve d
 
 ### 3.3 `stock-vault`
 
-Receives mockUSDC contributions, records contribution batches, enforces batch state transitions, and exposes reserve/batch views. This contract is independent of RITL's ritual treasury.
+Receives mockUSDC contributions, records contribution batches, enforces batch state transitions, and exposes reserve/batch views. This contract is independent of GEMBULL's ritual treasury.
 
 ### 3.4 `receipt-token`
 
@@ -81,7 +81,7 @@ Read-only event consumer. It indexes NEP-141 events (`ft_mint`, `ft_burn`, `ft_t
 
 ```text
 contracts/
-  ritl-core/
+  gembull-core/
   mock-usdc/
   stock-vault/
   receipt-token/
@@ -104,11 +104,11 @@ Codex may adjust the workspace layout after inspecting current repository state,
 sequenceDiagram
     actor Holder
     participant UI as Web App
-    participant C as RITL Core
+    participant C as GEMBULL Core
     Holder->>UI: Click Check in
     UI->>C: check_in()
     C->>C: Validate epoch, balance, duplicate, cap
-    C->>C: On first check-in, reserve full 200,000 RITL daily mint capacity
+    C->>C: On first check-in, reserve full 200,000 GEMBULL daily mint capacity
     C->>C: Record check-in + increment count
     C-->>UI: Transaction result / event
     UI-->>Holder: Check-in confirmed
@@ -120,7 +120,7 @@ sequenceDiagram
 sequenceDiagram
     actor Keeper
     actor Holder
-    participant C as RITL Core
+    participant C as GEMBULL Core
     Keeper->>C: finalize_day(day_id)
     C->>C: Require epoch ended and next sequential day
     C->>C: Check count >= 50
@@ -128,7 +128,7 @@ sequenceDiagram
     C-->>Keeper: RitualDayFinalized(success)
     Holder->>C: claim_reward(day_id)
     C->>C: Verify participant + success + not claimed
-    C->>C: Convert reserved mint capacity into minted RITL
+    C->>C: Convert reserved mint capacity into minted GEMBULL
     C-->>Holder: ft_mint + reward claimed
 ```
 
@@ -137,7 +137,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     actor Keeper
-    participant C as RITL Core
+    participant C as GEMBULL Core
     Keeper->>C: finalize_day(day_id)
     C->>C: Require epoch ended and next sequential day
     C->>C: Check count < 50
@@ -183,7 +183,7 @@ sequenceDiagram
 
 | Boundary | Trusted for | Not trusted for |
 |---|---|---|
-| RITL contract | Supply, ritual, treasury burn, check-in eligibility | Human uniqueness |
+| GEMBULL contract | Supply, ritual, treasury burn, check-in eligibility | Human uniqueness |
 | Wallet signer | User authorization | Human identity beyond account control |
 | Indexer/backend | Event indexing, presentation | Ritual decisions or token mint authority |
 | Stock quote API | Quoted market price and timestamp | Proof of stock ownership |

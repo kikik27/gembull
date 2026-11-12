@@ -44,11 +44,7 @@ export function RitualCalculator({
   const success = outcome.kind === "success";
 
   return (
-    <section
-      className="section field-ground"
-      id="calculator"
-      aria-labelledby="calc-title"
-    >
+    <section className="section" id="calculator" aria-labelledby="calc-title">
       <div className="frame">
         <SectionHead
           title={<span id="calc-title">Slide it. Watch the contract.</span>}
@@ -95,7 +91,7 @@ export function RitualCalculator({
           </Reveal>
 
           <Reveal className="calc-right" delay={0.1} data-kind={outcome.kind}>
-            <div aria-live="polite" style={{ display: "grid", gap: 24 }}>
+            <div aria-live="polite" className="calc-live">
               <div className="calc-verdict">
                 {success ? "Target hit." : "Target missed."}
               </div>
@@ -110,11 +106,11 @@ export function RitualCalculator({
                 <>
                   <div className="figure">
                     <span>Claimable by participants</span>
-                    <strong>{formatUnits(outcome.claimable, 0)} RITL</strong>
+                    <strong>{formatUnits(outcome.claimable, 0)} GEMBULL</strong>
                   </div>
                   <div className="figure">
                     <span>Unused mint capacity released</span>
-                    <strong>{formatUnits(outcome.released, 0)} RITL</strong>
+                    <strong>{formatUnits(outcome.released, 0)} GEMBULL</strong>
                   </div>
                   <div className="figure">
                     <span>Streak</span>
@@ -134,7 +130,7 @@ export function RitualCalculator({
                     <span>
                       Treasury burn ({bpsToPercent(rules.treasury_burn_bps)})
                     </span>
-                    <strong>{formatUnits(outcome.burn, 0)} RITL</strong>
+                    <strong>{formatUnits(outcome.burn, 0)} GEMBULL</strong>
                   </div>
                   <div className="figure">
                     <span>Streak</span>
@@ -150,7 +146,7 @@ export function RitualCalculator({
           {resolved.sourceLabel}. Burn is computed on{" "}
           {treasuryIsLive
             ? "the live ritual treasury"
-            : `a ${formatUnits(treasury, 0)} RITL proposed genesis treasury`}
+            : `a ${formatUnits(treasury, 0)} GEMBULL proposed genesis treasury`}
           .
         </p>
       </div>

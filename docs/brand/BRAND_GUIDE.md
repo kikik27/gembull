@@ -1,63 +1,32 @@
-# StonkRitual Brand & Asset Guide
+# GemBull brand guide
 
-## Brand snapshot
-**StonkRitual** · working ticker **$RITL** · tagline **The meme runs on rituals.**
+**Name:** GemBull. **New source token symbol:** GEMBULL. **Tagline:** “The meme runs on rituals.” The older RITL Testnet contract is a separate historical deployment. Name, domain, social handle, and trademark clearance remain open.
 
-Visual language: black/near-black fintech interface, neon lime accents, rising-market motifs, dark comic-style bull mascot. The brand should feel playful and internet-native without looking like a gambling promotion or making unsupported financial claims.
+## Visual identity
 
-## Color tokens
-| Token | Hex | Usage |
-|---|---|---|
-| `--sr-lime` | `#B7FF16` | Primary accent, active states, check-in CTA |
-| `--sr-bg` | `#070A08` | Main background |
-| `--sr-surface` | `#101611` | Cards, panels |
-| `--sr-green` | `#00B85A` | Secondary success accent |
-| `--sr-gray` | `#777D7A` | Muted labels and dividers |
-| `--sr-white` | `#F4F7F2` | Main text |
-| `--sr-gold` | `#FFC857` | Milestone and reward highlights only |
+- Background `#070A08`, surface `#101611`, neon lime `#B7FF16`, off-white `#F4F7F2`, success green `#00B85A`. Reserve gold `#FFC857` for reward or achievement details.
+- Use the owner-approved geometric bull logo at `/brand/gembull-logo.png` for landing visuals. Use `/brand/icons/gembull-app-icon.png` for compact marks, favicon, and app icon. The source is raster; a vector master is still needed for print-scale use.
+- The approved mascot identity is a dark bull with horns, green sunglasses, and a black hoodie. New transparent GM and streak stickers preserve that character. Do not use the N-like mark from the earlier concept board as the project logo.
+- Keep headings short, high contrast, and readable. Use type and spacing before adding glow or animation.
 
-## Typography
-- Display: Inter Display Bold.
-- Body/UI: Inter Regular or Medium.
-- Numeric data: Inter Display Medium with tabular numbers.
-- Keep headings short and high-contrast. Never use all-caps for long body paragraphs.
+## Current asset pack
 
-## Logo system
-- Primary: `01-logos/stonkritual-primary-logo.svg`.
-- Raster: `01-logos/stonkritual-primary-logo-lockup.png`.
-- Symbol: `01-logos/stonkritual-brand-symbol.svg`.
-- Clear space: at least the width of the symbol's inner bar around all sides.
-- Minimum size: horizontal logo 180 px wide digitally; standalone symbol 24 px.
-- Preferred background: dark. On a pale background use the SVG only if contrast remains strong; otherwise place it on a dark container.
+The authoritative file list is [`apps/web/public/brand/manifest.json`](../../apps/web/public/brand/manifest.json). It contains the logo, icon, OG preview, campaign coin, two transparent stickers, and decorative ritual scenes. Every manifest URL must resolve to a file in `apps/web/public/brand/`.
 
-## Mascot
-The bull mascot is the approved character. Keep its current appearance; use original hero/round crops and the six individually separated sticker crops. They retain the dark/green backdrop from the source image; use them on dark surfaces or within framed tiles. Avoid automatic background removal because black clothing and contours can be damaged. The mascot is a personality/illustration layer, not the token logo or a representation of a regulated financial institution.
+| Asset | Use |
+|---|---|
+| `/brand/gembull-logo.png` | Landing hero |
+| `/brand/icons/gembull-app-icon.png` | Header, small mark, favicon |
+| `/brand/gembull-open-graph.png` | Open Graph and X card |
+| `/brand/coins/gembull-campaign-coin.png` | Promotional illustration only; not on-chain token metadata |
+| `/brand/stickers/gembull-gm.png` | Community greeting |
+| `/brand/stickers/gembull-streak.png` | Streak celebration |
 
-## Social tone
-Playful, direct and transparent. Good examples: “Check in. Keep the streak.”, “Rules live on-chain.”, “The meme runs on rituals.” Avoid promises, price targets, APY claims or suggestions that RITL itself is backed by NVIDIA.
+The [creative prompts](GEMBULL_CREATIVE_PROMPTS.md) record how these concepts were generated. Proofread any new campaign export before publishing.
 
-## Instagram account starter kit
-Suggested handle (availability not checked): `@stonkritual` or `@joinstonkritual`.
-Suggested display name: `StonkRitual | $RITL`.
-Suggested bio:
-> The meme runs on rituals. 🐂💚\nDaily community mechanics • on-chain rules\nNEAR ecosystem build • Hackathon prototype\nStock-reserve layer is simulated in MVP.
+## Claims and disclosure
 
-Suggested highlight categories: `START`, `RITUAL`, `RULES`, `STREAK`, `VAULT`, `BUILD`, `FAQ`.
-
-Suggested pinned posts: (1) Meet StonkRitual, (2) How the daily ritual works, (3) What the stock-reserve simulation does and does not mean.
-
-## Content pack inventory
-- Six Instagram feed posts, each 1080x1350: introduction, daily check-in, missed-target burn, immutable rules, stock reserve disclaimer, Sybil limitation.
-- Two Instagram story canvases, each 1080x1920.
-- Instagram profile avatar, 1080x1080.
-- X banner, 1500x500.
-- Discord banner, 960x540.
-- Original extracted logo, mascot, sticker, icon and token-art crops.
-
-## Publication checklist
-1. Confirm project name and ticker; both are currently working candidates.
-2. Confirm social handle availability before creating accounts.
-3. Replace every simulated metric with real testnet values or label it clearly as illustrative.
-4. Check all links, contract addresses and network labels.
-5. Ensure posts do not imply actual stock purchases, custody or legal equity rights.
-6. Add hackathon/NEAR marks only according to official brand guidelines and never as if the sponsor endorses the project.
+- The ritual is the primary product. Show actual chain values with their network/source, and label proposed values as preview.
+- The stock reserve, broker, and `rNVDA` receipt are **SIMULATED** until separate contracts and integrations are implemented and tested. No visual may imply real shares, verified custody, redemption, or dividends.
+- Do not promise returns, APY, price targets, guaranteed rewards, or launch timing.
+- Do not present the generated campaign coin as the deployed token icon or as an investment product.

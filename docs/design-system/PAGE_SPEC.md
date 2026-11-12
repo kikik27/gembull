@@ -1,4 +1,4 @@
-# StonkRitual Page & UX Specification
+# GemBull Page & UX Specification
 
 ## User roles
 
@@ -94,7 +94,7 @@ Frontend must not infer finalized success/miss from a client-side countdown alon
 
 | Route | Page title | Main objective | Required content |
 |---|---|---|---|
-| `/` | StonkRitual | Explain product and invite participation | Hero, ritual explainer, demo progress, rules CTA, disclosure |
+| `/` | GemBull | Explain product and invite participation | Hero, ritual explainer, demo progress, rules CTA, disclosure |
 | `/how-it-works` | How the ritual works | Explain state transitions | Check-in → target → mint/burn → streak |
 | `/rules` | The rules | Establish trust | Contract parameters, immutability evidence, Sybil limitations |
 | `/transparency` | Transparency | Audit token mechanics | Events, supply, contract and simulation disclosure |
@@ -104,7 +104,7 @@ Frontend must not infer finalized success/miss from a client-side countdown alon
 | `/app/supply` | Supply | Understand mint/burn effects | Actual supply + separate 60-day simulator |
 | `/app/community` | Community | Show community participation | Leaderboard, milestones, Sybil disclaimer |
 | `/app/vault` | Stock Vault | Explain mock RWA layer | Persistent Simulation banner and simulated batches |
-| `/app/portfolio` | Portfolio | Show account state | Real RITL balance, claims and separate simulation panel |
+| `/app/portfolio` | Portfolio | Show account state | Real GEMBULL balance, claims and separate simulation panel |
 
 ## UX copy examples
 

@@ -1,36 +1,14 @@
-# Product Naming and Ticker Direction
+# GemBull name and token symbol
 
-## Recommended working identity
+The project owner selected **GemBull** as the product name and approved the geometric bull logo for the landing page. New contract source initializes its NEP-148 token metadata as **GemBull / GEMBULL**. Name, symbol, domain, social handle, and trademark clearance remain open; this source change is not a live deployment.
 
-- **Project / brand:** StonkRitual
-- **Meme token name:** StonkRitual
-- **Meme ticker:** `RITL`
-- **Secondary test receipt:** `rNVDA` — simulation only
-- **Tagline:** The meme runs on rituals. The rituals move the treasury.
+The previous prototype was named **StonkRitual / RITL**. Its existing [`ritl-stonkritual.testnet`](deployments/RITL_TESTNET.md) account retains that on-chain identity. It is historical evidence, not a GemBull deployment.
 
-## Why this direction
+`rNVDA` is reserved for a simulated stock-receipt demo. It is separate from GEMBULL and does not represent real equity, redemption, dividends, or custody.
 
-- `Stonk` communicates meme-stock / retail trading culture.
-- `Ritual` describes the core daily check-in and streak mechanic, which is the feature the NEAR track evaluates.
-- `RITL` is short and connected to the brand without using the generic `MEME` ticker.
-- Keeping `rNVDA` separate from RITL makes it clear that the meme token is not itself the stock receipt.
+## Before public launch
 
-## Alternative names considered
-
-| Name | Candidate ticker | Assessment |
-|---|---|---|
-| StonkRitual | RITL | Best match to the daily ritual mechanic and stock-meme narrative |
-| MemeReserve | MRSV | Clear on the treasury idea, weaker on the community ritual |
-| StonkStreak | STRK | Clear streak idea, but `STRK` is already strongly associated with Starknet |
-| RallyVault | RALLY | Strong community/treasury meaning, but generic and likely collision-prone |
-| StonkForge | FORGE | Good meme-builder identity, less explicit about daily participation |
-
-## Clearance checklist (not yet completed)
-
-- Search web, X, GitHub, app stores, and major token data directories for exact and similar names.
-- Check domains and social handles.
-- Check trademark databases for target launch jurisdictions.
-- Search NEAR mainnet/testnet token contracts for similar symbols. Token symbols are not globally reserved; an identical ticker may exist on another contract.
-- Check for confusion with existing stock/RWA tokens and issuer branding.
-
-Do not describe the name/ticker as trademark-cleared, domain-available, or globally unique until those checks are completed. The search performed during initial concept selection found several unrelated projects using `MemeStock` / `MEMESTOCK`, so that name is not recommended.
+1. Check exact and similar names across web, X, GitHub, app stores, domains, and relevant trademark databases.
+2. Search NEAR Testnet and Mainnet for similar token names and symbols; symbols are not globally unique.
+3. Verify social handles before publishing a handle in product assets.
+4. Review all stock-related language and receipt naming with the relevant legal and custody specialists before any real-money integration.
