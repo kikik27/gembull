@@ -2358,6 +2358,12 @@ html[data-scrolled="true"] .nav-menu {
   }
 }
 @media (max-width: 640px) {
+  .hero-copy {
+    gap: 16px;
+  }
+  .hero-sub {
+    max-width: 40ch;
+  }
   .hero-logo {
     width: 108px;
     margin: -12px 0 -10px -16px;
