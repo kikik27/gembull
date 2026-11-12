@@ -1086,6 +1086,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "gembull-core"
+version = "0.1.0"
+dependencies = [
+ "aws-lc-rs",
+ "base64 0.22.1",
+ "near-api",
+ "near-contract-standards",
+ "near-sandbox",
+ "near-sdk",
+ "testresult",
+ "tokio",
+]
+
+[[package]]
 name = "generic-array"
 version = "0.14.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2783,20 +2797,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd124222d17ad93a644ed9d011a40f4fb64aa54275c08cc216524a9ea82fb09f"
 dependencies = [
  "digest 0.10.7",
-]
-
-[[package]]
-name = "gembull-core"
-version = "0.1.0"
-dependencies = [
- "aws-lc-rs",
- "base64 0.22.1",
- "near-api",
- "near-contract-standards",
- "near-sandbox",
- "near-sdk",
- "testresult",
- "tokio",
 ]
 
 [[package]]

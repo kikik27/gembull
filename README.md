@@ -11,7 +11,7 @@ The goal is to demonstrate a memecoin mechanic that a judge can reproduce and in
 | Track expectation | Evidence in this repository | Current status |
 |---|---|---|
 | NEP-141 token with NEP-145 storage and NEP-148 metadata | [`gembull-core`](contracts/gembull-core/) | Source updated; new deployment pending |
-| Daily check-in, target, streak, mint and burn enforced on-chain | Contract methods `check_in`, `finalize_day`, `claim_reward`; [spec](docs/SMART_CONTRACT_SPEC.md) | Source implemented; new Rust test run pending |
+| Daily check-in, target, streak, mint and burn enforced on-chain | Contract methods `check_in`, `finalize_day`, `claim_reward`; [spec](docs/SMART_CONTRACT_SPEC.md) | 20 Rust unit tests and one Linux Sandbox integration test pass; new Testnet deployment pending |
 | Fixed public launch parameters and supply cap | `get_rules()`, no public setters, reward-capacity reservation | Implemented in source |
 | Progress, rules, supply, and event history | [web app](apps/web/) | Local preview; live GemBull data pending deployment |
 | 60-day supply simulation | [script](scripts/simulate_60_days.py) and [CSV](docs/simulation/gembull-60-day-simulation.csv) | 180 rows regenerated and checked |
@@ -69,7 +69,7 @@ cargo near build non-reproducible-wasm --no-abi
 cargo test --test ritual_sandbox
 ```
 
-The Sandbox test reads `target/near/gembull_core.wasm`; build first. Run Sandbox in Linux or macOS, or via a Linux Rust environment on Windows. The [contract README](contracts/gembull-core/README.md) explains initialization and storage funding. The Rust toolchain was unavailable in the current editing environment, so the renamed GemBull contract has **not yet passed a fresh Rust or Sandbox run**.
+The Sandbox test reads `target/near/gembull_core.wasm`; build first. Run Sandbox on Linux x86_64/aarch64 or macOS arm64, or via a supported Linux environment on Windows. The [contract README](contracts/gembull-core/README.md) explains initialization and storage funding. On 2026-11-12, `cargo fmt --check`, `cargo near check`, all **20 Rust unit tests**, the Wasm build, and **one Sandbox integration test** passed. The Sandbox test ran in a Rust 1.99.1 Debian Trixie Linux container because `near-sandbox` does not support native Windows and its Linux binary requires a newer GLIBC than Debian Bookworm provides.
 
 From the repository root, reproduce the deterministic 60-day simulation:
 
@@ -96,7 +96,6 @@ The roadmap is an implementation checklist. The landing page shows a short statu
 
 | Priority | Next outcome | Gate |
 |---|---|---|
-| P0 | Run GemBull Rust unit tests, Wasm build, and Sandbox success/miss/claim flows | Tests pass on the renamed source |
 | P0 | Deploy a new GemBull Testnet contract and record ID, transaction, code hash, and upgrade authority | Human-reviewed account and verified metadata |
 | P0 | Fund demo participants, record one real check-in, host UI, and capture a reproducible video | End-to-end judge walkthrough works |
 | P1 | Build separate mockUSDC, stock vault, mock broker, and simulated receipt | Sandbox integration passes; UI always says `SIMULATED` |

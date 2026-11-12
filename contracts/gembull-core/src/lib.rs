@@ -820,7 +820,7 @@ mod tests {
         let mut contract = setup();
         contract
             .token
-            .internal_withdraw(&account("ritl.testnet"), 150_000_000 * UNIT);
+            .internal_withdraw(&account("gembull.testnet"), 150_000_000 * UNIT);
         context(account("keeper.testnet"), EPOCH_NS);
         contract.finalize_day(0);
         assert_eq!(contract.get_epoch(0).treasury_burned.0, 0);
@@ -832,7 +832,7 @@ mod tests {
         let mut contract = setup();
         contract
             .token
-            .internal_withdraw(&account("ritl.testnet"), 150_000_000 * UNIT - 1);
+            .internal_withdraw(&account("gembull.testnet"), 150_000_000 * UNIT - 1);
         context(account("keeper.testnet"), EPOCH_NS);
         contract.finalize_day(0);
         assert_eq!(contract.get_epoch(0).treasury_burned.0, 1);
@@ -841,9 +841,9 @@ mod tests {
 
     #[test]
     #[should_panic(expected = "Ritual treasury is locked")]
-    fn treasury_cannot_transfer_ritl() {
+    fn treasury_cannot_transfer_gembull() {
         let mut contract = setup();
-        context(account("ritl.testnet"), 0);
+        context(account("gembull.testnet"), 0);
         contract.ft_transfer(account("public.testnet"), U128(UNIT), None);
     }
 
@@ -915,8 +915,7 @@ mod tests {
         assert!(
             events
                 .iter()
-                .any(|value| value["standard"] == "gembull"
-                    && value["event"] == "ritual_check_in")
+                .any(|value| value["standard"] == "gembull" && value["event"] == "ritual_check_in")
         );
         assert!(
             events
@@ -930,7 +929,7 @@ mod tests {
     fn genesis_rejects_treasury_as_public_account() {
         context(account("owner.testnet"), 0);
         Contract::new(
-            account("ritl.testnet"),
+            account("gembull.testnet"),
             account("liquidity.testnet"),
             account("ecosystem.testnet"),
         );
