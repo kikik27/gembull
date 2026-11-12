@@ -1,6 +1,6 @@
 {
   "brand": "GemBull",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "contract_id": "gembull-core.testnet",
   "network": "testnet",
   "license": "MIT",
@@ -75,7 +75,9 @@
     ],
     "stickers": [
       { "file": "04-stickers/gembull-gm.png", "description": "Transparent GM community greeting sticker with hoodie bull", "dimensions": "1312x1199", "format": "PNG" },
-      { "file": "04-stickers/gembull-streak.png", "description": "Transparent streak celebration bull sticker", "dimensions": "1254x1254", "format": "PNG" }
+      { "file": "04-stickers/gembull-checked-in.png", "description": "Transparent confirmed daily check-in bull sticker", "dimensions": "1254x1254", "format": "PNG" },
+      { "file": "04-stickers/gembull-streak.png", "description": "Transparent streak celebration bull sticker", "dimensions": "1254x1254", "format": "PNG" },
+      { "file": "04-stickers/gembull-target-hit.png", "description": "Transparent community target celebration bull sticker", "dimensions": "1254x1254", "format": "PNG" }
     ],
     "marketing_and_concepts": [
       { "file": "05-marketing/gembull-campaign-coin.png", "description": "3D campaign artwork coin illustration (not on-chain token metadata)", "dimensions": "1254x1254", "format": "PNG" },

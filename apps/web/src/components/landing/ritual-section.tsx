@@ -11,6 +11,7 @@ import {
   History,
   Layers,
   LayoutDashboard,
+  Sparkles,
   Trophy,
   Vault,
   type LucideIcon,
@@ -52,7 +53,6 @@ type Props = {
   history: HistoryRow[];
   busy: string | null;
   error: string | null;
-  notice: string | null;
   loading: boolean;
   act: (action: RitualAction) => void;
 };
@@ -80,6 +80,7 @@ const sidebar: Array<{ group: string; items: SideItem[] }> = [
     items: [
       { href: "#calculator", label: "Calculator", icon: FlaskConical },
       { href: "#vault", label: "Stock vault", icon: Vault, badge: "SIM" },
+      { href: "#stickers", label: "Stickers", icon: Sparkles },
     ],
   },
 ];
@@ -98,7 +99,6 @@ export function RitualSection({
   history,
   busy,
   error,
-  notice,
   loading,
   act,
 }: Props) {
@@ -301,6 +301,12 @@ export function RitualSection({
                 <span>Loading contract state…</span>
               </div>
             )}
+            {error && (
+              <div className="notice notice-error" role="alert">
+                <strong>FAILED</strong>
+                <span>{error}</span>
+              </div>
+            )}
 
             <div className="rc-grid">
               <div className="rc">
@@ -351,14 +357,14 @@ export function RitualSection({
                 {account?.checked_in && (
                   <div className="rc-checked-banner">
                     <Image
-                      src="/brand/stickers/gembull-gm.png"
+                      src="/brand/stickers/gembull-checked-in.png"
                       width={52}
-                      height={48}
-                      alt="GemBull greeting sticker"
+                      height={52}
+                      alt="GemBull checked-in sticker"
                       className="rc-gm-sticker"
                     />
                     <div>
-                      <strong>GM Ritualist!</strong>
+                      <strong>Ritual confirmed!</strong>
                       <p>
                         Checked in for Day {global?.current_day_id ?? "—"}. Streak preserved!
                       </p>

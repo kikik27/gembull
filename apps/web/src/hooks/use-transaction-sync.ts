@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNearWallet } from "near-connect-hooks";
 import { ritualQueryKey } from "@/constants/ritual";
+import { verifyRitualTransaction } from "@/services/near-rpc";
 import { useRitualUiStore } from "@/stores/ritual-ui-store";
 
 /**
@@ -13,6 +15,8 @@ import { useRitualUiStore } from "@/stores/ritual-ui-store";
 export function useTransactionSync() {
   const queryClient = useQueryClient();
   const { popToast } = useRitualUiStore();
+  const { signedAccountId, loading } = useNearWallet();
+  const processingHashes = useRef<string | null>(null);
 
   const syncOnChainData = useCallback(async () => {
     // Immediate query invalidation & refetch
@@ -40,37 +44,63 @@ export function useTransactionSync() {
     const errorMessage = params.get("errorMessage");
 
     if (txHashes) {
-      const firstHash = txHashes.split(",")[0];
-      popToast({
-        type: "success",
-        title: "Transaction Confirmed",
-        message: "Your on-chain action was verified and completed on NEAR Testnet.",
-        txHash: firstHash,
-        durationMs: 7000,
-      });
-
-      syncOnChainData();
-
-      // Clean URL params so it does not re-trigger on subsequent navigation
-      const cleanUrl = new URL(window.location.href);
-      cleanUrl.searchParams.delete("transactionHashes");
-      window.history.replaceState({}, "", cleanUrl.pathname + cleanUrl.hash);
+      if (loading || !signedAccountId || processingHashes.current === txHashes) return;
+      processingHashes.current = txHashes;
+      const hashes = txHashes.split(",").filter(Boolean);
+      void (async () => {
+        try {
+          if (hashes.length === 0 || hashes.length > 5) throw new Error("Invalid wallet transaction list");
+          const results = await Promise.all(hashes.map((hash) => verifyRitualTransaction(hash, signedAccountId)));
+          const failure = results.find((result) => !result.success);
+          popToast(failure ? {
+            type: "error",
+            title: "Transaction Failed",
+            message: failure.reason || "A GemBull transaction failed on NEAR Testnet.",
+            txHash: hashes[0],
+            durationMs: 7000,
+          } : {
+            type: "success",
+            title: "Transaction Confirmed",
+            message: "The GemBull action completed at finality on NEAR Testnet.",
+            txHash: hashes[0],
+            durationMs: 7000,
+          });
+          void syncOnChainData().catch(() => {
+            popToast({
+              type: "info",
+              title: "Refreshing contract data",
+              message: "Transaction status is final. The latest contract view will retry automatically.",
+              durationMs: 5000,
+            });
+          });
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete("transactionHashes");
+          window.history.replaceState({}, "", cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+        } catch (cause) {
+          popToast({
+            type: "info",
+            title: "Verification pending",
+            message: cause instanceof Error ? cause.message : "Could not verify the transaction. Reload to try again.",
+            txHash: hashes[0],
+            durationMs: 7000,
+          });
+          processingHashes.current = null;
+        }
+      })();
     } else if (errorCode) {
       popToast({
         type: "error",
         title: "Transaction Cancelled",
-        message: errorMessage
-          ? decodeURIComponent(errorMessage)
-          : `Wallet returned error code: ${errorCode}`,
+        message: errorMessage || `Wallet returned error code: ${errorCode}`,
         durationMs: 6000,
       });
 
       const cleanUrl = new URL(window.location.href);
       cleanUrl.searchParams.delete("errorCode");
       cleanUrl.searchParams.delete("errorMessage");
-      window.history.replaceState({}, "", cleanUrl.pathname + cleanUrl.hash);
+      window.history.replaceState({}, "", cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
     }
-  }, [popToast, syncOnChainData]);
+  }, [popToast, syncOnChainData, signedAccountId, loading]);
 
   return { syncOnChainData };
 }

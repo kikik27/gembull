@@ -7,6 +7,7 @@ import {
   ritualQueryKey,
 } from "@/constants/ritual";
 import { errorMessage } from "@/lib/ritual-format";
+import { verifyRitualTransaction } from "@/services/near-rpc";
 import { useRitualUiStore } from "@/stores/ritual-ui-store";
 
 export type RitualAction = {
@@ -53,8 +54,11 @@ export function useRitualActions() {
       if (typeof result.status === "object" && "Failure" in result.status) {
         throw new Error(JSON.stringify(result.status.Failure));
       }
-
-      return { label, hash: result.transaction?.hash };
+      const hash = result.transaction?.hash;
+      if (!hash) throw new Error("Wallet did not return a transaction hash to verify");
+      const verified = await verifyRitualTransaction(hash, wallet.signedAccountId);
+      if (!verified.success) throw new Error(verified.reason || "GemBull transaction failed at finality");
+      return { label, hash };
     },
     onSuccess: async ({ label, hash }) => {
       popToast({
@@ -80,16 +84,7 @@ export function useRitualActions() {
         queryClient.refetchQueries({ queryKey: ritualQueryKey });
       }, 3500);
     },
-    onError: (cause) => {
-      const msg = errorMessage(cause);
-      setActionError(msg);
-      popToast({
-        type: "error",
-        title: "Action Failed",
-        message: msg,
-        durationMs: 6000,
-      });
-    },
+    onError: (cause) => setActionError(errorMessage(cause)),
     onSettled: () => setBusyAction(null),
   });
 

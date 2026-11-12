@@ -1491,6 +1491,68 @@ html[data-scrolled="true"] .nav-menu {
   color: var(--dim);
   line-height: 1.5;
 }
+.sticker-pack-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.sticker-pack-card {
+  overflow: hidden;
+  border: 1px solid var(--sr-border);
+  border-radius: 16px;
+  background: var(--sr-surface-1);
+}
+.sticker-pack-preview {
+  display: grid;
+  place-items: center;
+  min-height: 220px;
+  padding: 16px;
+  background: radial-gradient(circle at 50% 52%, rgba(183, 255, 22, 0.13), transparent 68%);
+}
+.sticker-pack-preview img {
+  width: min(100%, 220px);
+  height: auto;
+  object-fit: contain;
+}
+.sticker-pack-info {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px 18px;
+}
+.sticker-pack-info h3 {
+  font-size: 19px;
+}
+.sticker-pack-info p {
+  min-height: 3em;
+  color: var(--dim);
+  line-height: 1.5;
+  font-size: 13px;
+}
+.sticker-pack-info a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: fit-content;
+  color: var(--lime);
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.sticker-pack-info a:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+@media (max-width: 900px) {
+  .sticker-pack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 500px) {
+  .sticker-pack-grid { grid-template-columns: 1fr; }
+  .sticker-pack-preview { min-height: 240px; }
+  .sticker-pack-info p { min-height: 0; }
+}
 @media (max-width: 900px) {
   .roadmap-list { grid-template-columns: 1fr; }
 }

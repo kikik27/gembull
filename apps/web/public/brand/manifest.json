@@ -1,6 +1,6 @@
 {
   "brand": "GemBull",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "status": "complete production brand & vector asset pack",
   "assets": [
     { "url": "/brand/gembull-symbol.svg", "source": "vector master emblem", "placement": "scalable brand emblem" },
@@ -15,7 +15,9 @@
     { "url": "/brand/coins/gembull-token-badge.svg", "source": "vector circular coin badge", "placement": "token badge, DEX listing" },
     { "url": "/brand/coins/gembull-campaign-coin.png", "source": "generated GemBull coin", "placement": "promotional illustration; not deployed token metadata" },
     { "url": "/brand/stickers/gembull-gm.png", "source": "transparent GemBull bull sticker", "placement": "community greeting" },
+    { "url": "/brand/stickers/gembull-checked-in.png", "source": "generated transparent GemBull bull sticker", "placement": "confirmed check-in and sticker pack" },
     { "url": "/brand/stickers/gembull-streak.png", "source": "transparent GemBull bull sticker", "placement": "streak celebration" },
+    { "url": "/brand/stickers/gembull-target-hit.png", "source": "generated transparent GemBull bull sticker", "placement": "community target and sticker pack" },
     { "url": "/brand/social/x-banner-1500x500.png", "source": "1500x500 header banner", "placement": "X profile banner" },
     { "url": "/brand/social/discord-banner-1200x500.png", "source": "1200x500 header banner", "placement": "Discord / community header" },
     { "url": "/brand/gembull-open-graph.png", "source": "generated GemBull social preview", "placement": "Open Graph and X card" },

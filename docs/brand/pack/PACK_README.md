@@ -35,7 +35,9 @@ docs/brand/pack/
 │   └── social-avatar-1080x1080.png     # Square profile avatar
 ├── 04-stickers/
 │   ├── gembull-gm.png                  # Transparent GM greeting bull sticker
-│   └── gembull-streak.png              # Transparent streak celebration bull sticker
+│   ├── gembull-checked-in.png          # Transparent confirmed check-in bull sticker
+│   ├── gembull-streak.png              # Transparent streak celebration bull sticker
+│   └── gembull-target-hit.png          # Transparent community target bull sticker
 ├── 05-marketing/
 │   ├── gembull-campaign-coin.png       # 3D campaign artwork coin (illustrative)
 │   ├── gembull-commercial-board-v1.png # 3x3 commercial concept board

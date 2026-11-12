@@ -6,7 +6,7 @@
 
 - Background `#070A08`, surface `#101611`, neon lime `#B7FF16`, off-white `#F4F7F2`, success green `#00B85A`. Reserve gold `#FFC857` for reward or achievement details.
 - Use the official vector master emblem `/brand/gembull-symbol.svg` and primary lockup `/brand/gembull-logo.svg` for scalable UI, headers, and print. Use `/brand/icons/gembull-app-icon.svg` or `/brand/icons/gembull-app-icon.png` for compact marks, favicon, and app icon. The full asset package is organized in [`docs/brand/pack/`](pack/PACK_README.md).
-- The approved mascot identity is a dark bull with horns, green sunglasses, and a black hoodie. Transparent GM (`/brand/stickers/gembull-gm.png`) and streak (`/brand/stickers/gembull-streak.png`) stickers preserve that character. Do not use the N-like mark from the earlier concept board as the project logo.
+- The approved mascot identity is a dark bull with horns, green sunglasses, and a black hoodie. Transparent GM, checked-in, streak, and target-hit stickers preserve that character. Do not use the N-like mark from the earlier concept board as the project logo.
 - Keep headings short, high contrast, and readable. Use type and spacing before adding glow or animation.
 
 ## Current asset pack
@@ -23,7 +23,9 @@ The authoritative web file list is [`apps/web/public/brand/manifest.json`](../..
 | `/brand/coins/gembull-token-badge.svg` | Vector token badge / coin face for explorer and DEX listings |
 | `/brand/coins/gembull-campaign-coin.png` | Promotional illustration only; not on-chain token metadata |
 | `/brand/stickers/gembull-gm.png` | Community greeting |
+| `/brand/stickers/gembull-checked-in.png` | Confirmed daily check-in / downloadable sticker |
 | `/brand/stickers/gembull-streak.png` | Streak celebration |
+| `/brand/stickers/gembull-target-hit.png` | Community target celebration / downloadable sticker |
 | `/brand/social/x-banner-1500x500.png` | X (Twitter) profile banner (1500×500) |
 | `/brand/social/discord-banner-1200x500.png` | Discord / Telegram header (1200×500) |
 | `/brand/gembull-open-graph.png` | Open Graph and X card |

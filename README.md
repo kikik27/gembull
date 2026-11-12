@@ -2,7 +2,7 @@
 
 GemBull is a NEAR-native community memecoin whose supply reacts to a daily on-chain ritual. An eligible account checks in once per 24-hour epoch. A successful community day creates individual reward claims; a missed day burns a fixed slice of the ritual treasury and resets the current streak. The rules live in the token contract, not a backend.
 
-**Hackathon track:** `memecoins` — Memecoins With Mechanics. **Status:** **GemBull / GEMBULL is deployed on NEAR Testnet** at [`gembull-core.testnet`](docs/deployments/GEMBULL_TESTNET.md); metadata, rules, supply, and genesis balances were verified at finality. The [hosted landing](https://web-cyan-three-62.vercel.app) is connected to this contract. A live wallet check-in and recorded demo are still pending. The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) remains a separate legacy **StonkRitual / RITL** token. The stock reserve and active-holder rewards are **PLANNED / SIMULATED** and represent no real shares, custody, redemption, or broker execution. The v0.2 product direction retires the former mock stock-receipt MVP plan.
+**Hackathon track:** `memecoins` — Memecoins With Mechanics. **Status:** **GemBull / GEMBULL is deployed on NEAR Testnet** at [`gembull-core.testnet`](docs/deployments/GEMBULL_TESTNET.md); metadata, rules, supply, and genesis balances were verified at finality. The [hosted landing](https://web-cyan-three-62.vercel.app) is connected to this contract. One live Testnet check-in has been observed at finality; the recorded walkthrough and live settlement/claim evidence are pending. The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) remains a separate legacy **StonkRitual / RITL** token. The stock reserve and active-holder rewards are **PLANNED / SIMULATED** and represent no real shares, custody, redemption, or broker execution. The v0.2 product direction retires the former mock stock-receipt MVP plan.
 
 ## Hackathon goal and evidence
 
@@ -11,11 +11,11 @@ The goal is to demonstrate a memecoin mechanic that a judge can reproduce and in
 | Track expectation | Evidence in this repository | Current status |
 |---|---|---|
 | NEP-141 token with NEP-145 storage and NEP-148 metadata | [`gembull-core`](contracts/gembull-core/) and [Testnet record](docs/deployments/GEMBULL_TESTNET.md) | Deployed; metadata verified |
-| Daily check-in, target, streak, mint and burn enforced on-chain | Contract methods `check_in`, `finalize_day`, `claim_reward`; [spec](docs/SMART_CONTRACT_SPEC.md) | 20 Rust unit tests and one Linux Sandbox integration test pass; live wallet activity pending |
+| Daily check-in, target, streak, mint and burn enforced on-chain | Contract methods `check_in`, `finalize_day`, `claim_reward`; [spec](docs/SMART_CONTRACT_SPEC.md) | 20 Rust unit tests and one Linux Sandbox integration test pass; one live Testnet check-in observed; later settlement and claim/burn evidence pending |
 | Fixed public launch parameters and supply cap | `get_rules()`, no public setters, reward-capacity reservation | Verified on Testnet; deployment key can still upgrade code |
 | Progress, rules, supply, and event history | [hosted web app](https://web-cyan-three-62.vercel.app) | Production page and hydrated live rules/supply verified; wallet walkthrough pending |
 | 60-day supply simulation | [script](scripts/simulate_60_days.py) and [CSV](docs/simulation/gembull-60-day-simulation.csv) | 180 rows regenerated and checked |
-| Judge walkthrough with live wallet actions | Testnet account, faucet/distribution, hosted demo, recorded transactions | Pending |
+| Judge walkthrough with live wallet actions | Testnet account, distribution, hosted demo, recorded transactions | First live check-in observed; full walkthrough/video pending |
 
 The [live hackathon instructions](https://nearhackathon.com/HACKATHON.md) require a public reproducible repository, a human-published X demo post, and one reviewed submission. Testnet-only projects are eligible. Publishing, posting, or submitting needs explicit human approval. The repo must be public by **2026-11-14 23:59 UTC** to enter judging.
 
@@ -102,7 +102,7 @@ The roadmap is an implementation checklist. The landing page shows a short statu
 
 | Priority | Next outcome | Gate |
 |---|---|---|
-| P0 | Fund demo participants, record one real check-in, and capture a reproducible video on the hosted UI | End-to-end judge walkthrough works |
+| P0 | Fund more demo participants and capture a reproducible hosted-UI video of the live check-in and later settlement | End-to-end judge walkthrough works |
 | P1 | Design a simulated two-source stock reserve and non-transferable Ritual Points/active-holder allocations | Open parameters reviewed; UI says `SIMULATED`; no stock receipt token in MVP |
 | Later | Evaluate routed purchase fee, launch venue, LP lock, and legal custody path | No production claim before implementation and review |
 
@@ -123,4 +123,4 @@ docs/deployments/           GemBull Testnet evidence and historical RITL record
 docs/brand/                GemBull assets and creative prompts
 ```
 
-Start with [hackathon alignment](docs/HACKATHON_ALIGNMENT.md), [product requirements](docs/PRD.md), [tokenomics](docs/TOKENOMICS.md), [contract specification](docs/SMART_CONTRACT_SPEC.md), [security](docs/SECURITY_AND_RISK.md), [test plan](docs/TEST_PLAN.md), and [roadmap details](docs/ROADMAP.md). The approved landing logo and commercial assets are documented in the [brand guide](docs/brand/BRAND_GUIDE.md).
+Start with [hackathon alignment](docs/HACKATHON_ALIGNMENT.md), [product requirements](docs/PRD.md), [tokenomics](docs/TOKENOMICS.md), [contract specification](docs/SMART_CONTRACT_SPEC.md), [security](docs/SECURITY_AND_RISK.md), [test plan](docs/TEST_PLAN.md), [roadmap details](docs/ROADMAP.md), and the [latest integration audit](docs/INTEGRATION_AUDIT.md). The approved landing logo, downloadable stickers, and commercial assets are documented in the [brand guide](docs/brand/BRAND_GUIDE.md).

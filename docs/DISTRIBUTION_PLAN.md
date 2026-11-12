@@ -28,6 +28,8 @@ Standards: [NEP-141 fungible token transfer](https://github.com/near/neps/blob/m
 
 For a small pilot, the team can make reviewed transfers from the public allocation account to named Testnet accounts. To test the **successful** day path live, at least **50 distinct registered accounts** must each receive the minimum balance and check in before the epoch ends. Allocating 1,000 each would move 50,000 GEMBULL from the existing public bucket; this is a **demo example**, not an approved public airdrop policy. One account cannot prove 50 independent humans. For a larger test, build a limited, auditable claim distributor funded with a bounded amount from the public account, with one claim per eligible account and explicit anti-abuse rules. Such a distributor is **not implemented** today.
 
+The team CLI script supports a read-only preflight, e.g. `pnpm distribute:testnet alice.testnet 5000 --dry-run`. It checks that the Testnet account exists, GEMBULL storage is registered, and the public allocation has sufficient balance. Running without `--dry-run` sends a signed transfer and requires human approval under the project work protocol.
+
 This route is **distribution of test tokens**, not a purchase. Testnet NEAR used for gas or token storage is not payment for GEMBULL. The current app has no Buy button, DEX integration, or GEMBULL faucet.
 
 ## Route B — future trading, not live

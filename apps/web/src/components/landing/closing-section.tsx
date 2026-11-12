@@ -25,6 +25,7 @@ const columns = [
     title: "Community",
     links: [
       { href: "#roles", label: "Who it’s for" },
+      { href: "#stickers", label: "Sticker pack" },
       { href: "#join", label: "Join the ritual" },
       { href: "#top", label: "Back to top" },
     ],

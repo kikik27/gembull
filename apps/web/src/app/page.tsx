@@ -17,6 +17,7 @@ import { RolesSection } from "@/components/landing/roles-section";
 import { RoadmapSection } from "@/components/landing/roadmap-section";
 import { RulesSection } from "@/components/landing/rules-section";
 import { SiteHeader } from "@/components/landing/site-header";
+import { StickerPackSection } from "@/components/landing/sticker-pack-section";
 import { SupplySection } from "@/components/landing/supply-section";
 import { VaultSection } from "@/components/landing/vault-section";
 import { SceneStack } from "@/components/scene/scene-stack";
@@ -37,7 +38,6 @@ export default function Home() {
     showThroughDay,
     busyAction: busy,
     actionError,
-    notice,
   } = useRitualUiStore();
   const data = useRitualData(signedAccountId, historyLimit);
   const {
@@ -86,7 +86,6 @@ export default function Home() {
           history={history}
           busy={busy}
           error={error}
-          notice={notice}
           loading={data.isLoading}
           act={act}
         />
@@ -123,6 +122,7 @@ export default function Home() {
           <RulesSection resolved={resolved} />
           <VaultSection />
           <RoadmapSection />
+          <StickerPackSection />
         </div>
         <EndSection explorer={explorer} />
       </main>

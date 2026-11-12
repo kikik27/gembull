@@ -41,7 +41,15 @@ Generated draft: [gembull-commercial-board-v1.png](concepts/gembull-commercial-b
 - Landing logo: `apps/web/public/brand/gembull-logo.png` — approved for landing use by the owner.
 - Square app icon: `apps/web/public/brand/icons/gembull-app-icon.png` — derived from the logo for compact UI and favicon use.
 - Coin art: `apps/web/public/brand/coins/gembull-campaign-coin.png` — promotional illustration, not the deployed Testnet token metadata.
-- Stickers: `apps/web/public/brand/stickers/gembull-gm.png` and `gembull-streak.png` — transparent community artwork.
+- Stickers: `apps/web/public/brand/stickers/` contains GM, checked-in, streak, and target-hit transparent community artwork.
+
+## 4. New dApp sticker prompts
+
+Both stickers were generated with the built-in image generation tool, using the approved GM sticker as the mascot identity reference. They have genuine PNG alpha and no embedded text so the app can provide accessible, localized status text in HTML.
+
+**Checked in:** “Create a new standalone GemBull sticker preserving the friendly charcoal-black bull, cream horns, neon-lime mirrored sunglasses, black hoodie, bold linework and warm white die-cut border. The bull proudly taps a lime checkmark on a small daily calendar. Centered, square, crisp at small sizes, transparent background. No text, numbers, logo, stock symbol or scene.”
+
+**Target hit:** “Create a new standalone GemBull sticker preserving that mascot identity. The bull celebrates the community reaching its daily goal, raising a lime trophy and making a victory gesture, with a few lime and gold confetti sparks. Centered, square, crisp at small sizes, transparent background. No text, numbers, logo, stock symbol or scene.”
 - Social preview: `apps/web/public/brand/gembull-open-graph.png` — 1734×907, used for Open Graph and X metadata.
 
 The app still reads the deployed token's actual name and ticker from the contract. These assets do not change the on-chain metadata.
