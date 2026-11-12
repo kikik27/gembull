@@ -175,8 +175,8 @@ tr {
   max-width: 1000px;
   font-size: clamp(32px, 4.4vw, 58px);
   font-weight: 750;
-  line-height: 1.07;
-  letter-spacing: -0.038em;
+  line-height: 1.08;
+  letter-spacing: -0.044em;
   text-wrap: balance;
 }
 .h2 em,
@@ -186,9 +186,9 @@ tr {
   color: var(--lime);
 }
 .lede {
-  max-width: 600px;
+  max-width: 620px;
   font-size: clamp(16px, 1.4vw, 19px);
-  line-height: 1.55;
+  line-height: 1.62;
   letter-spacing: -0.005em;
   color: var(--dim);
 }
@@ -515,6 +515,8 @@ html[data-scrolled="true"] .nav-menu {
 }
 .hero-copy {
   display: flex;
+  width: 100%;
+  min-width: 0;
   max-width: 780px;
   flex-direction: column;
   align-items: flex-start;
@@ -543,9 +545,12 @@ html[data-scrolled="true"] .nav-menu {
   display: block;
 }
 .hero-sub {
+  max-width: 620px;
   font-size: clamp(17px, 1.6vw, 21px);
   color: var(--dim);
   letter-spacing: -0.005em;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 .hero-actions {
   display: flex;
@@ -555,31 +560,25 @@ html[data-scrolled="true"] .nav-menu {
 .scroll-card {
   display: flex;
   flex: none;
-  width: clamp(160px, 14vw, 200px);
-  aspect-ratio: 193 / 152;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  padding: 16px 17px;
-  border: 1px solid rgba(183, 255, 22, 0.22);
-  border-radius: 14px;
-  background: linear-gradient(
-    160deg,
-    rgba(183, 255, 22, 0.1),
-    rgba(21, 30, 24, 0.55)
-  );
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  font-size: clamp(20px, 1.9vw, 26px);
-  font-weight: 650;
-  line-height: 1.18;
-  letter-spacing: -0.015em;
+  gap: 24px;
+  padding: 14px 0 0;
+  border-top: 1px solid rgba(183, 255, 22, 0.42);
+  color: var(--sr-text-muted);
+  font-family: var(--sr-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
   transition: transform 350ms var(--out);
 }
 .scroll-card:hover {
   transform: translateY(-4px);
 }
 .scroll-arrow {
-  align-self: flex-end;
   color: var(--lime);
   animation: bob 2.2s ease-in-out infinite;
 }
@@ -1458,9 +1457,11 @@ html[data-scrolled="true"] .nav-menu {
   margin-bottom: clamp(28px, 4vw, 48px);
 }
 .sec-head p {
+  max-width: 48ch;
   font-size: 17px;
-  line-height: 1.5;
+  line-height: 1.62;
   color: var(--dim);
+  text-wrap: pretty;
 }
 .roadmap-list {
   display: grid;
@@ -2308,11 +2309,9 @@ html[data-scrolled="true"] .nav-menu {
     justify-content: flex-end;
   }
   .scroll-card {
-    align-self: flex-end;
-    width: 150px;
-    aspect-ratio: 150 / 92;
-    padding: 12px 14px;
-    font-size: 17px;
+    align-self: flex-start;
+    padding-top: 12px;
+    font-size: 11px;
   }
   .dash-body {
     grid-template-columns: minmax(0, 1fr);

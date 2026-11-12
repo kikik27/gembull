@@ -46,8 +46,8 @@ export function RulesSection({ resolved }: { resolved: ResolvedRules }) {
     <section className="section" id="rules" aria-labelledby="rules-title">
       <div className="frame">
         <SectionHead
-          title={<span id="rules-title">Set once. Seen by everyone.</span>}
-          aside="Read from get_rules() when a contract is configured. There are no setters for any of these values."
+          title={<span id="rules-title">The rules live in the open.</span>}
+          aside="Read from get_rules() when a contract is configured. These parameters have no admin setters; code upgrade authority is disclosed below."
         />
         <div className="rules-grid">
           <Reveal className="rules-copy">

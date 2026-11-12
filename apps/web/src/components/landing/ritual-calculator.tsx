@@ -47,8 +47,8 @@ export function RitualCalculator({
     <section className="section" id="calculator" aria-labelledby="calc-title">
       <div className="frame">
         <SectionHead
-          title={<span id="calc-title">Slide it. Watch the contract.</span>}
-          aside="Pick how many accounts check in today. The result below uses the same rules the contract runs, so you can see the stakes before you show up."
+          title={<span id="calc-title">What if we all showed up?</span>}
+          aside="Move the slider to explore a possible day. The illustration follows the contract rules; it does not predict real participation."
         />
         <div className="calc-grid">
           <Reveal className="calc-left">

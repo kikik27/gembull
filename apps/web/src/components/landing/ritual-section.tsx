@@ -188,9 +188,10 @@ export function RitualSection({
         </Reveal>
         <Reveal delay={0.1}>
           <p className="lede">
-            Check in once per epoch. Hit the target and everyone who showed up
-            claims a reward. Miss it and the contract burns part of the ritual
-            treasury. No admin can change the numbers.
+            One check-in is a small act. Together, they decide the day. Meet
+            the target and eligible participants can claim a reward after
+            finalization. Miss it and the contract burns a fixed share of the
+            ritual treasury. The numbers have no admin setters.
           </p>
         </Reveal>
         <Reveal className="studio-actions" delay={0.15}>
@@ -364,9 +365,10 @@ export function RitualSection({
                       className="rc-gm-sticker"
                     />
                     <div>
-                      <strong>Ritual confirmed!</strong>
+                      <strong>Your check-in is on-chain.</strong>
                       <p>
-                        Checked in for Day {global?.current_day_id ?? "—"}. Streak preserved!
+                        Day {global?.current_day_id ?? "—"} recorded. The streak
+                        updates when the epoch is finalized.
                       </p>
                     </div>
                   </div>

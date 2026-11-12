@@ -30,10 +30,10 @@ export function StickerPackSection() {
     <section className="section" id="stickers" aria-labelledby="stickers-title">
       <div className="sec-head">
         <Reveal>
-          <h2 className="h2" id="stickers-title">Bring the bull along.</h2>
+          <h2 className="h2" id="stickers-title">Give the ritual a face.</h2>
         </Reveal>
         <Reveal delay={0.1}>
-          <p>Four transparent GemBull stickers for your ritual posts. Download a PNG and share it with the community.</p>
+          <p>Four little marks for the days you show up. Download a transparent PNG and share the moment with your community.</p>
         </Reveal>
       </div>
       <div className="sticker-pack-grid">

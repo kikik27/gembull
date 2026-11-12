@@ -22,7 +22,7 @@ export function VaultSection() {
             <span className="tag tag-sim">Secondary concept · Simulation</span>
           </div>
           <h2 className="h2" id="vault-title">
-            Stock reserve. Still a simulation.
+            A future idea, clearly simulated.
           </h2>
           <p>
             Two funding sources are proposed: eligible routed trading fees and

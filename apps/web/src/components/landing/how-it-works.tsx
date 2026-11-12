@@ -16,7 +16,7 @@ export function HowItWorks({ resolved }: { resolved: ResolvedRules }) {
       index: "01",
       icon: CalendarCheck,
       eyebrow: "CHECK IN",
-      title: "Show up once per epoch.",
+      title: "One day. One check-in.",
       body: `Any NEAR account holding at least ${formatRitl(rules.min_holding, 0)} GEMBULL checks in once per ${hours}-hour epoch. One transaction, recorded on-chain.`,
       caption: "Epoch length",
       metric: `${hours}h`,
@@ -28,7 +28,7 @@ export function HowItWorks({ resolved }: { resolved: ResolvedRules }) {
       index: "02",
       icon: Target,
       eyebrow: "HIT THE TARGET",
-      title: `Reach ${rules.daily_target} together.`,
+      title: `Reach ${rules.daily_target}. Together.`,
       body: `If ${rules.daily_target} accounts check in before the epoch closes, the day succeeds and the community streak goes up by one.`,
       caption: "Daily target",
       metric: String(rules.daily_target),
@@ -39,8 +39,8 @@ export function HowItWorks({ resolved }: { resolved: ResolvedRules }) {
       index: "03",
       icon: Flame,
       eyebrow: "MINT OR BURN",
-      title: "Claim or burn.",
-      body: `On success every participant claims ${formatRitl(rules.reward_per_checkin, 0)} GEMBULL, minted by the contract. On a miss the ritual treasury burns ${bpsToPercent(rules.treasury_burn_bps)}. No admin can change either number.`,
+      title: "The outcome leaves a mark.",
+      body: `On success every participant can claim ${formatRitl(rules.reward_per_checkin, 0)} GEMBULL after finalization, minted by the contract. On a miss the ritual treasury burns ${bpsToPercent(rules.treasury_burn_bps)}. Neither number has an admin setter.`,
       caption: "Missed-day burn",
       metric: bpsToPercent(rules.treasury_burn_bps),
       href: "#rules",
@@ -71,13 +71,14 @@ export function HowItWorks({ resolved }: { resolved: ResolvedRules }) {
           </Reveal>
           <Reveal delay={0.05}>
             <h2 className="h2" id="how-title">
-              One day, <em>three steps.</em>
+              A simple act. <em>A shared outcome.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lede">
-              The whole mechanic fits on one screen. Everything below it is the
-              contract showing its work.
+              Show up, reach the mark, let the contract settle the day. The
+              ritual is simple enough to feel; its rules are public enough to
+              verify.
             </p>
           </Reveal>
           <Reveal className="split-actions" delay={0.15}>

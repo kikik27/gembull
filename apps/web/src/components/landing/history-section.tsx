@@ -138,8 +138,8 @@ export function HistorySection({
     <section className="section" id="history" aria-labelledby="history-title">
       <div className="frame">
         <SectionHead
-          title={<span id="history-title">Proof in the pattern.</span>}
-          aside="Every finalized epoch, read from contract views. Claims appear on the row where you earned them."
+          title={<span id="history-title">Every day leaves a record.</span>}
+          aside="Finalized epochs come from contract views. Eligible claims appear beside the day that made them possible."
         />
         <Reveal className="ledger">
           <div className="ledger-scroll">

@@ -5,7 +5,7 @@ const roles = [
   {
     icon: Wallet,
     title: "Holder",
-    body: "Hold the minimum, check in once an epoch, claim when the community hits the target.",
+    body: "A single check-in joins a larger count. Hold the minimum, show up once, and claim if the day succeeds.",
     chips: ["Minimum holding", "One per epoch"],
     href: "#ritual",
     cta: "Enter the ritual",
@@ -13,7 +13,7 @@ const roles = [
   {
     icon: Users,
     title: "Community",
-    body: "Participation is the number that matters. The streak belongs to everyone, not one wallet.",
+    body: "The streak is written together, one eligible account at a time. Its history stays open to everyone.",
     chips: ["Shared streak", "Public history"],
     href: "#history",
     cta: "See the history",
@@ -21,7 +21,7 @@ const roles = [
   {
     icon: ShieldCheck,
     title: "Judge",
-    body: "Inspect every parameter, mint and burn. No setters, no hidden mint, no trust required.",
+    body: "Follow every parameter, claim and burn to the contract. The ritual is meant to be checked, not taken on faith.",
     chips: ["get_rules()", "Event logs"],
     href: "#rules",
     cta: "Read the rules",
@@ -29,7 +29,7 @@ const roles = [
   {
     icon: Braces,
     title: "Builder",
-    body: "Read the contract views, run the 60-day simulation and fork the mechanic.",
+    body: "Read the contract views, run the 60-day simulation, and build on the mechanic.",
     chips: ["Open views", "Simulation"],
     href: "#treasury",
     cta: "See the supply",
@@ -42,15 +42,15 @@ export function RolesSection() {
       <div className="roles-head">
         <Reveal>
           <h2 className="h2" id="roles-title">
-            Built for everyone
+            One ritual. Many ways
             <br />
-            who <em>shows up.</em>
+            to <em>show up.</em>
           </h2>
         </Reveal>
         <Reveal delay={0.08}>
           <p className="lede">
-            One ritual, four ways in. Every role gets the controls it needs,
-            and nothing it doesn’t.
+            Whether you hold, gather, inspect, or build, the same public rules
+            give every role a place in the story.
           </p>
         </Reveal>
       </div>

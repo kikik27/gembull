@@ -49,11 +49,11 @@ export function EndSection({ explorer }: { explorer: string }) {
           alt="The GemBull mascot"
         />
         <h2 className="cta-title">
-          Check in. <em>Keep the streak.</em>
+          Show up today. <em>Come back tomorrow.</em>
         </h2>
         <p className="lede">
-          One transaction a day. The contract keeps score, so nobody has to take
-          our word for it.
+          A daily act becomes a shared history. Sign one check-in, watch the
+          community reach for its mark, and let the chain tell the rest.
         </p>
         <div className="cta-actions">
           <a className="btn btn-lime" href="#dash">
@@ -76,10 +76,10 @@ export function EndSection({ explorer }: { explorer: string }) {
               <BrandWord size={28} />
             </a>
             <p>
-              GemBull is a NEAR Testnet hackathon prototype at
-              gembull-core.testnet. Its token is a community meme, not an equity
-              claim. The stock reserve is a simulation with no real shares,
-              custody or redemption.
+              A meme with a memory, built on NEAR Testnet at
+              gembull-core.testnet. GemBull is a hackathon prototype and its
+              token does not confer equity ownership. The stock reserve is simulated: no real
+              shares, custody, or redemption.
             </p>
             <span className={`tag tag-dot ${explorer ? "tag-live" : ""}`}>
               {explorer ? "NEAR Testnet" : "Local preview"}

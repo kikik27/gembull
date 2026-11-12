@@ -33,7 +33,9 @@ export function Hero() {
             </span>
           </h1>
           <p className="hero-sub" data-intro="sub">
-            GemBull is live on NEAR Testnet. Check in once per daily epoch; the contract tracks progress, rewards, and treasury burns.
+            A meme with a memory. Show up once a day on NEAR Testnet. The
+            contract records the ritual; a successful day opens eligible reward claims,
+            while a missed day burns a slice of the ritual treasury.
           </p>
           <div className="hero-actions" data-intro="actions">
             <a className="btn btn-lime" href="#dash">
@@ -46,12 +48,8 @@ export function Hero() {
         </div>
 
         <a className="scroll-card" href="#ritual" data-intro="card">
-          <span>
-            Scroll down
-            <br />
-            &amp; discover
-          </span>
-          <ArrowDown className="scroll-arrow" aria-hidden="true" size={22} />
+          <span>Explore the ritual</span>
+          <ArrowDown className="scroll-arrow" aria-hidden="true" size={18} />
         </a>
       </div>
     </section>

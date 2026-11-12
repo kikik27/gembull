@@ -8,6 +8,8 @@ import { sceneState } from "./scene-state";
 
 const TAU = Math.PI * 2;
 const FACE_RADIUS = 0.4;
+const READING_AREAS =
+  "main.page :is(h1, h2, h3, p, .glass, .panel, .dash, .slip, .ledger, .term, .roadmap-item, .footer-grid)";
 
 /** Prepares the coin face; the approved GemBull icon is added after it loads. */
 function paintCoinFace(size: number) {
@@ -156,6 +158,28 @@ export function CoinCanvas() {
     let frame = 0;
     let last = performance.now();
     const start = last;
+    const readingAreas = Array.from(
+      document.querySelectorAll<HTMLElement>(READING_AREAS),
+    ).filter((element) => !element.closest(".hero"));
+    let lastOverlapCheck = 0;
+    let overlapsReadingArea = false;
+    let coinOpacity = 1;
+
+    const coinTouchesReadingArea = (pose: Pose) => {
+      const centerX = ((pose.x + 1) * width) / 2;
+      const centerY = ((1 - pose.y) * height) / 2;
+      const radius = (pose.s * height) / 2 + 16;
+      return readingAreas.some((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > height) return false;
+        const nearestX = Math.max(rect.left, Math.min(centerX, rect.right));
+        const nearestY = Math.max(rect.top, Math.min(centerY, rect.bottom));
+        return (
+          (centerX - nearestX) ** 2 + (centerY - nearestY) ** 2 <
+          radius ** 2
+        );
+      });
+    };
 
     const layout = () => {
       width = Math.max(window.innerWidth, 1);
@@ -221,6 +245,16 @@ export function CoinCanvas() {
       camera.rotation.x = tiltY;
 
       apply(current, time);
+      if (now - lastOverlapCheck > 90) {
+        lastOverlapCheck = now;
+        overlapsReadingArea =
+          window.scrollY > height * 0.65 && coinTouchesReadingArea(current);
+      }
+      const targetOpacity = overlapsReadingArea ? 0.12 : 1;
+      coinOpacity = reduced
+        ? targetOpacity
+        : coinOpacity + (targetOpacity - coinOpacity) * (1 - Math.exp(-dt * 8));
+      canvas.style.opacity = coinOpacity.toFixed(3);
       renderer.render(scene, camera);
     };
 

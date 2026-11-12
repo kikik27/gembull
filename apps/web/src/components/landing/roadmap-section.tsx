@@ -22,8 +22,8 @@ export function RoadmapSection() {
   return (
     <section className="section" id="roadmap" aria-labelledby="roadmap-title">
       <div className="sec-head">
-        <Reveal><h2 className="h2" id="roadmap-title">What ships next.</h2></Reveal>
-        <Reveal delay={0.1}><p>Implementation status, not a promise of returns or a token launch date.</p></Reveal>
+        <Reveal><h2 className="h2" id="roadmap-title">The story is still being written.</h2></Reveal>
+        <Reveal delay={0.1}><p>What is live, what comes next, and what is only planned. No return promises or launch dates.</p></Reveal>
       </div>
       <ol className="roadmap-list">
         {milestones.map((item, index) => (

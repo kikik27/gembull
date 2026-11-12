@@ -52,8 +52,8 @@ export function SupplySection({ global, resolved }: Props) {
     <section className="section" id="treasury" aria-labelledby="supply-title">
       <div className="frame">
         <SectionHead
-          title={<span id="supply-title">The numbers don’t bluff.</span>}
-          aside="On the left, what the contract reports right now. On the right, a clearly separate 60-day simulation of how the same rules move supply."
+          title={<span id="supply-title">Every number leaves a trace.</span>}
+          aside="The contract reports the supply on the left. The separate 60-day simulation on the right shows how these rules could move it."
         />
         <div className="supply-grid">
           <Reveal className="panel watch">
