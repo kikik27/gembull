@@ -154,36 +154,46 @@ export function VaultSection() {
       </Reveal>
 
       <Reveal className="vault-governance" delay={0.16}>
-        <div className="vault-governance-intro">
-          <span className="tag tag-sim">COMMUNITY CHOICE · PLANNED</span>
-          <h3>Who chooses the stock? <em>The community.</em></h3>
+        <div className="vault-governance-heading">
+          <div>
+            <span className="tag tag-sim">COMMUNITY CHOICE · PLANNED</span>
+            <h3>The next stock choice <em>belongs to the community.</em></h3>
+          </div>
           <p>
-            A separate NEAR ballot is the next goal. Eligible wallets would
-            nominate candidates and sign votes; anyone could close the round.
-            No team member would choose the winner or edit the tally. Voting is
-            not live yet.
+            The proposed ballot would live on NEAR. The team can host the
+            conversation; the contract would count votes and set the result.
           </p>
         </div>
-        <ol className="vault-governance-steps">
+        <ol className="vault-governance-route" aria-label="Planned community voting flow">
           <li>
-            <span>01 / NOMINATE</span>
-            <strong>Put a candidate on the ballot.</strong>
-            <p>Community submitted tickers would be visibly unverified.</p>
+            <span className="vault-governance-number">01</span>
+            <strong>Nominate</strong>
+            <p>Eligible wallets propose a stock candidate.</p>
           </li>
           <li>
-            <span>02 / VOTE ON NEAR</span>
-            <strong>Let eligible wallets decide.</strong>
-            <p>Votes and the final tally would come from a separate contract.</p>
+            <span className="vault-governance-number">02</span>
+            <strong>Vote on NEAR</strong>
+            <p>Wallet-signed choices become public ballots.</p>
           </li>
           <li>
-            <span>03 / SHOW RECIPIENTS</span>
-            <strong>Make each portion traceable.</strong>
-            <p>Future simulated records would show wallet, points, snapshot, and calculated portion.</p>
+            <span className="vault-governance-number">03</span>
+            <strong>Finalize</strong>
+            <p>Anyone closes the round. No admin picks the winner.</p>
           </li>
         </ol>
+        <div className="vault-governance-ledger">
+          <div>
+            <span>PUBLIC RECIPIENT VIEW · PLANNED</span>
+            <strong>Who would receive a simulated portion?</strong>
+            <p>Active wallets only, using a fixed snapshot and verified Ritual Points.</p>
+          </div>
+          <div className="vault-governance-ledger-fields" aria-label="Proposed recipient record fields">
+            <span>WALLET</span><span>POINTS</span><span>SNAPSHOT</span><span>PORTION</span>
+          </div>
+        </div>
         <p className="vault-governance-note">
-          No ballot or recipient ledger is deployed. A vote selects a simulated
-          target; it does not buy stock or give GEMBULL holders shares.
+          No ballot or recipient ledger is live. A vote does not buy shares or
+          grant stock ownership.
         </p>
       </Reveal>
 

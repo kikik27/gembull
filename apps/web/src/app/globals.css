@@ -2489,69 +2489,127 @@ html[data-scrolled="true"] .nav-menu {
 }
 .vault-governance {
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 32px 48px;
+  gap: 28px;
   margin-top: clamp(52px, 7vw, 88px);
-  padding-top: 30px;
-  border-top: 1px solid rgba(183, 255, 22, 0.22);
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid rgba(183, 255, 22, 0.24);
+  border-radius: 22px;
+  background: radial-gradient(circle at 92% 0%, rgba(183, 255, 22, 0.09), transparent 43%), #0b120d;
 }
-.vault-governance-intro h3 {
-  max-width: 13ch;
-  margin-top: 18px;
+.vault-governance-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 0.7fr);
+  align-items: end;
+  gap: 24px;
+}
+.vault-governance-heading h3 {
+  max-width: 20ch;
+  margin-top: 16px;
   font-size: clamp(28px, 3.1vw, 46px);
-  line-height: 1.05;
+  line-height: 1.08;
   letter-spacing: -0.04em;
 }
-.vault-governance-intro h3 em {
+.vault-governance-heading h3 em {
   color: var(--sr-lime);
   font-style: normal;
 }
-.vault-governance-intro p {
-  max-width: 48ch;
-  margin-top: 18px;
+.vault-governance-heading p {
+  max-width: 42ch;
   color: var(--sr-text-muted);
   font-size: 14px;
   line-height: 1.65;
 }
-.vault-governance-steps {
+.vault-governance-route {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(244, 247, 242, 0.16);
+  border-bottom: 1px solid rgba(244, 247, 242, 0.16);
   list-style: none;
 }
-.vault-governance-steps li {
+.vault-governance-route li {
+  position: relative;
   min-width: 0;
-  padding-top: 16px;
-  border-top: 1px solid rgba(244, 247, 242, 0.22);
+  padding: 22px 26px 24px 0;
 }
-.vault-governance-steps li:nth-child(2) {
-  border-color: var(--sr-lime);
+.vault-governance-route li + li {
+  padding-left: 26px;
+  border-left: 1px solid rgba(244, 247, 242, 0.16);
 }
-.vault-governance-steps span {
+.vault-governance-route li:not(:last-child)::after {
+  content: "↗";
+  position: absolute;
+  right: 18px;
+  top: 22px;
+  color: var(--sr-lime);
+  font-size: 20px;
+}
+.vault-governance-number {
   color: var(--sr-lime);
   font-family: var(--sr-font-mono);
   font-size: 10px;
   letter-spacing: 0.12em;
 }
-.vault-governance-steps strong {
+.vault-governance-route strong {
   display: block;
-  margin-top: 20px;
-  font-size: 17px;
+  margin-top: 12px;
+  font-size: 19px;
   line-height: 1.2;
 }
-.vault-governance-steps p {
-  margin-top: 12px;
+.vault-governance-route p {
+  max-width: 27ch;
+  margin-top: 8px;
   color: var(--sr-text-subtle);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.55;
 }
-.vault-governance-note {
-  grid-column: 2;
-  max-width: 70ch;
+.vault-governance-ledger {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 22px;
+  padding: 24px;
+  border: 1px solid rgba(255, 200, 87, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 200, 87, 0.045);
+}
+.vault-governance-ledger > div:first-child > span {
   color: var(--sr-warning);
   font-family: var(--sr-font-mono);
-  font-size: 11px;
-  line-height: 1.6;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+.vault-governance-ledger strong {
+  display: block;
+  margin-top: 9px;
+  font-size: 17px;
+}
+.vault-governance-ledger p {
+  margin-top: 7px;
+  color: var(--sr-text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.vault-governance-ledger-fields {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+.vault-governance-ledger-fields span {
+  padding: 10px 5px;
+  border: 1px solid rgba(255, 200, 87, 0.24);
+  border-radius: 6px;
+  color: var(--sr-warning);
+  font-family: var(--sr-font-mono);
+  font-size: 9px;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.vault-governance-note {
+  color: var(--sr-text-subtle);
+  font-size: 12px;
+  line-height: 1.5;
 }
 .vault-disclosures {
   display: grid;
@@ -2793,11 +2851,9 @@ html[data-scrolled="true"] .nav-menu {
   .vault-disclosures {
     grid-template-columns: minmax(0, 1fr);
   }
-  .vault-governance {
+  .vault-governance-heading,
+  .vault-governance-ledger {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .vault-governance-note {
-    grid-column: 1;
   }
   .kpis {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2830,12 +2886,31 @@ html[data-scrolled="true"] .nav-menu {
   .vault-model {
     min-height: 680px;
   }
-  .vault-governance-steps {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
+  .vault-governance {
+    gap: 22px;
+    padding: 22px;
   }
-  .vault-governance-steps strong {
-    margin-top: 8px;
+  .vault-governance-route {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vault-governance-route li {
+    padding: 17px 0;
+  }
+  .vault-governance-route li + li {
+    padding-left: 0;
+    border-top: 1px solid rgba(244, 247, 242, 0.16);
+    border-left: 0;
+  }
+  .vault-governance-route li:not(:last-child)::after {
+    top: 18px;
+    right: 2px;
+    transform: rotate(90deg);
+  }
+  .vault-governance-ledger {
+    padding: 18px;
+  }
+  .vault-governance-ledger-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .vault-flow-formulas {
     top: 54px;
