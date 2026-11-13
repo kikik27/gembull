@@ -19,9 +19,7 @@ GemBull is a NEAR-native community memecoin whose supply reacts to a daily on-ch
 
 For a full reproduction path, follow [Run locally](#run-locally), [Verify the contract and simulation](#verify-the-contract-and-simulation), and the [judge walkthrough](#judge-walkthrough). The [submission readiness sheet](docs/SUBMISSION_READINESS.md) tracks the demo post and final submission gates.
 
-The [54-second paper pop-up demo film](films/gembull-popup/README.md) is a narrated, animated story made with Lemo Opuscar. It illustrates the ritual rules and labels the stock concept **SIMULATED**. It is not footage of a live wallet signature; the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) covers that action.
-
-The [16-bit pixel RPG film](films/gembull-story/README.md) remains a separate creative exploration. The paper pop-up film is the selected submission demo; its local export awaits human review before the X post.
+The selected submission video is a 54.5-second narrated paper pop-up story made with Lemo Opuscar. It illustrates the ritual rules and labels the stock concept **SIMULATED**. It is not footage of a live wallet signature; the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) covers that action. Film source and exports stay local to keep this judging repository focused on the app, contract, tests, and reproducible simulation. The public X demo post will carry the video once published.
 
 The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) is a separate legacy **StonkRitual / RITL** token. The v0.2 product direction retires its mock stock-receipt plan; judges should inspect the GemBull contract and the [GemBull Testnet deployment record](docs/deployments/GEMBULL_TESTNET.md).
 
@@ -145,11 +143,10 @@ scripts/                   Deterministic 60-day simulator
 docs/                      Product, contract, security, test, and design specifications
 docs/deployments/           GemBull Testnet evidence and historical RITL record
 docs/brand/                GemBull assets and creative prompts
-films/gembull-popup/        Lemo Opuscar paper pop-up film source, narration script and credits
 ```
 
 Start with [hackathon alignment](docs/HACKATHON_ALIGNMENT.md), [product requirements](docs/PRD.md), [tokenomics](docs/TOKENOMICS.md), [contract specification](docs/SMART_CONTRACT_SPEC.md), [security](docs/SECURITY_AND_RISK.md), [test plan](docs/TEST_PLAN.md), [roadmap details](docs/ROADMAP.md), and the [latest integration audit](docs/INTEGRATION_AUDIT.md). The approved landing logo, downloadable stickers, and commercial assets are documented in the [brand guide](docs/brand/BRAND_GUIDE.md).
 
 ## Implementation and provenance
 
-The NEAR integration was developed during the 2026-11-01 to 2026-11-14 hackathon window; the repository's first commit is dated 2026-11-12. The older RITL deployment and StonkRitual naming are documented as historical work within this repository, not presented as the current token. The contract uses Rust, `near-sdk`, and NEAR fungible-token standards. The web app uses Next.js/React, NEAR wallet tooling, typed contract reads, TanStack Query, Zod, Zustand, and Axios. The supply simulation is a deterministic Python script. The submission film uses [Lemo Opuscar](films/gembull-popup/README.md) with ElevenLabs narration; no API credentials are committed. Third-party project packages are listed in the relevant `Cargo.toml`, `package.json`, and lockfiles.
+The NEAR integration was developed during the 2026-11-01 to 2026-11-14 hackathon window; the repository's first commit is dated 2026-11-12. The older RITL deployment and StonkRitual naming are documented as historical work within this repository, not presented as the current token. The contract uses Rust, `near-sdk`, and NEAR fungible-token standards. The web app uses Next.js/React, NEAR wallet tooling, typed contract reads, TanStack Query, Zod, Zustand, and Axios. The supply simulation is a deterministic Python script. The local submission film uses Lemo Opuscar with ElevenLabs narration; no API credentials are committed. Third-party app and contract packages are listed in the relevant `Cargo.toml`, `package.json`, and lockfiles.

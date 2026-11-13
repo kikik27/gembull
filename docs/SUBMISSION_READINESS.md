@@ -10,11 +10,11 @@ Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com
 - [x] NEAR Testnet contract `gembull-core.testnet`: `pnpm verify:testnet` passed at finality on 2026-11-13, including metadata, supply, rules, code hash, and disclosure of one remaining FullAccess upgrade key.
 - [x] README includes reproducible actions and observable results.
 - [x] Contract tests and deterministic 60-day simulation are documented; the live and simulated paths are separated.
-- [x] The human selected the Lemo Opuscar [paper pop-up film](../films/gembull-popup/README.md) for the X demo post. It is exported locally at 1920 × 1080, 24 fps, 54.5 seconds with ElevenLabs narration, AAC audio, and corrected English captions. The MP4 is ignored by Git and awaits human review and X upload.
+- [x] The human selected the Lemo Opuscar paper pop-up film for the X demo post. Its local export, `films/gembull-popup/gembull-popup.mp4`, is 1920 × 1080, 24 fps, 54.5 seconds with ElevenLabs narration, AAC audio, and corrected English captions. The film folder is excluded from the judging repository; the MP4 awaits human review and X upload.
 
 ## Still required before submission
 
-- [ ] Review the selected [paper pop-up demo film](../films/gembull-popup/README.md), its captions, and every spoken claim. The story and target counter illustrate the verified rules; they are not a recording of a signed wallet transaction or live 50-account milestone.
+- [ ] Review the selected local paper pop-up demo film, its captions, and every spoken claim. The story and target counter illustrate the verified rules; they are not a recording of a signed wallet transaction or live 50-account milestone.
 - [ ] Human publishes a public X post with the video attached, says it was built at **NEAR HACKATHON**, tags **@NEARProtocol** and **#NEARHackathon**, and provides the post URL.
 - [ ] Human provides and confirms the team lead name, contact email, team size, mainnet NEAR payout account, selected track(s), public repo link, public X post link, and the exact project description. Do not infer these from a Testnet wallet.
 - [ ] Read the organizer contact notice verbatim and obtain the human's consent.
