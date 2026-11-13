@@ -17,6 +17,8 @@
   --dim: var(--sr-text-muted);
   --pad: clamp(16px, 3vw, 36px);
   --maxw: 1200px;
+  --section-space: clamp(64px, 7vw, 96px);
+  --feature-radius: 20px;
   --glass-bg: linear-gradient(
     160deg,
     rgba(28, 40, 32, 0.6),
@@ -589,7 +591,7 @@ html[data-scrolled="true"] .nav-menu {
 
 /* ───────────────────────── Statement + dashboard ───────────────────────── */
 .studio {
-  padding: clamp(120px, 24vh, 260px) var(--pad) clamp(72px, 9vw, 140px);
+  padding: clamp(112px, 12vw, 152px) var(--pad) var(--section-space);
   text-align: center;
 }
 .studio-head {
@@ -1131,7 +1133,7 @@ html[data-scrolled="true"] .nav-menu {
 .how {
   width: min(100% - var(--pad) * 2, var(--maxw));
   margin-inline: auto;
-  padding-block: clamp(110px, 14vw, 190px) clamp(60px, 8vw, 110px);
+  padding-block: var(--section-space);
 }
 .split {
   display: grid;
@@ -1150,6 +1152,12 @@ html[data-scrolled="true"] .nav-menu {
   justify-content: flex-start;
 }
 .code {
+  min-width: 0;
+  padding: 18px 22px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--feature-radius);
+  background: var(--sr-surface-1);
+  box-shadow: var(--glass-shadow);
   font-family: var(--sr-font-mono);
 }
 .code-head,
@@ -1356,11 +1364,11 @@ html[data-scrolled="true"] .nav-menu {
   position: relative;
   width: min(100% - var(--pad) * 2, var(--maxw));
   margin-inline: auto;
-  padding-block: clamp(90px, 12vw, 160px) clamp(100px, 13vw, 190px);
+  padding-block: var(--section-space);
 }
 .roles-head {
   position: absolute;
-  top: clamp(90px, 12vw, 160px);
+  top: var(--section-space);
   right: 0;
   width: min(560px, 48%);
   text-align: right;
@@ -1440,7 +1448,7 @@ html[data-scrolled="true"] .nav-menu {
 .section {
   width: min(100% - var(--pad) * 2, var(--maxw));
   margin-inline: auto;
-  padding-block: clamp(44px, 6vw, 84px);
+  padding-block: var(--section-space);
 }
 #under {
   padding-top: clamp(30px, 6vw, 80px);
@@ -1468,10 +1476,10 @@ html[data-scrolled="true"] .nav-menu {
   min-height: 460px;
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid rgba(183, 255, 22, 0.2);
-  border-radius: 24px;
-  background: #0a100b;
-  box-shadow: 0 32px 90px rgba(0, 0, 0, 0.24);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--feature-radius);
+  background: var(--sr-surface-1);
+  box-shadow: var(--glass-shadow);
 }
 .roadmap-visual {
   position: relative;
@@ -1687,8 +1695,9 @@ html[data-scrolled="true"] .nav-menu {
 .sticker-pack-card {
   overflow: hidden;
   border: 1px solid var(--sr-border);
-  border-radius: 16px;
-  background: var(--sr-surface-1);
+  border-radius: var(--feature-radius);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
 }
 .sticker-pack-preview {
   display: grid;
@@ -2259,10 +2268,10 @@ html[data-scrolled="true"] .nav-menu {
 /* Proposed reserve, always separate from the live ritual. */
 .vault-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   align-items: end;
   gap: 18px 48px;
-  margin-bottom: 30px;
+  margin-bottom: clamp(28px, 4vw, 48px);
 }
 .vault-intro > :first-child {
   grid-column: 1 / -1;
@@ -2283,9 +2292,10 @@ html[data-scrolled="true"] .nav-menu {
   grid-template-columns: minmax(0, 1.1fr) minmax(350px, 0.9fr);
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid rgba(255, 200, 87, 0.24);
-  border-radius: 24px;
-  background: #0a100b;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--feature-radius);
+  background: var(--sr-surface-1);
+  box-shadow: var(--glass-shadow);
 }
 .vault-model {
   position: relative;
@@ -2490,11 +2500,12 @@ html[data-scrolled="true"] .nav-menu {
 .vault-governance {
   display: grid;
   gap: 28px;
-  margin-top: clamp(52px, 7vw, 88px);
+  margin-top: var(--section-space);
   padding: clamp(24px, 4vw, 44px);
-  border: 1px solid rgba(183, 255, 22, 0.24);
-  border-radius: 22px;
-  background: radial-gradient(circle at 92% 0%, rgba(183, 255, 22, 0.09), transparent 43%), #0b120d;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--feature-radius);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
 }
 .vault-governance-heading {
   display: grid;
@@ -2629,7 +2640,7 @@ html[data-scrolled="true"] .nav-menu {
   display: flex;
   min-height: 100svh;
   flex-direction: column;
-  padding: clamp(110px, 15vw, 220px) var(--pad) 36px;
+  padding: clamp(112px, 12vw, 152px) var(--pad) 36px;
 }
 .cta {
   position: relative;
@@ -2638,7 +2649,7 @@ html[data-scrolled="true"] .nav-menu {
   margin-inline: auto;
   padding: 52px 60px 46px;
   overflow: hidden;
-  border-radius: 24px;
+  border-radius: var(--feature-radius);
   background: linear-gradient(
     180deg,
     rgba(28, 40, 32, 0.68),
@@ -2796,7 +2807,7 @@ html[data-scrolled="true"] .nav-menu {
     margin-top: 48px;
   }
   .roles {
-    padding-block: 90px 110px;
+    padding-block: var(--section-space);
   }
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2881,7 +2892,7 @@ html[data-scrolled="true"] .nav-menu {
 }
 @media (max-width: 640px) {
   .vault-simulator {
-    border-radius: 18px;
+    border-radius: var(--feature-radius);
   }
   .vault-model {
     min-height: 680px;
@@ -2946,7 +2957,7 @@ html[data-scrolled="true"] .nav-menu {
     font-size: 20px;
   }
   .roadmap-experience {
-    border-radius: 18px;
+    border-radius: var(--feature-radius);
   }
   .roadmap-visual {
     min-height: 300px;
@@ -3007,7 +3018,24 @@ html[data-scrolled="true"] .nav-menu {
     flex: 1 1 100%;
   }
   .studio {
-    padding-block: 150px 80px;
+    padding-block: 104px var(--section-space);
+  }
+  .code {
+    padding: 16px;
+  }
+  .panel-campaign-coin {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .campaign-coin-body {
+    min-width: 0;
+  }
+  .campaign-coin-head .tag {
+    height: auto;
+    min-height: 26px;
+    padding-block: 6px;
+    line-height: 1.3;
+    white-space: normal;
   }
   .dash {
     margin-top: 48px;
@@ -3067,11 +3095,11 @@ html[data-scrolled="true"] .nav-menu {
     margin-left: 0;
   }
   .end {
-    padding-top: 150px;
+    padding-top: 104px;
   }
   .cta {
     padding: 36px 22px 32px;
-    border-radius: 18px;
+    border-radius: var(--feature-radius);
   }
   .footer {
     padding-top: 90px;

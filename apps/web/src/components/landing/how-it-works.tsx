@@ -82,7 +82,7 @@ export function HowItWorks({ resolved }: { resolved: ResolvedRules }) {
             </p>
           </Reveal>
           <Reveal className="split-actions" delay={0.15}>
-            <a className="btn btn-white" href="#calculator">
+            <a className="btn btn-lime" href="#calculator">
               Open the calculator
             </a>
             <a className="btn btn-dk" href="#rules">
