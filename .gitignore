@@ -24,5 +24,6 @@ films/
 .agents/
 **/.redesign-backup/
 *.log
+contracts/stock-governance/
 
 .vercel

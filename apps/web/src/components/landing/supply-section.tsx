@@ -12,6 +12,11 @@ export function SupplySection({ global, resolved }: Props) {
   const { rules, isLive } = resolved;
   const rows: Array<{ label: string; note: string; value: string }> = [
     {
+      label: "Genesis supply",
+      note: isLive ? "Fixed at contract initialization" : "Proposed launch amount",
+      value: formatRitl(rules.initial_supply),
+    },
+    {
       label: "Total supply",
       note: "GEMBULL in circulation",
       value: formatRitl(global?.total_supply),

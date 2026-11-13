@@ -18,6 +18,7 @@ import { SectionHead } from "./section-head";
 import { Reveal } from "./reveal";
 import { epochJumpSchema, type HistoryRow } from "@/schemas/ritual";
 import { formatRitl } from "@/lib/ritual-format";
+import type { RitualEvent } from "@/schemas/ritual-events";
 
 const features = tableFeatures({});
 type JumpForm = { day: number };
@@ -30,6 +31,12 @@ type Props = {
   busy: boolean;
   explorer: string;
   loading: boolean;
+  events: RitualEvent[];
+  eventError: string | null;
+  eventLoading: boolean;
+  eventLoadingMore: boolean;
+  eventHasMore: boolean;
+  onLoadMoreEvents: () => void;
   onClaim: (dayId: number) => void;
   onShowOlder: () => void;
   onJumpToDay: (dayId: number) => void;
@@ -43,6 +50,12 @@ export function HistorySection({
   busy,
   explorer,
   loading,
+  events,
+  eventError,
+  eventLoading,
+  eventLoadingMore,
+  eventHasMore,
+  onLoadMoreEvents,
   onClaim,
   onShowOlder,
   onJumpToDay,
@@ -213,6 +226,51 @@ export function HistorySection({
               </a>
             )}
           </div>
+        </Reveal>
+        <Reveal className="event-feed">
+          <div className="event-feed-head">
+            <div>
+              <span className="tag tag-live">NEAR TESTNET · INDEXED RECEIPTS</span>
+              <h3>Ritual event log</h3>
+              <p>Mint, burn, check-in and settlement logs emitted by the GemBull contract. Each link opens its NEAR transaction.</p>
+            </div>
+            <span className="event-feed-count">{events.length} events loaded</span>
+          </div>
+          {eventError ? <p className="event-feed-state" role="alert">{eventError}. Contract epoch views above remain available.</p> : null}
+          {eventLoading ? <p className="event-feed-state">Loading verified Testnet receipts…</p> : null}
+          {!eventLoading && !eventError && events.length === 0 ? (
+            <p className="event-feed-state">No ritual events on this page yet. Load older transactions if available.</p>
+          ) : null}
+          <ol className="event-feed-list">
+            {events.map((item) => {
+              const when = new Date(Number(BigInt(item.blockTimestampNs) / 1_000_000n));
+              return (
+                <li key={item.id}>
+                  <div className="event-feed-primary">
+                    <strong>{item.event.replaceAll("_", " ")}</strong>
+                    <span>{item.standard} · block {item.blockHeight}</span>
+                  </div>
+                  <div className="event-feed-detail">
+                    <span>{item.accountId ?? "Contract"}</span>
+                    {item.dayId !== null ? <span>Day {item.dayId}</span> : null}
+                    {item.amount && BigInt(item.amount) > 0n ? <span>{formatRitl(item.amount)} GEMBULL</span> : null}
+                    {item.outcome ? <span>{item.outcome}</span> : null}
+                  </div>
+                  <div className="event-feed-meta">
+                    <time dateTime={when.toISOString()}>{when.toLocaleString("en-US", { timeZone: "UTC" })} UTC</time>
+                    <a href={`https://testnet.nearblocks.io/txns/${encodeURIComponent(item.transactionHash)}`} target="_blank" rel="noreferrer" aria-label={`Open transaction ${item.transactionHash} in NEAR explorer`}>
+                      {item.transactionHash.slice(0, 9)}…{item.transactionHash.slice(-6)} ↗
+                    </a>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+          {eventHasMore ? (
+            <Button className="btn btn-quiet btn-sm" disabled={eventLoadingMore} onClick={onLoadMoreEvents}>
+              {eventLoadingMore ? "Loading…" : "Load older transactions ↓"}
+            </Button>
+          ) : null}
         </Reveal>
       </div>
     </section>

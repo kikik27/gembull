@@ -1,0 +1,14 @@
+{
+  "name": "gembull-keeper-bot",
+  "version": "1.0.0",
+  "description": "Automated keeper bot for GemBull daily ritual epoch settlement on NEAR",
+  "type": "module",
+  "main": "keeper.mjs",
+  "scripts": {
+    "start": "node keeper.mjs",
+    "check": "node keeper.mjs --once"
+  },
+  "dependencies": {
+    "near-api-js": "^7.5.1"
+  }
+}

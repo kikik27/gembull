@@ -3,6 +3,7 @@
 import { RITUAL_CONTRACT_ID as CONTRACT_ID } from "@/constants/ritual";
 import { useRitualActions } from "@/hooks/use-ritual-actions";
 import { useRitualData } from "@/hooks/use-ritual-data";
+import { useRitualEvents } from "@/hooks/use-ritual-events";
 import { useTransactionSync } from "@/hooks/use-transaction-sync";
 import { PROPOSED_TREASURY, resolveRules } from "@/lib/ritual-params";
 import { useRitualUiStore } from "@/stores/ritual-ui-store";
@@ -40,6 +41,7 @@ export default function Home() {
     actionError,
   } = useRitualUiStore();
   const data = useRitualData(signedAccountId, historyLimit);
+  const eventFeed = useRitualEvents();
   const {
     rules,
     global,
@@ -106,6 +108,12 @@ export default function Home() {
             busy={Boolean(busy)}
             explorer={explorer}
             loading={data.isLoading}
+            events={eventFeed.events}
+            eventError={eventFeed.error}
+            eventLoading={eventFeed.loading}
+            eventLoadingMore={eventFeed.loadingMore}
+            eventHasMore={eventFeed.hasMore}
+            onLoadMoreEvents={eventFeed.loadMore}
             onClaim={(dayId) =>
               act({
                 label: `Claim day ${dayId}`,
