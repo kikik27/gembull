@@ -9,7 +9,7 @@ GemBull is a NEAR-native community memecoin whose supply reacts to a daily on-ch
 | Do this | See this | Evidence |
 |---|---|---|
 | Open the hosted app and scroll to **Ritual** | Current epoch, target progress, rules, and Testnet source labels | Live contract views, not seeded metrics |
-| Open **Supply** and **Epoch history** | On-chain supply and event history alongside a clearly separate 60-day simulation | `get_global_state()` and [deterministic CSV](docs/simulation/gembull-60-day-simulation.csv) |
+| Open **Supply** and **Epoch history** | On-chain supply and finalized-epoch summaries alongside a clearly separate 60-day simulation | `get_global_state()`, `get_epoch()`, and [deterministic CSV](docs/simulation/gembull-60-day-simulation.csv) |
 | Run `pnpm verify:testnet` from the repo root | Metadata, rules, supply bounds, code hash, and upgrade-key report | Read-only finality checks against Testnet RPC |
 | Run `python scripts/simulate_60_days.py --check` | `180` checked scenario rows | No price or adoption prediction |
 | Connect a Testnet wallet, register storage, receive at least 1,000 test GEMBULL, then **Check in now** | The wallet signs `check_in`; the app refreshes account status and epoch progress after finality | [Wallet guide](docs/TESTNET_USER_GUIDE.md); token transfer is team-operated, with no buy route |
@@ -32,7 +32,7 @@ The goal is to demonstrate a memecoin mechanic that a judge can reproduce and in
 | NEP-141 token with NEP-145 storage and NEP-148 metadata | [`gembull-core`](contracts/gembull-core/) and [Testnet record](docs/deployments/GEMBULL_TESTNET.md) | Deployed; metadata verified |
 | Daily check-in, target, streak, mint and burn enforced on-chain | Contract methods `check_in`, `finalize_day`, `claim_reward`; [spec](docs/SMART_CONTRACT_SPEC.md) | 20 Rust unit tests and one Linux Sandbox integration test pass; one live Testnet check-in observed; later settlement and claim/burn evidence pending |
 | Fixed public launch parameters and supply cap | `get_rules()`, no public setters, reward-capacity reservation | Verified on Testnet; deployment key can still upgrade code |
-| Progress, rules, supply, and event history | [hosted web app](https://gembull-testnet.vercel.app) | Production page and hydrated live rules/supply verified; wallet walkthrough pending |
+| Progress, rules, supply, and event history | [hosted web app](https://gembull-testnet.vercel.app) | Live rules, supply, and finalized-epoch summaries are available; the per-event feed required by the PRD is pending |
 | 60-day supply simulation | [script](scripts/simulate_60_days.py) and [CSV](docs/simulation/gembull-60-day-simulation.csv) | 180 rows regenerated and checked |
 | Judge walkthrough with live wallet actions | Testnet account, distribution, hosted demo, recorded transactions | First live check-in observed; full walkthrough/video pending |
 

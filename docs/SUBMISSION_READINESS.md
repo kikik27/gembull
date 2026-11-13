@@ -30,6 +30,14 @@ Attach the video file to the post. The human must publish it and return its publ
 
 One accepted Testnet check-in was observed at finality, but no complete hosted wallet recording or live successful claim/burn transaction has been documented. The 50-account target makes a successful live epoch unavailable from a single tester. The Sandbox integration test demonstrates both settlement branches under time travel. Stock voting, share purchase, custody, and holder allocations are not deployed. The deployed contract code remains upgradeable through its FullAccess key.
 
+## MVP acceptance gaps against the current PRD
+
+- **F-08 event history:** the web app displays finalized-epoch summaries from contract views, but does not list each ritual `ft_mint`, `ft_burn`, and check-in event with transaction hash, block height/time, account, and amount. The generic contract explorer link does not meet the PRD's in-app event-history requirement.
+- **F-06 supply dashboard:** the contract exposes `initial_supply` through `get_rules()`, but the supply panel does not display it. The other supply, treasury, mint, burn, and capacity values are shown.
+- **End-to-end live evidence:** a wallet check-in has been observed on Testnet, while a hosted-wallet recording and a live successful claim or missed-day burn are not yet documented. Sandbox covers both settlement branches.
+
+The stock reserve, Ritual Points, simulated allocation ledger, and community ballot are explicitly planned in the v0.2 product direction; they are not part of the deployed hackathon core. The present build should be described as a working ritual core with the acceptance gaps above, not as the complete v0.2 product.
+
 ## Submission idea draft
 
 GemBull is a NEAR-native memecoin whose daily community ritual changes on-chain supply. Eligible holders check in once per 24-hour epoch. When 50 accounts participate, each can claim a fixed reward after permissionless settlement; when the target is missed, the contract burns a fixed portion of its ritual treasury and resets the streak. The NEP-141 token contract enforces these rules, balance eligibility, participant limits, supply cap, and epoch ordering. A Testnet web app shows live progress, rules, supply, and history. A reproducible 60-day simulation explores the supply mechanic. Stock reserve and community vote concepts are clearly marked simulated and are not part of the deployed contract.
