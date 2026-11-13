@@ -23,7 +23,8 @@ Make a memecoin where community participation has deterministic on-chain consequ
 4. **History page:** epoch outcomes, each mint/burn event, transaction hash, block height/time, account, amount.
 5. **Treasury page:** ritual treasury balance, cumulative burned amount, total minted, current total supply, remaining mint headroom.
 6. **Stock Reserve page (planned, secondary):** source-separated mock inflows, batch status, simulated execution, active-holder points/allocation records, explicit SIMULATED banner. The current landing shows a concept preview only.
-7. **Docs / How it works:** immutable rules, sybil limitations, contract IDs, links to explorer, reproduction steps.
+7. **Community stock vote (proposed Testnet extension):** community-nominated candidates, wallet-signed on-chain ballots, permissionless tally, and inspectable simulated recipient calculations. No ballot contract is deployed today.
+8. **Docs / How it works:** immutable rules, sybil limitations, contract IDs, links to explorer, reproduction steps.
 
 ## 4. Functional requirements
 
@@ -107,6 +108,15 @@ Display:
 - Export per-day values: check-ins, success/failure, reward minted, treasury burned, total supply, treasury balance, current streak, longest streak.
 - Document the claim-rate assumption (100% claims in the simulation).
 
+### F-11 — Community stock candidate vote (proposed, not deployed)
+
+- Let eligible wallets nominate bounded, clearly unverified candidate metadata and cast wallet-signed ballots on NEAR Testnet.
+- Enforce eligibility, one vote per account per round, vote window, tally, and permissionless finalization in a separate contract, not the backend. Voting weight and eligibility remain open decisions.
+- No team/admin method may select or override the winner. A no-quorum or tied round must follow a published no-action rule.
+- Show transaction links and chain-derived totals; display `PLANNED — NOT LIVE` until deployment and verification.
+- A public simulated recipient view must show wallet IDs, points, snapshot, batch, calculated portion, and rounding when its ledger is implemented. Do not show fabricated current holders or stock shares.
+- Follow the [governance proposal](COMMUNITY_STOCK_GOVERNANCE.md) and keep all actual stock execution outside this Testnet feature.
+
 ## 5. Non-functional requirements
 
 - **Correctness:** contract logic is deterministic and independent of backend state.
@@ -152,7 +162,7 @@ Hackathon product metrics should be demonstrable, not fabricated:
 
 - Real stock acquisition or legal receipt issuance.
 - Verified personhood / proof-of-humanity.
-- Permissionless multi-stock governance.
+- Live real-asset purchase, custody, or shareholder rights triggered by a ballot.
 - Unbounded on-chain participant list rendering.
 - Token price targets, yield/APY promises, or guaranteed stock-price correlation.
 - Mainnet launch.

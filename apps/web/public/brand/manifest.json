@@ -23,6 +23,6 @@
     { "url": "/brand/gembull-open-graph.png", "source": "generated GemBull social preview", "placement": "Open Graph and X card" },
     { "url": "/brand/scene/ritual-day.svg", "source": "project scene asset", "placement": "landing day scene" },
     { "url": "/brand/scene/ritual-night.svg", "source": "project scene asset", "placement": "landing night scene" },
-    { "url": "/brand/scene/gembull-roadster-mascot.png", "source": "generated transparent GemBull mascot in lime roadster", "placement": "interactive roadmap vehicle" }
+    { "url": "/brand/scene/gembull-roadster-mascot.png", "source": "generated transparent GemBull mascot leaning out of lime car window", "placement": "interactive roadmap vehicle" }
   ]
 }

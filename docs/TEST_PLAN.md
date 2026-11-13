@@ -45,6 +45,7 @@
 - When implemented, verify both simulated stock funding sources, protected-surplus calculation, points eligibility, and allocations remain isolated from GEMBULL ritual treasury; no custom receipt mint is in the revised MVP.
 - Test the proposed active-holder window at 4/7, 5/7, and 7/7 valid check-ins; a failed community day still gives its valid check-in point. Test a balance below/exactly at the proposed snapshot minimum, zero eligible holders, carry-forward, and rounding dust. These tests are pending until the points/simulation layer exists.
 - Verify mock broker failure does not impact ritual transactions.
+- When the separate governance contract exists, test nomination, wallet-signed vote, duplicate prevention, eligibility cross-call failure, voting window boundaries, tie/no-quorum behavior, and permissionless finalization. Verify no admin method can override the tally. These tests are pending; there is no deployed ballot today.
 
 ## 3. Property / invariant tests
 

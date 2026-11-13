@@ -1508,10 +1508,46 @@ html[data-scrolled="true"] .nav-menu {
   top: 58%;
   left: 23%;
   width: clamp(106px, 13vw, 148px);
-  height: auto;
-  transform: translate(-50%, -58%);
+  transform: translate(-50%, -58%) rotate(var(--car-tilt, 0deg));
   pointer-events: none;
   filter: drop-shadow(0 14px 15px rgba(0, 0, 0, 0.65));
+}
+.roadmap-car-art {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.roadmap-car[data-driving="true"] .roadmap-car-art {
+  animation: roadmap-car-suspension 260ms ease-in-out infinite;
+}
+.roadmap-car-dust {
+  position: absolute;
+  top: 75%;
+  left: 7%;
+  width: 48%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(183, 255, 22, 0.72));
+  opacity: 0;
+}
+.roadmap-car-dust-two {
+  top: 83%;
+  width: 34%;
+}
+.roadmap-car[data-driving="true"] .roadmap-car-dust {
+  animation: roadmap-car-trail 420ms linear infinite;
+}
+.roadmap-car[data-driving="true"] .roadmap-car-dust-two {
+  animation-delay: 130ms;
+}
+@keyframes roadmap-car-suspension {
+  50% { transform: translateY(-2px); }
+}
+@keyframes roadmap-car-trail {
+  0% { opacity: 0; transform: translateX(-4px) scaleX(0.45); }
+  30% { opacity: 0.7; }
+  100% { opacity: 0; transform: translateX(-34px) scaleX(1); }
 }
 .roadmap-visual-heading {
   position: absolute;
@@ -2451,6 +2487,72 @@ html[data-scrolled="true"] .nav-menu {
 .vault-result-total dd {
   font-size: 22px;
 }
+.vault-governance {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 32px 48px;
+  margin-top: clamp(52px, 7vw, 88px);
+  padding-top: 30px;
+  border-top: 1px solid rgba(183, 255, 22, 0.22);
+}
+.vault-governance-intro h3 {
+  max-width: 13ch;
+  margin-top: 18px;
+  font-size: clamp(28px, 3.1vw, 46px);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.vault-governance-intro h3 em {
+  color: var(--sr-lime);
+  font-style: normal;
+}
+.vault-governance-intro p {
+  max-width: 48ch;
+  margin-top: 18px;
+  color: var(--sr-text-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.vault-governance-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  list-style: none;
+}
+.vault-governance-steps li {
+  min-width: 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(244, 247, 242, 0.22);
+}
+.vault-governance-steps li:nth-child(2) {
+  border-color: var(--sr-lime);
+}
+.vault-governance-steps span {
+  color: var(--sr-lime);
+  font-family: var(--sr-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+.vault-governance-steps strong {
+  display: block;
+  margin-top: 20px;
+  font-size: 17px;
+  line-height: 1.2;
+}
+.vault-governance-steps p {
+  margin-top: 12px;
+  color: var(--sr-text-subtle);
+  font-size: 12px;
+  line-height: 1.55;
+}
+.vault-governance-note {
+  grid-column: 2;
+  max-width: 70ch;
+  color: var(--sr-warning);
+  font-family: var(--sr-font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+}
 .vault-disclosures {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2691,6 +2793,12 @@ html[data-scrolled="true"] .nav-menu {
   .vault-disclosures {
     grid-template-columns: minmax(0, 1fr);
   }
+  .vault-governance {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .vault-governance-note {
+    grid-column: 1;
+  }
   .kpis {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2721,6 +2829,13 @@ html[data-scrolled="true"] .nav-menu {
   }
   .vault-model {
     min-height: 680px;
+  }
+  .vault-governance-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  .vault-governance-steps strong {
+    margin-top: 8px;
   }
   .vault-flow-formulas {
     top: 54px;

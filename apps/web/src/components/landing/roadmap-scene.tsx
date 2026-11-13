@@ -40,7 +40,7 @@ function roadRibbon(curve: THREE.CatmullRomCurve3, width: number, height: number
 /** A small map: curved road, three flag pins, and the GemBull mascot driving to the selected stop. */
 export function RoadmapScene({ active, onSelect }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const carRef = useRef<HTMLImageElement>(null);
+  const carRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef(active);
   const selectRef = useRef(onSelect);
   const redrawRef = useRef<(() => void) | null>(null);
@@ -197,24 +197,46 @@ export function RoadmapScene({ active, onSelect }: Props) {
     });
 
     let progress = CAR_STOPS[activeRef.current] ?? CAR_STOPS[0];
+    let departure = progress;
+    let destination = progress;
+    let departureTime = 0;
+    let driveDuration = 1;
+    let lastSelected = activeRef.current;
     let frame = 0;
     let visible = false;
     let pointerX = 0;
     let pointerY = 0;
     const draw = (time: number) => {
       const selected = activeRef.current;
-      const target = CAR_STOPS[selected] ?? CAR_STOPS[0];
-      progress += (target - progress) * (reduced ? 1 : 0.055);
+      if (selected !== lastSelected) {
+        departure = progress;
+        destination = CAR_STOPS[selected] ?? CAR_STOPS[0];
+        departureTime = time;
+        driveDuration = 1000 + Math.abs(destination - departure) * 1700;
+        lastSelected = selected;
+      }
+      const journey = reduced
+        ? 1
+        : Math.min(1, Math.max(0, (time - departureTime) / driveDuration));
+      const eased = journey * journey * (3 - 2 * journey);
+      progress = departure + (destination - departure) * eased;
+      const driving = !reduced && journey < 1 && Math.abs(destination - departure) > 0.001;
       const point = road.getPoint(progress);
       const carPosition = new THREE.Vector3(
         point.x,
-        0.78 + (reduced ? 0 : Math.sin(time * 0.004) * 0.025),
+        0.78 + (driving ? Math.sin(time * 0.018) * 0.025 : 0),
         point.z,
       );
       const projected = carPosition.project(camera);
       if (carRef.current) {
         carRef.current.style.left = `${(projected.x + 1) * 50}%`;
         carRef.current.style.top = `${(1 - projected.y) * 50}%`;
+        const tangent = road.getTangent(progress);
+        const ahead = carPosition.clone().addScaledVector(tangent, 0.35).project(camera);
+        const screenAngle = Math.atan2(projected.y - ahead.y, ahead.x - projected.x);
+        const tilt = driving ? Math.max(-6, Math.min(6, screenAngle * 9)) : 0;
+        carRef.current.style.setProperty("--car-tilt", `${tilt.toFixed(2)}deg`);
+        carRef.current.dataset.driving = String(driving);
       }
       flags.forEach((flag, index) => {
         const chosen = index === selected;
@@ -251,6 +273,7 @@ export function RoadmapScene({ active, onSelect }: Props) {
         if (!visible && frame) {
           window.cancelAnimationFrame(frame);
           frame = 0;
+          if (carRef.current) carRef.current.dataset.driving = "false";
         }
       },
       { threshold: 0.05 },
@@ -324,17 +347,19 @@ export function RoadmapScene({ active, onSelect }: Props) {
   return (
     <>
       <canvas ref={canvasRef} className="roadmap-canvas" aria-hidden="true" />
-      <Image
-        ref={carRef}
-        src="/brand/scene/gembull-roadster-mascot.png"
-        alt=""
-        aria-hidden="true"
-        className="roadmap-car"
-        width={1312}
-        height={1199}
-        priority
-        unoptimized
-      />
+      <div ref={carRef} className="roadmap-car" aria-hidden="true" data-driving="false">
+        <span className="roadmap-car-dust roadmap-car-dust-one" />
+        <span className="roadmap-car-dust roadmap-car-dust-two" />
+        <Image
+          src="/brand/scene/gembull-roadster-mascot.png"
+          alt=""
+          className="roadmap-car-art"
+          width={1536}
+          height={1024}
+          priority
+          unoptimized
+        />
+      </div>
     </>
   );
 }

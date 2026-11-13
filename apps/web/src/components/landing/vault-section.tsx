@@ -153,6 +153,40 @@ export function VaultSection() {
         </div>
       </Reveal>
 
+      <Reveal className="vault-governance" delay={0.16}>
+        <div className="vault-governance-intro">
+          <span className="tag tag-sim">COMMUNITY CHOICE · PLANNED</span>
+          <h3>Who chooses the stock? <em>The community.</em></h3>
+          <p>
+            A separate NEAR ballot is the next goal. Eligible wallets would
+            nominate candidates and sign votes; anyone could close the round.
+            No team member would choose the winner or edit the tally. Voting is
+            not live yet.
+          </p>
+        </div>
+        <ol className="vault-governance-steps">
+          <li>
+            <span>01 / NOMINATE</span>
+            <strong>Put a candidate on the ballot.</strong>
+            <p>Community submitted tickers would be visibly unverified.</p>
+          </li>
+          <li>
+            <span>02 / VOTE ON NEAR</span>
+            <strong>Let eligible wallets decide.</strong>
+            <p>Votes and the final tally would come from a separate contract.</p>
+          </li>
+          <li>
+            <span>03 / SHOW RECIPIENTS</span>
+            <strong>Make each portion traceable.</strong>
+            <p>Future simulated records would show wallet, points, snapshot, and calculated portion.</p>
+          </li>
+        </ol>
+        <p className="vault-governance-note">
+          No ballot or recipient ledger is deployed. A vote selects a simulated
+          target; it does not buy stock or give GEMBULL holders shares.
+        </p>
+      </Reveal>
+
       <div className="vault-disclosures">
         <p>
           Arithmetic only, not actual reserve performance. No real shares,

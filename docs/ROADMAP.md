@@ -10,6 +10,7 @@ This is an engineering checklist for the NEAR Hackathon `memecoins` track, not a
 | GemBull Testnet | `ft_metadata() = GemBull / GEMBULL` | [Deployed and verified](deployments/GEMBULL_TESTNET.md); one FullAccess upgrade key remains | Account, transaction, code hash, allocations, authority, and live views recorded |
 | Demo distribution and evidence | Fund registered tester wallets; duplicate rejection, success claim, missed-epoch burn and video | One live check-in observed at finality on 2026-11-13; remaining evidence pending | [Distribution route](DISTRIBUTION_PLAN.md), replayable instructions and video; Sandbox covers time travel |
 | Stock simulator | Separate two-source mock reserve and activity-point allocation records; no receipt token in MVP | Planned | Source-separated accounting, eligibility tests, and persistent `SIMULATED` disclosure |
+| Community stock vote | Separate Testnet contract for community nomination, wallet-signed votes and permissionless finalization; public simulated recipient ledger | Proposed, not deployed | Voting rules reviewed; no admin winner override or upgrade backdoor; Sandbox vote tests and on-chain UI evidence |
 | Routed purchase fee, LP lock, real custody | Optional future integrations | Not implemented | No claims until real integration, tests, and legal/operational review |
 
 ## Critical path before submission

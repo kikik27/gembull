@@ -31,6 +31,9 @@
 | Mock broker forgery | False impression of stock ownership | Prominent SIMULATED label, testnet-only tokens, no redemption |
 | Contract upgrade | Rules/code can be replaced | Restrict/remove deploy authority after review; do not claim immutability without proof |
 | DEX buy bypass | Stock fee not applied | State clearly that 1% fee only applies to routed app purchases; external routes bypass it |
+| Ballot manipulation | Wrong community winner | Future contract validates wallet, eligibility, round, duplicate vote, and window on-chain; no admin tally override |
+| Upgrade key override | Admin-free claim becomes false | Publish governance-account keys and remove or constrain code-upgrade authority before claiming admin-free voting |
+| Candidate spoofing / Sybil nominations | Misleading or spammed ticker choices | Bounded candidate metadata and storage funding; label community entries unverified; decide eligibility and spam rules before deployment |
 
 ## 3. Sybil-resistance statement
 
@@ -47,6 +50,7 @@ The contract has no method for changing the configured ritual parameters after i
 - A token wrapper does not automatically confer rights in the underlying security.
 - Real deployment requires an issuer, qualified broker/custodian, enforceable holder rights, transfer restrictions where needed, KYC/AML and jurisdictional assessment.
 - The revised MVP does not mint a stock receipt. Proposed Ritual Points and simulated allocation records confer no rights, dividends, voting, redemption, or beneficial ownership.
+- A community vote over a stock candidate is not a stock trade, ownership record, or authorization for a real broker to act. Real securities operations still require their own legal and operational controls.
 
 ## 6. Operational controls
 

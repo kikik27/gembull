@@ -106,9 +106,10 @@ The roadmap is an implementation checklist. The landing page shows a short statu
 |---|---|---|
 | P0 | Fund more demo participants and capture a reproducible hosted-UI video of the live check-in and later settlement | End-to-end judge walkthrough works |
 | P1 | Design a simulated two-source stock reserve and non-transferable Ritual Points/active-holder allocations | Open parameters reviewed; UI says `SIMULATED`; no stock receipt token in MVP |
+| P1 extension | Build a separate on-chain community ballot for simulated stock candidates and a public simulated recipient ledger | Voting/eligibility rules reviewed; no admin winner override; Sandbox tests and verified Testnet UI |
 | Later | Evaluate routed purchase fee, launch venue, LP lock, and legal custody path | No production claim before implementation and review |
 
-The stock layer's proposed 1% reserve applies only to eligible purchases routed through a future app router. Transfers and external DEX trades do not automatically contribute. No actual equity is acquired in this hackathon build. NEAR Intents are outside the current implementation.
+The stock layer's proposed 1% reserve applies only to eligible purchases routed through a future app router. Transfers and external DEX trades do not automatically contribute. No actual equity is acquired in this hackathon build. The [community stock governance proposal](docs/COMMUNITY_STOCK_GOVERNANCE.md) describes a separate, **not-yet-deployed** NEAR Testnet ballot: community nominations, wallet-signed votes, permissionless tally, and a public simulated recipient ledger. Voting weight and eligibility remain open decisions. A vote cannot by itself buy shares or grant shareholder rights. NEAR Intents are outside the current implementation.
 
 ## Test with a connected wallet
 

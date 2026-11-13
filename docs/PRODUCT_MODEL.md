@@ -9,6 +9,7 @@ This document adapts the supplied `stonkritual-docs-v0.2.zip` (12 November 2026)
 | Daily ritual | One eligible check-in per 24-hour epoch; 50-account target; successful claims mint 1,000 GEMBULL; a miss burns 5 bps of the ritual treasury | **LIVE on NEAR Testnet** in `gembull-core.testnet` |
 | Stock Acquisition Treasury | Separate accounting for eligible routed trading fees and protected bonding graduation surplus | **PLANNED / SIMULATED**; no router, bonding curve, stock vault, broker execution, or real asset custody is deployed |
 | Active-holder stock-linked rewards | Allocate simulated rewards to active holders using activity points, not balances above the eligibility minimum | **PLANNED / SIMULATED**; there is no on-chain Ritual Points ledger or stock reward claim |
+| Community stock selection | Community wallets nominate and vote for a stock candidate through a separate NEAR contract; anyone can finalize the tally | **PLANNED**; no ballot contract or vote is live |
 
 ## Proposed stock reserve design
 
@@ -23,6 +24,10 @@ Only a positive surplus could contribute. Funds needed for refunds, bonding solv
 The archive proposes one non-transferable **Ritual Point** per valid check-in, including a day when the community target is missed. Proposed eligibility is **5 valid check-ins in the previous 7 completed epochs** plus at least **1,000 GEMBULL at a fixed distribution snapshot**. Allocation weight would depend on eligible points, not the amount of GEMBULL above the threshold. The snapshot definition, distributable share of a stock batch, and points implementation are still open. The deployed contract has no points method or historical point ledger. Do not show retroactive points as verified.
 
 For the MVP, any stock allocation is a **SIMULATED** record only. No `rNVDA` or other self-created stock receipt token is part of the revised MVP. Points and simulated allocations are not shares, cash, dividends, redeemable claims, or a promise of future equity. An actual stock-linked asset requires issuer authorization, custody evidence, legal and jurisdiction review, and eligibility controls before it can be described as a real distribution.
+
+## Community choice and public recipients
+
+The community should nominate candidates, cast wallet-signed votes, and finalize an ended round on-chain without a team-controlled winner override. The selected ticker is a **simulated target**, not an automatic purchase. A future public recipient view should show which NEAR accounts meet the active-holder rule, their verified points and snapshot, and each calculated simulated portion. No recipient list or real share balance exists today. The [governance proposal](COMMUNITY_STOCK_GOVERNANCE.md) specifies the trust boundary and acceptance gates; voting weight, eligibility, and execution details still need review.
 
 ## What a tester can do now
 

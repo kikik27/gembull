@@ -40,7 +40,7 @@ docs/brand/pack/
 │   └── gembull-target-hit.png          # Transparent community target bull sticker
 ├── 05-marketing/
 │   ├── gembull-campaign-coin.png       # 3D campaign artwork coin (illustrative)
-│   ├── gembull-roadster-mascot.png     # Roadmap mascot in a lime car
+│   ├── gembull-roadster-mascot.png     # Roadmap mascot leaning from a lime car window
 │   ├── gembull-commercial-board-v1.png # 3x3 commercial concept board
 │   └── gembull-logo-concept-v1.png     # Approved raster concept reference
 └── concept-crops/                      # Individual 418x418 panels extracted from the 3x3 board

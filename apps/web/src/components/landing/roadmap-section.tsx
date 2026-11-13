@@ -24,11 +24,11 @@ const milestones = [
   },
   {
     status: "PLANNED · SIMULATED",
-    short: "Reserve idea",
-    title: "Explore a separate reserve.",
+    short: "Vote",
+    title: "Let the community choose.",
     detail:
-      "Design a SIMULATED stock-reserve layer with proposed routed-fee and protected-surplus inputs plus non-transferable Ritual Points. No real shares, custody, redemption, or stock receipt token are part of this prototype.",
-    note: "Concept only · no real equity",
+      "A separate NEAR ballot is planned so eligible wallets can nominate and vote on a stock candidate, with a permissionless tally. The reserve and public recipient ledger remain SIMULATED; no vote or real share ownership is live today.",
+    note: "Ballot planned · no real equity",
   },
 ] as const;
 

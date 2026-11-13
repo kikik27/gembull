@@ -20,6 +20,6 @@ Use only files listed in [`apps/web/public/brand/manifest.json`](../../apps/web/
 | `/brand/social/x-banner-1500x500.png` | X social header | 1500×500 high-res banner |
 | `/brand/social/discord-banner-1200x500.png` | Community banner | 1200×500 high-res banner |
 | `/brand/scene/ritual-day.svg` and `/brand/scene/ritual-night.svg` | Landing scene | Decorative; essential copy stays in HTML |
-| `/brand/scene/gembull-roadster-mascot.png` | Interactive roadmap | Transparent GemBull mascot in lime roadster; roadmap milestones remain HTML controls |
+| `/brand/scene/gembull-roadster-mascot.png` | Interactive roadmap | Transparent GemBull mascot leaning from car window; roadmap milestones remain HTML controls |
 
 Use text for all controls, financial disclosures, loading states, and contract values. Stock-related imagery always needs a visible `SIMULATED` label. The 3D coin and scenes must respect reduced-motion preferences. The verified `gembull-core.testnet` metadata is **GemBull / GEMBULL**; the legacy RITL account is separate.

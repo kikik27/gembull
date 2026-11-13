@@ -23,6 +23,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 4. Provide an auditable history of check-ins, successful/missed epochs, reward mints, treasury burns, and streak records.
 5. Design a separate, source-auditable stock-acquisition reserve and simulated active-holder allocations without misrepresenting legal ownership.
 6. Deliver a reproducible project that a human judge and AI coding judge can inspect.
+7. Let eligible community wallets select a future stock candidate through an auditable, on-chain vote without a team-controlled winner override; publish the simulated recipient calculation by wallet.
 
 ## 4. Stakeholders
 
@@ -56,7 +57,7 @@ Conventional memecoins often concentrate attention on price, trading volume, and
 - Automatic 1% stock-reserve fee on every application-routed purchase through an audited trade router.
 - Production buyback execution on a supported AMM, beyond the ritual treasury burn.
 - LP lock integration or a dedicated LP locker after compatibility testing with the selected launch/liquidity venue.
-- Multi-ticker stock reserve and community governance.
+- Multi-ticker stock reserve and community governance. A separate Testnet ballot is now a proposed MVP extension, but no voting contract is deployed.
 - Verified third-party proof of custody and independent audit.
 
 The proposed 2% routed fee split, 5% protected graduation-surplus contribution, and five-of-seven active-holder rule are tracked in [OPEN_DECISIONS.md](OPEN_DECISIONS.md). They are not deployed economic rules.
@@ -84,6 +85,8 @@ The proposed 2% routed fee split, 5% protected graduation-surplus contribution, 
 | BR-09 | 60-day simulations cover multiple participation scenarios | Must | Script produces reproducible CSV and summary |
 | BR-10 | Stock reserve remains separate from GEMBULL and LP balances | Should | Separate contract/account and ledger |
 | BR-11 | Stock allocations and Ritual Points are visibly identified as simulated | Must for stock MVP | No UI or doc claims real equity ownership |
+| BR-12 | Community stock selection has no admin winner override | Must for future vote | Nomination, votes, tally, and finalization are contract-enforced; upgrade authority is disclosed |
+| BR-13 | Simulated recipients are publicly auditable | Must for future allocation | Wallet, eligibility snapshot, points, portion, batch, and rounding are inspectable; no fabricated live recipients |
 
 ## 7. Business rules
 

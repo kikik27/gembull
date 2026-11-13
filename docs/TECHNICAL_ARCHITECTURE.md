@@ -24,6 +24,9 @@ flowchart TD
     FE -. planned .-> SV[SIMULATED Stock Reserve]
     RF[Proposed routed trading fees] -.-> SV
     GS[Proposed protected graduation surplus] -.-> SV
+    FE -. planned wallet-signed votes .-> GOV[Separate NEAR Governance Contract]
+    GOV -. read-only eligibility .-> CORE
+    GOV -. winning candidate .-> SV
     SV -.-> POINTS[SIMULATED Ritual Points and allocations]
     POINTS -.-> FE
 ```
@@ -57,6 +60,10 @@ Tracks proposed routed-fee and protected graduation-surplus inflows separately, 
 
 One non-transferable point per valid check-in is the v0.2 proposal. A fixed snapshot and rolling 5-of-7 eligibility calculation would weight simulated allocations. Neither points nor allocation ledger exists today, and the revised MVP does not mint a custom stock receipt token.
 
+### 3.4a Planned community governance
+
+A separate Testnet contract would accept permissionless candidate nominations, verify wallet-signed voter eligibility against on-chain state, record ballots, tally, and allow anyone to finalize after the voting window. It must have no admin winner override. Candidate metadata and simulated recipient views are separate from actual equity rights. Voting weight, eligibility verification, storage/deposit bounds, and upgrade authority are open design gates in [COMMUNITY_STOCK_GOVERNANCE.md](COMMUNITY_STOCK_GOVERNANCE.md). No such contract is deployed.
+
 ### 3.5 Stock simulator service
 
 A Node.js service with:
@@ -65,6 +72,8 @@ A Node.js service with:
 - batch-result generator;
 - mock issuer signer/account integration;
 - no private keys committed to the repository.
+
+The simulator is never authoritative for votes, winners, or recipient entitlement. Any eventual recipient calculation must be reproducible from frozen, verifiable state rather than a team-edited file.
 
 Market prices are informational. Custody confirmation is a separate mock event and must have a `SIMULATED` label.
 
@@ -83,6 +92,7 @@ contracts/
   gembull-core/
   mock-usdc/
   stock-vault/
+  stock-governance/       # proposed; separate from gembull-core
   ritual-points/          # planned, if contract-backed points are chosen
 apps/
   web/
