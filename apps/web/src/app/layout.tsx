@@ -23,9 +23,7 @@ export const metadata: Metadata = {
       { url: "/brand/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://web-cyan-three-62.vercel.app"
-  ),
+  metadataBase: new URL("https://gembull-testnet.vercel.app"),
   openGraph: {
     title: "GemBull — The meme runs on rituals",
     description:

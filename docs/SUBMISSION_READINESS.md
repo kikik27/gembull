@@ -6,11 +6,12 @@ Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com
 
 - [x] Primary track `memecoins` matches the deployed contract mechanic.
 - [x] Repository <https://github.com/kikik27/gembull> is public and contains an MIT license.
-- [x] Hosted app: <https://web-cyan-three-62.vercel.app>.
+- [x] Hosted app: <https://gembull-testnet.vercel.app>.
 - [x] NEAR Testnet contract `gembull-core.testnet`: `pnpm verify:testnet` passed at finality on 2026-11-13, including metadata, supply, rules, code hash, and disclosure of one remaining FullAccess upgrade key.
 - [x] README includes reproducible actions and observable results.
 - [x] Contract tests and deterministic 60-day simulation are documented; the live and simulated paths are separated.
 - [x] Lemo Opuscar [paper pop-up film](../films/gembull-popup/README.md) exported locally at 1920 × 1080, 24 fps, 54.5 seconds with ElevenLabs narration, AAC audio, and corrected English captions. The MP4 is ignored by Git and awaits human review and X upload.
+- [x] Alternative Lemo Opuscar [pixel RPG film](../films/gembull-story/README.md) exported locally with a recognizable GemBull bull mascot and a clearly simulated stock concept. The two films are options for the human's X demo post; neither is a wallet recording.
 
 ## Still required before submission
 
@@ -22,7 +23,7 @@ Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com
 
 ## Demo post draft for the human
 
-> One day. One check-in. Show up together. GemBull is a NEAR Testnet memecoin with contract-enforced daily rituals: reach the community target for reward claims, or miss it and burn from the ritual treasury. Built at NEAR HACKATHON. Stock concept: SIMULATED. Try: https://web-cyan-three-62.vercel.app Code: https://github.com/kikik27/gembull @NEARProtocol #NEARHackathon
+> One day. One check-in. Show up together. GemBull is a NEAR Testnet memecoin with contract-enforced daily rituals: reach the community target for reward claims, or miss it and burn from the ritual treasury. Built at NEAR HACKATHON. Stock concept: SIMULATED. Try: https://gembull-testnet.vercel.app Code: https://github.com/kikik27/gembull @NEARProtocol #NEARHackathon
 
 Attach the video file to the post. The human must publish it and return its public URL. Do not describe the animated reconstruction as footage of a live wallet signature; a separate real wallet capture remains desirable evidence.
 

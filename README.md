@@ -4,7 +4,7 @@ GemBull is a NEAR-native community memecoin whose supply reacts to a daily on-ch
 
 ## Judge start here
 
-**Track:** `memecoins` · **Network:** NEAR Testnet · **Live contract:** [`gembull-core.testnet`](https://testnet.nearblocks.io/address/gembull-core.testnet) · **Hosted app:** [GemBull](https://web-cyan-three-62.vercel.app) · **License:** [MIT](LICENSE).
+**Track:** `memecoins` · **Network:** NEAR Testnet · **Live contract:** [`gembull-core.testnet`](https://testnet.nearblocks.io/address/gembull-core.testnet) · **Hosted app:** [GemBull](https://gembull-testnet.vercel.app) · **License:** [MIT](LICENSE).
 
 | Do this | See this | Evidence |
 |---|---|---|
@@ -21,6 +21,8 @@ For a full reproduction path, follow [Run locally](#run-locally), [Verify the co
 
 The [54-second paper pop-up demo film](films/gembull-popup/README.md) is a narrated, animated story made with Lemo Opuscar. It illustrates the ritual rules and labels the stock concept **SIMULATED**. It is not footage of a live wallet signature; the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) covers that action.
 
+An alternative [16-bit pixel RPG film](films/gembull-story/README.md) uses the same truthful Testnet story and the approved bull mascot with curved horns, a wide muzzle, green sunglasses, and a black hoodie. Both film exports are local assets for human review before an X post.
+
 The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) is a separate legacy **StonkRitual / RITL** token. The v0.2 product direction retires its mock stock-receipt plan; judges should inspect the GemBull contract and the [GemBull Testnet deployment record](docs/deployments/GEMBULL_TESTNET.md).
 
 ## Hackathon goal and evidence
@@ -32,7 +34,7 @@ The goal is to demonstrate a memecoin mechanic that a judge can reproduce and in
 | NEP-141 token with NEP-145 storage and NEP-148 metadata | [`gembull-core`](contracts/gembull-core/) and [Testnet record](docs/deployments/GEMBULL_TESTNET.md) | Deployed; metadata verified |
 | Daily check-in, target, streak, mint and burn enforced on-chain | Contract methods `check_in`, `finalize_day`, `claim_reward`; [spec](docs/SMART_CONTRACT_SPEC.md) | 20 Rust unit tests and one Linux Sandbox integration test pass; one live Testnet check-in observed; later settlement and claim/burn evidence pending |
 | Fixed public launch parameters and supply cap | `get_rules()`, no public setters, reward-capacity reservation | Verified on Testnet; deployment key can still upgrade code |
-| Progress, rules, supply, and event history | [hosted web app](https://web-cyan-three-62.vercel.app) | Production page and hydrated live rules/supply verified; wallet walkthrough pending |
+| Progress, rules, supply, and event history | [hosted web app](https://gembull-testnet.vercel.app) | Production page and hydrated live rules/supply verified; wallet walkthrough pending |
 | 60-day supply simulation | [script](scripts/simulate_60_days.py) and [CSV](docs/simulation/gembull-60-day-simulation.csv) | 180 rows regenerated and checked |
 | Judge walkthrough with live wallet actions | Testnet account, distribution, hosted demo, recorded transactions | First live check-in observed; full walkthrough/video pending |
 
@@ -66,7 +68,7 @@ cp apps/web/.env.example apps/web/.env.local
 pnpm dev
 ```
 
-Open `http://localhost:3000`. The example environment points to the verified `gembull-core.testnet` contract; the web app also uses that Testnet account by default. `NEXT_PUBLIC_NEAR_RPC_URL` selects the Testnet RPC endpoint. Set `NEXT_PUBLIC_SITE_URL` to the public origin before hosting so OG and X image URLs resolve correctly. No private keys belong in public environment variables.
+Open `http://localhost:3000`. The example environment points to the verified `gembull-core.testnet` contract; the web app also uses that Testnet account by default. `NEXT_PUBLIC_NEAR_RPC_URL` selects the Testnet RPC endpoint. Open Graph and X image URLs use the branded `https://gembull-testnet.vercel.app` origin configured in the app layout. No private keys belong in public environment variables.
 
 To explore the separate **SIMULATED** stock-reserve concept, scroll to `#vault` and adjust the eligible routed-volume and protected net-surplus sliders. The 3D router, graduation gate, and vessel illustrate proposed inputs: 1% of eligible app-routed volume per day over 60 illustrative days, plus a one-time 5% of protected net graduation surplus. The initial $5,000/day and $0 surplus example yields $3,000. These controls make no transaction and do not change GEMBULL balances, supply, or the ritual treasury; no real shares or reserve are held.
 

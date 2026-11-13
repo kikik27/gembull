@@ -11,7 +11,7 @@ Use only files listed in [`apps/web/public/brand/manifest.json`](../../apps/web/
 | `/brand/icons/gembull-app-icon.svg` | Dashboard, header mark, app icon | Square vector recreation of the approved PNG icon |
 | `/brand/icons/gembull-app-icon.png` | Header, dashboard mark, favicon, decorative 3D coin face | High-resolution raster derivative |
 | `/brand/coins/gembull-token-badge.svg` | Token badge / coin face | Official vector circular badge |
-| `/brand/gembull-open-graph.png` | Social metadata | Set `NEXT_PUBLIC_SITE_URL` before hosting |
+| `/brand/gembull-open-graph.png` | Social metadata | Absolute URLs use the branded `gembull-testnet.vercel.app` origin from the app layout |
 | `/brand/coins/gembull-campaign-coin.png` | Marketing artwork | Never label as deployed token metadata |
 | `/brand/stickers/gembull-gm.png` | Community/social greeting | Decorative, transparent mascot greeting |
 | `/brand/stickers/gembull-checked-in.png` | Confirmed check-in banner / sticker pack | Decorative transparent mascot and calendar; transaction confirmation remains HTML text |

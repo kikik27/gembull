@@ -1,6 +1,6 @@
 # Test GemBull with a NEAR Testnet wallet
 
-**App:** <https://web-cyan-three-62.vercel.app>
+**App:** <https://gembull-testnet.vercel.app>
 
 **Live token contract:** `gembull-core.testnet`
 **Network:** NEAR Testnet. GEMBULL Testnet tokens are not stock or mainnet assets.
