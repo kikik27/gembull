@@ -1,174 +1,120 @@
 # GemBull
 
-GemBull is a NEAR-native community memecoin whose circulating supply and tokenomics react to a daily on-chain ritual. An eligible account checks in once per 24-hour epoch. A successful community day creates individual reward claims; a missed day burns a fixed slice of the ritual treasury and resets the community streak. The entire state machine lives directly inside the smart contract, not in a private backend.
+**A NEAR Testnet memecoin whose daily community ritual changes token supply.** Holders check in once per 24-hour epoch. If 50 eligible accounts check in, each can claim a 1,000 GEMBULL reward after settlement. If the community misses, the contract burns 5 basis points of its ritual treasury and resets the streak. The rules and state transitions live in the NEP-141 contract.
 
----
+Built for **NEAR HACKATHON 2026**, track **`memecoins` — Memecoins With Mechanics**. The [track prompt](https://github.com/nearai/near-hackathon-prompt-examples/blob/main/tracks/11-memecoins.md) asks for a contract-enforced streak coin, public launch parameters, a progress and event page, Sybil limitations, and a reproducible 60-day supply simulation. GemBull is a Testnet demonstration; GEMBULL has no mainnet value or claim on stock.
 
-## 🎯 Judge Start Here
+| Open | Link |
+| --- | --- |
+| Live dApp | [gembull-testnet.vercel.app](https://gembull-testnet.vercel.app) |
+| Testnet contract | [`gembull-core.testnet`](https://testnet.nearblocks.io/address/gembull-core.testnet) |
+| Deployment transaction | [View on NEAR Testnet explorer](https://explorer.testnet.near.org/transactions/5rBtj3zDp9A7BrzuKQWYVzTN2wYnSsVcg8TcztXSaG9j) |
+| Deployment details | [Contract, genesis allocation, code hash, and upgrade key](docs/deployments/GEMBULL_TESTNET.md) |
+| Demo video | Local export prepared; public X post link pending |
 
-* **Track:** `memecoins`
-* **Network:** NEAR Testnet
-* **Live Contract:** [`gembull-core.testnet`](https://testnet.nearblocks.io/address/gembull-core.testnet)
-* **Autonomous Keeper:** [`keeper.gembull-public.testnet`](https://testnet.nearblocks.io/address/keeper.gembull-public.testnet)
-* **Hosted dApp:** [https://gembull-testnet.vercel.app](https://gembull-testnet.vercel.app)
-* **License:** [MIT](LICENSE)
+## Try it: action → result
 
-| Do this | See this | Evidence |
-|---|---|---|
-| Open the [hosted app](https://gembull-testnet.vercel.app) and scroll to **Ritual** | Current epoch, live check-in progress, on-chain rules, and Testnet source labels | Live contract views (`get_global_state`, `get_rules`), not simulated metrics |
-| Open **Supply** and **Epoch History** | On-chain supply, verified finalized epochs, and live NEP-297 ritual event stream | Contract queries and `/api/ritual/events` feed indexing `ft_mint`, `ft_burn`, and check-ins |
-| Run `pnpm verify:testnet` from repo root | Metadata, rules, supply bounds, code hash, and upgrade-key report | Direct JSON-RPC finality verification against NEAR Testnet |
-| Run `python scripts/simulate_60_days.py --check` | 180 verified mathematical simulation rows | Deterministic model checking optimistic, base, and pessimistic outcomes |
-| Connect a Testnet wallet, register storage, and **Check in now** | Wallet signs `check_in`; app refreshes account status and epoch count at finality | [Wallet Guide](docs/TESTNET_USER_GUIDE.md); 0.05 Testnet NEAR attached for storage |
-| Inspect autonomous epoch finalization | Background keeper settles completed epochs sequentially | [Keeper Service](services/keeper-bot/); runs 24/7 in Docker with multi-RPC failover |
+| Do this | See this | Source of truth |
+| --- | --- | --- |
+| Open the [dApp](https://gembull-testnet.vercel.app) and go to **Ritual** | Current epoch, check-in count, target, streak, and fixed rules | `get_global_state()` and `get_rules()` on Testnet |
+| Open **Supply** and **Epoch History** | Current supply, ritual treasury, finalized-day outcomes, and indexed ritual events | Contract views and receipt logs; event feed depends on its read-only indexer |
+| Run `pnpm verify:testnet` | Token metadata, rules, supply bounds, code hash, and upgrade-key status | Finalized Testnet RPC state |
+| Connect a NEAR Testnet wallet with at least **1,000 GEMBULL**, then click **Check in now** | Wallet-signed transaction; the account's epoch status and progress update after finality | `check_in()` in `gembull-core.testnet` |
+| After an epoch closes, call **Settle day N** if it is still unsettled | Success or missed result, streak change, and reward eligibility or treasury burn | Permissionless `finalize_day(day_id)` |
+| Run `python scripts/simulate_60_days.py --check` | 180 deterministic rows across optimistic, base, and pessimistic scenarios | Local model using published contract parameters; **not** live chain history |
 
-**Observed On-Chain Testnet Evidence:**
-* Genesis supply of 1,000,000,000 GEMBULL initialized with 150,000,000 allocated to the ritual treasury.
-* **Epoch Day 0 Finalized:** Settled on-chain at block `277534032`. With target missed, the contract burned 5 bps of the treasury (**75,000 GEMBULL**) via standard `ft_burn` event, reducing treasury to `149,925,000 GEMBULL` and total supply to `999,925,000 GEMBULL`.
-* **Active Epoch:** Day 1 is active on Testnet, tracked in real-time by the web app and keeper worker.
+Wallet connection alone does not provide GEMBULL. There is **no in-app faucet or purchase route**. Token storage must be registered and test tokens must be distributed before check-in. Follow the [Testnet wallet guide](docs/TESTNET_USER_GUIDE.md), including the public-allocation transfer procedure. A single tester cannot reach the 50-account success target; the Sandbox test covers that path with time travel.
 
----
+## The on-chain mechanic
 
-## ⚡ Architecture & Daily Ritual State Machine
-
-The ritual operates on a fixed deterministic 24-hour cycle enforced by the NEAR runtime timestamp:
-
-```mermaid
-flowchart TD
-    A["Active Epoch Day N"] --> B{"Community Target Met?\n(≥ 50 Check-ins)"}
-    B -- "Yes" --> C["Finalize Day: SUCCESS"]
-    B -- "No" --> D["Finalize Day: MISSED"]
-    C --> E["Eligible Participants Claim 1,000 GEMBULL Reward (Mint)"]
-    C --> F["Current Streak + 1\nUnused Daily Budget Released"]
-    D --> G["5 bps Treasury Burn (ft_burn)\nStreak Resets to 0"]
-    D --> H["All Daily Mint Budget Released"]
+```text
+24-hour epoch starts
+  → eligible account holds ≥ 1,000 GEMBULL and checks in once
+  → first check-in reserves the epoch's full possible reward capacity
+  → after the epoch ends, anyone settles the next unsettled day
+     ├─ ≥ 50 check-ins: streak increases; each participant may claim once
+     └─ < 50 check-ins: 5 bps of ritual treasury burns; streak resets
+  → unused reward capacity is released; the next epoch proceeds
 ```
 
-### Ritual Parameters (Contract Enforced)
+| Rule | Deployed value |
+| --- | ---: |
+| Epoch duration | 24 hours |
+| Community target | 50 distinct eligible accounts |
+| Minimum balance at check-in | 1,000 GEMBULL |
+| Participant cap | 200 accounts per epoch |
+| Reward after a successful epoch | 1,000 GEMBULL per participant, minted on individual claim |
+| Missed-epoch burn | 5 bps (0.05%) of the remaining ritual treasury |
+| Genesis / maximum supply | 1,000,000,000 / 1,050,000,000 GEMBULL |
 
-These rules are fixed at contract initialization. There are no public admin or owner setters capable of mutating them:
+The contract enforces sequential settlement, one check-in and one claim per account per eligible epoch, bounded reward minting, and treasury-only missed-day burns. It implements NEP-141 fungible tokens, NEP-145 storage management, NEP-148 metadata, and NEP-297 events. The frontend and event indexer read chain state; neither decides the ritual outcome. See [contract specification](docs/SMART_CONTRACT_SPEC.md) and [tokenomics](docs/TOKENOMICS.md).
 
-| Parameter | Value | Contract Enforcement |
-|---|---:|---|
-| **Epoch Duration** | 24 hours (`86,400s`) | Calculated from genesis timestamp via `env::block_timestamp()` |
-| **Community Target** | 50 accounts | Minimum check-ins required for a successful epoch |
-| **Minimum Holding** | 1,000 GEMBULL | Account must hold at least 1,000 GEMBULL to check in |
-| **Participant Cap** | 200 accounts | Maximum reward claims per successful epoch (max 200,000 GEMBULL/day) |
-| **Reward per Check-in** | 1,000 GEMBULL | Minted individually upon claim after successful finalization |
-| **Treasury Miss Burn** | 5 bps (0.05%) | Burned from contract ritual treasury on missed epoch |
-| **Supply Cap** | 1,050,000,000 GEMBULL | Hard ceiling; once remaining capacity < 200,000, ritual terminates |
+## Evidence and limits
 
----
+| Evidence | What it establishes |
+| --- | --- |
+| [Testnet deployment record](docs/deployments/GEMBULL_TESTNET.md) | Contract initialization, genesis allocations, and the on-chain code hash |
+| `pnpm verify:testnet` | Rechecks metadata, rules, supply, treasury, and the current upgrade-key posture without a signing key |
+| Testnet Day 0 settlement | A missed target burned **75,000 GEMBULL**; finalized RPC verification on 2026-11-13 returned supply **999,925,000** and treasury **149,925,000** GEMBULL |
+| `cargo test --lib` and `cargo test --test ritual_sandbox` | Unit and local Sandbox checks of success, failure, claims, ordering, and cap behavior; Sandbox transactions are **not** live Testnet transactions |
+| [60-day simulation](docs/simulation/60_DAY_SIMULATION.md) | Reproducible model behavior under three participation scenarios, assuming all eligible rewards are claimed |
 
-## 🤖 Autonomous Keeper Bot (`services/keeper-bot`)
+**Security boundary:** there is no public setter for the ritual parameters and no unrestricted mint method. The deployed contract account still has a **FullAccess key capable of redeploying code**, so its bytecode is not fully immutable. Minimum balance plus one check-in per account limits simple spam; it does **not** prove one human per account. A successful live 50-account epoch and reward claim are not presented as completed Testnet evidence.
 
-Because smart contracts on NEAR cannot execute transactions on their own without external gas, GemBull implements a **Permissionless Settlement** architecture supported by an autonomous keeper service:
+The landing includes a clearly labeled **SIMULATED** stock-reserve concept. No stock purchase, custody, holder allocation, or stock-voting contract is live. The removed stock-batch recorder is not part of this MVP. These ideas do not affect GEMBULL supply or the ritual treasury. See [product direction](docs/PRODUCT_MODEL.md) and [open decisions](docs/OPEN_DECISIONS.md).
 
-* **Location:** [`services/keeper-bot/`](services/keeper-bot/)
-* **Runtime:** Containerized Node.js service running 24/7 on VPS via Docker Compose (`node:22-alpine`).
-* **Wallet:** Dedicated testnet account [`keeper.gembull-public.testnet`](https://testnet.nearblocks.io/address/keeper.gembull-public.testnet) funded with 3 NEAR.
-* **RPC Failover:** Automatic fallback between FastNear, Official NEAR Testnet RPC, and NearData RPC.
-* **Mechanism:**
-  1. Polls `get_global_state()` every 60 seconds.
-  2. Compares `current_day_id` with `last_finalized_day`.
-  3. If unfinalized epochs exist (`current_day_id > last_finalized_day + 1`), automatically triggers `finalize_day({ day_id })` sequentially.
-  4. Web dashboard also maintains a fallback settlement action in case keepers are offline.
+## Roadmap
 
----
+| Stage | Goal | Status |
+| --- | --- | --- |
+| Ritual core | NEP-141 token, daily check-in, permissionless settlement, reward claims, treasury burn, live dashboard, and 60-day model | **Live on Testnet**; successful-epoch claim is verified in local tests, not yet demonstrated with 50 live accounts |
+| Community proof | Record a complete wallet demo, exercise a successful live epoch with eligible participants, and verify event-history coverage against receipts | **Next evidence milestone** |
+| Community choice | Define ballot eligibility and tie rules, then build and test a separate on-chain nomination and vote contract with no admin winner override | **Proposed; not deployed** |
 
-## 💻 Run Locally
+The [detailed roadmap](docs/ROADMAP.md) tracks acceptance gates. Its future stages are plans, not committed launch dates or token-holder benefits.
 
-### 1. Web Application
+## Run locally
+
+Requirements: Node.js and pnpm for the web app; Python 3 for the supply simulation. Rust and cargo-near are needed only for contract tests and builds.
 
 ```bash
-# Install dependencies from root
 pnpm install
-
-# Configure environment
 cp apps/web/.env.example apps/web/.env.local
-
-# Run Next.js development server
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the ritual dashboard.
-
-Frontend commands from root:
-```bash
-pnpm typecheck   # Typecheck with TypeScript
-pnpm lint        # Lint web application with ESLint
-pnpm build       # Production Next.js build
-```
-
-### 2. Verify On-Chain Contract & Simulation
+Open <http://localhost:3000>. The example environment points to NEAR Testnet and `gembull-core.testnet`. It contains no private keys. From the repository root:
 
 ```bash
-# Verify deployed Testnet contract at finality
+pnpm typecheck
+pnpm lint
+pnpm build
 pnpm verify:testnet
-
-# Run deterministic 60-day supply simulation
-python scripts/simulate_60_days.py --check
+pnpm check:sim
 ```
 
-### 3. Run Keeper Bot Locally
-
-```bash
-cd services/keeper-bot
-
-# Single-run check (read-only monitor mode if no private key is set)
-node keeper.mjs --once
-
-# Continuous monitor loop
-npm start
-```
-
----
-
-## 🧪 Smart Contract Verification
-
-The smart contract is written in Rust using `near-sdk` v5.30.1:
+Contract verification:
 
 ```bash
 cd contracts/gembull-core
-
-# Run 20 unit tests covering all ritual edge cases
+cargo fmt --check
 cargo test --lib
-
-# Build Wasm binary
 cargo near build non-reproducible-wasm --no-abi
-
-# Run Linux Sandbox integration tests (requires Linux or Docker)
 cargo test --test ritual_sandbox
 ```
 
-All 20 unit tests pass, verifying:
-* Target hit vs missed outcomes
-* Exact 5 bps treasury burn calculation and rounding
-* Supply cap reservation and release
-* Sequential settlement requirements (rejecting skipped or premature epochs)
-* Single check-in and single claim enforcement per account per epoch
-* NEP-141, NEP-145, and NEP-148 compliance with NEP-297 event logging
+The Sandbox test requires Linux or a suitable Linux environment; build the Wasm before running it. See the [contract README](contracts/gembull-core/README.md) for the full toolchain notes. `services/keeper-bot/` contains an optional Testnet keeper that can call permissionless settlement; the app also exposes the action. Running the keeper with signing credentials can submit transactions, so inspect its [README](services/keeper-bot/README.md) first.
 
----
+## Repository map
 
-## 🗺️ Repository Structure
+| Path | Purpose |
+| --- | --- |
+| [`contracts/gembull-core/`](contracts/gembull-core/) | NEP-141 token and ritual state machine |
+| [`apps/web/`](apps/web/) | Next.js Testnet dApp and read-only event feed |
+| [`services/keeper-bot/`](services/keeper-bot/) | Optional epoch settlement worker |
+| [`scripts/`](scripts/) | Testnet verification, distribution helper, and 60-day simulation |
+| [`docs/`](docs/) | Requirements, architecture, tests, risk disclosures, and deployment evidence |
 
-```text
-├── contracts/
-│   └── gembull-core/         # NEP-141 token and ritual state machine in Rust
-├── apps/
-│   └── web/                  # Next.js 16 (Turbopack) ritual dApp and live event feed
-├── services/
-│   └── keeper-bot/           # 24/7 Autonomous keeper service (Node.js + Docker)
-├── scripts/
-│   ├── verify_gembull_testnet.mjs  # On-chain RPC verification script
-│   ├── distribute_testnet.mjs      # Testnet token distribution helper
-│   └── simulate_60_days.py         # Deterministic supply simulation script
-└── docs/                     # PRD, Tokenomics, Architecture, Test Plan, and Audit
-```
+The project was developed during the 2026-11-01 to 2026-11-14 hackathon window; the repository history includes an earlier **StonkRitual / RITL** prototype from the same window, followed by the GemBull rebrand and Testnet deployment. Development used AI coding assistance and third-party libraries, including `near-sdk`, `near-contract-standards`, Next.js, React, `near-api-js`, and the wallet packages declared in the lockfiles. No external stock or broker integration is implemented.
 
----
-
-## 📄 License
-
-This repository is licensed under the [MIT License](LICENSE).
+Licensed under [MIT](LICENSE).

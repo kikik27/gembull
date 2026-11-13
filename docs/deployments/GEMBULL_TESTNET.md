@@ -36,7 +36,7 @@ Testnet RPC `final` views returned:
 
 The contract account has **one FullAccess key** (`ed25519:2hJvPF78gtfxsQ5bYtdepVPeggfjJBhMPcxKdGZVvnov`). Its holder can redeploy code, so the bytecode is **upgradeable**. The ritual parameters have no public setter, but this deployment must not be described as fully immutable.
 
-Before deployment, `cargo fmt --check`, `cargo near check`, 20 Rust unit tests, one Linux Sandbox integration test, and the 180-row simulation passed. On 2026-11-13, read-only Testnet views at finality showed one accepted day-0 check-in (`get_epoch(0).checkin_count = 1`) and the participant account's `get_account_epoch_status(..., 0).checked_in = true`; the account held 10,000 GEMBULL and had registered token storage. This establishes a live Testnet check-in, but the transaction hash and hosted-UI video have not yet been added here. Successful-epoch claim and missed-epoch burn remain pending live demo evidence.
+Before deployment, `cargo fmt --check`, `cargo near check`, 20 Rust unit tests, one Linux Sandbox integration test, and the 180-row simulation passed. On 2026-11-13, read-only Testnet views at finality showed one accepted day-0 check-in (`get_epoch(0).checkin_count = 1`) and the participant account's `get_account_epoch_status(..., 0).checked_in = true`; the account held 10,000 GEMBULL and had registered token storage. Day 0 was later finalized after missing the 50-account target. A read-only `pnpm verify:testnet` run returned total supply `999,925,000` and ritual treasury `149,925,000` GEMBULL, consistent with a 75,000 GEMBULL burn from genesis. A successful-epoch claim and complete hosted-wallet recording remain pending live demo evidence.
 
 ## Web integration
 

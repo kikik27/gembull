@@ -1,6 +1,6 @@
 # GemBull submission readiness
 
-Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com/HACKATHON.md) on 2026-11-13. Re-read them immediately before submission; the development deadline is **2026-11-14 23:59 UTC** and only one submission is allowed per repository.
+Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com/HACKATHON.md) on 2026-11-14 (Asia/Jakarta). Re-read them immediately before submission; the development deadline is **2026-11-14 23:59 UTC** and only one submission is allowed per repository.
 
 ## Verified now
 
@@ -8,7 +8,7 @@ Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com
 - [x] Repository <https://github.com/kikik27/gembull> is public and contains an MIT license.
 - [x] Hosted app: <https://gembull-testnet.vercel.app>.
 - [x] NEAR Testnet contract `gembull-core.testnet`: `pnpm verify:testnet` passed at finality on 2026-11-13, including metadata, supply, rules, code hash, and disclosure of one remaining FullAccess upgrade key.
-- [x] README includes reproducible actions and observable results.
+- [x] README leads with reproducible action → result steps, Testnet evidence, local commands, and explicit limitations.
 - [x] Contract tests and deterministic 60-day simulation are documented; the live and simulated paths are separated.
 - [x] The human selected the Lemo Opuscar paper pop-up film for the X demo post. Its local export, `films/gembull-popup/gembull-popup.mp4`, is 1920 × 1080, 24 fps, 54.5 seconds with ElevenLabs narration, AAC audio, and corrected English captions. The film folder is excluded from the judging repository; the MP4 awaits human review and X upload.
 
@@ -28,15 +28,15 @@ Attach the video file to the post. The human must publish it and return its publ
 
 ## Live evidence limit
 
-One accepted Testnet check-in was observed at finality, but no complete hosted wallet recording or live successful claim/burn transaction has been documented. The 50-account target makes a successful live epoch unavailable from a single tester. The Sandbox integration test demonstrates both settlement branches under time travel. Stock voting, share purchase, custody, and holder allocations are not deployed. The deployed contract code remains upgradeable through its FullAccess key.
+One accepted Testnet check-in was observed at finality. Day 0 was finalized after missing the target; the resulting 75,000 GEMBULL burn is reflected in finalized supply and treasury views. No complete hosted wallet recording or live successful claim has been documented. The 50-account target makes a successful live epoch unavailable from a single tester. The Sandbox integration test demonstrates both settlement branches under time travel. Stock voting, share purchase, custody, and holder allocations are not deployed. The deployed contract code remains upgradeable through its FullAccess key.
 
-## MVP acceptance gaps against the current PRD
+## Remaining evidence and scope gaps
 
-- **F-08 event history:** the web app displays finalized-epoch summaries from contract views, but does not list each ritual `ft_mint`, `ft_burn`, and check-in event with transaction hash, block height/time, account, and amount. The generic contract explorer link does not meet the PRD's in-app event-history requirement.
-- **F-06 supply dashboard:** the contract exposes `initial_supply` through `get_rules()`, but the supply panel does not display it. The other supply, treasury, mint, burn, and capacity values are shown.
-- **End-to-end live evidence:** a wallet check-in has been observed on Testnet, while a hosted-wallet recording and a live successful claim or missed-day burn are not yet documented. Sandbox covers both settlement branches.
+- **F-08 event history:** an indexed event feed has been added to the web app. Its completeness and hosted availability still need verification against contract receipts; it must not be described as an exhaustive chain archive.
+- **F-06 supply dashboard:** the supply panel now displays genesis supply alongside current supply and treasury values.
+- **End-to-end live evidence:** a check-in and missed-day burn are observable on Testnet. A hosted-wallet recording and a live successful claim remain outstanding; Sandbox covers the success branch.
 
-The stock reserve, Ritual Points, simulated allocation ledger, and community ballot are explicitly planned in the v0.2 product direction; they are not part of the deployed hackathon core. The present build should be described as a working ritual core with the acceptance gaps above, not as the complete v0.2 product.
+The stock reserve, Ritual Points, simulated allocation ledger, and community ballot are explicitly planned in the v0.2 product direction; they are not part of the deployed hackathon core. The stock-batch simulator was removed from the app. The present build should be described as a working ritual core with the evidence limits above, not as the complete v0.2 product.
 
 ## Submission idea draft
 
