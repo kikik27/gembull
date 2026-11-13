@@ -10,12 +10,11 @@ Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com
 - [x] NEAR Testnet contract `gembull-core.testnet`: `pnpm verify:testnet` passed at finality on 2026-11-13, including metadata, supply, rules, code hash, and disclosure of one remaining FullAccess upgrade key.
 - [x] README includes reproducible actions and observable results.
 - [x] Contract tests and deterministic 60-day simulation are documented; the live and simulated paths are separated.
-- [x] Lemo Opuscar [paper pop-up film](../films/gembull-popup/README.md) exported locally at 1920 × 1080, 24 fps, 54.5 seconds with ElevenLabs narration, AAC audio, and corrected English captions. The MP4 is ignored by Git and awaits human review and X upload.
-- [x] Alternative Lemo Opuscar [pixel RPG film](../films/gembull-story/README.md) exported locally with a recognizable GemBull bull mascot and a clearly simulated stock concept. The two films are options for the human's X demo post; neither is a wallet recording.
+- [x] The human selected the Lemo Opuscar [paper pop-up film](../films/gembull-popup/README.md) for the X demo post. It is exported locally at 1920 × 1080, 24 fps, 54.5 seconds with ElevenLabs narration, AAC audio, and corrected English captions. The MP4 is ignored by Git and awaits human review and X upload.
 
 ## Still required before submission
 
-- [ ] Review the rendered [paper pop-up demo film](../films/gembull-popup/README.md), its captions, and every spoken claim. The story and target counter illustrate the verified rules; they are not a recording of a signed wallet transaction or live 50-account milestone.
+- [ ] Review the selected [paper pop-up demo film](../films/gembull-popup/README.md), its captions, and every spoken claim. The story and target counter illustrate the verified rules; they are not a recording of a signed wallet transaction or live 50-account milestone.
 - [ ] Human publishes a public X post with the video attached, says it was built at **NEAR HACKATHON**, tags **@NEARProtocol** and **#NEARHackathon**, and provides the post URL.
 - [ ] Human provides and confirms the team lead name, contact email, team size, mainnet NEAR payout account, selected track(s), public repo link, public X post link, and the exact project description. Do not infer these from a Testnet wallet.
 - [ ] Read the organizer contact notice verbatim and obtain the human's consent.
@@ -23,7 +22,7 @@ Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com
 
 ## Demo post draft for the human
 
-> One day. One check-in. Show up together. GemBull is a NEAR Testnet memecoin with contract-enforced daily rituals: reach the community target for reward claims, or miss it and burn from the ritual treasury. Built at NEAR HACKATHON. Stock concept: SIMULATED. Try: https://gembull-testnet.vercel.app Code: https://github.com/kikik27/gembull @NEARProtocol #NEARHackathon
+> GemBull asks you to show up daily. On NEAR Testnet, check-ins decide reward claims or a ritual-treasury burn. Stock concept: simulated. Built at NEAR HACKATHON. Try: https://gembull-testnet.vercel.app Code: https://github.com/kikik27/gembull @NEARProtocol #NEARHackathon
 
 Attach the video file to the post. The human must publish it and return its public URL. Do not describe the animated reconstruction as footage of a live wallet signature; a separate real wallet capture remains desirable evidence.
 

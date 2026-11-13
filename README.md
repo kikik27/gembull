@@ -21,7 +21,7 @@ For a full reproduction path, follow [Run locally](#run-locally), [Verify the co
 
 The [54-second paper pop-up demo film](films/gembull-popup/README.md) is a narrated, animated story made with Lemo Opuscar. It illustrates the ritual rules and labels the stock concept **SIMULATED**. It is not footage of a live wallet signature; the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) covers that action.
 
-An alternative [16-bit pixel RPG film](films/gembull-story/README.md) uses the same truthful Testnet story and the approved bull mascot with curved horns, a wide muzzle, green sunglasses, and a black hoodie. Both film exports are local assets for human review before an X post.
+The [16-bit pixel RPG film](films/gembull-story/README.md) remains a separate creative exploration. The paper pop-up film is the selected submission demo; its local export awaits human review before the X post.
 
 The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) is a separate legacy **StonkRitual / RITL** token. The v0.2 product direction retires its mock stock-receipt plan; judges should inspect the GemBull contract and the [GemBull Testnet deployment record](docs/deployments/GEMBULL_TESTNET.md).
 
