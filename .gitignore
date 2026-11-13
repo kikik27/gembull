@@ -16,6 +16,14 @@ __pycache__/
 **/target/
 *.zip
 *.tsbuildinfo
+films/*/node_modules/
+films/*/out/
+films/*/stills/
+films/*/voices/
+films/*/*.mp4
+films/*/mix.wav
+films/*/preview*.png
+films/*/contact*.png
 
 
 # Local tooling and scratch

@@ -2,7 +2,26 @@
 
 GemBull is a NEAR-native community memecoin whose supply reacts to a daily on-chain ritual. An eligible account checks in once per 24-hour epoch. A successful community day creates individual reward claims; a missed day burns a fixed slice of the ritual treasury and resets the current streak. The rules live in the token contract, not a backend.
 
-**Hackathon track:** `memecoins` — Memecoins With Mechanics. **Status:** **GemBull / GEMBULL is deployed on NEAR Testnet** at [`gembull-core.testnet`](docs/deployments/GEMBULL_TESTNET.md); metadata, rules, supply, and genesis balances were verified at finality. The [hosted landing](https://web-cyan-three-62.vercel.app) is connected to this contract. One live Testnet check-in has been observed at finality; the recorded walkthrough and live settlement/claim evidence are pending. The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) remains a separate legacy **StonkRitual / RITL** token. The stock reserve and active-holder rewards are **PLANNED / SIMULATED** and represent no real shares, custody, redemption, or broker execution. The v0.2 product direction retires the former mock stock-receipt MVP plan.
+## Judge start here
+
+**Track:** `memecoins` · **Network:** NEAR Testnet · **Live contract:** [`gembull-core.testnet`](https://testnet.nearblocks.io/address/gembull-core.testnet) · **Hosted app:** [GemBull](https://web-cyan-three-62.vercel.app) · **License:** [MIT](LICENSE).
+
+| Do this | See this | Evidence |
+|---|---|---|
+| Open the hosted app and scroll to **Ritual** | Current epoch, target progress, rules, and Testnet source labels | Live contract views, not seeded metrics |
+| Open **Supply** and **Epoch history** | On-chain supply and event history alongside a clearly separate 60-day simulation | `get_global_state()` and [deterministic CSV](docs/simulation/gembull-60-day-simulation.csv) |
+| Run `pnpm verify:testnet` from the repo root | Metadata, rules, supply bounds, code hash, and upgrade-key report | Read-only finality checks against Testnet RPC |
+| Run `python scripts/simulate_60_days.py --check` | `180` checked scenario rows | No price or adoption prediction |
+| Connect a Testnet wallet, register storage, receive at least 1,000 test GEMBULL, then **Check in now** | The wallet signs `check_in`; the app refreshes account status and epoch progress after finality | [Wallet guide](docs/TESTNET_USER_GUIDE.md); token transfer is team-operated, with no buy route |
+| Run the Linux/macOS Sandbox test | Success → claim/mint, and miss → treasury burn/streak reset | [Contract test instructions](contracts/gembull-core/README.md); these are Sandbox outcomes, not live Testnet transactions |
+
+**What is live:** NEP-141/145/148 token, contract-enforced check-ins and settlement rules, Testnet deployment, hosted read path, and one accepted Testnet check-in observed at finality. **What is pending as live demo evidence:** a recorded wallet walkthrough and a 50-account success/claim or missed-day burn on Testnet. The stock reserve, community stock ballot, and allocation ledger are **PLANNED / SIMULATED**; the app holds no shares. The deployed account still has a FullAccess key, so its code remains upgradeable even though there are no public parameter setters.
+
+For a full reproduction path, follow [Run locally](#run-locally), [Verify the contract and simulation](#verify-the-contract-and-simulation), and the [judge walkthrough](#judge-walkthrough). The [submission readiness sheet](docs/SUBMISSION_READINESS.md) tracks the demo post and final submission gates.
+
+The [54-second paper pop-up demo film](films/gembull-popup/README.md) is a narrated, animated story made with Lemo Opuscar. It illustrates the ritual rules and labels the stock concept **SIMULATED**. It is not footage of a live wallet signature; the [Testnet user guide](docs/TESTNET_USER_GUIDE.md) covers that action.
+
+The earlier [`ritl-stonkritual.testnet` deployment](docs/deployments/RITL_TESTNET.md) is a separate legacy **StonkRitual / RITL** token. The v0.2 product direction retires its mock stock-receipt plan; judges should inspect the GemBull contract and the [GemBull Testnet deployment record](docs/deployments/GEMBULL_TESTNET.md).
 
 ## Hackathon goal and evidence
 
@@ -17,7 +36,7 @@ The goal is to demonstrate a memecoin mechanic that a judge can reproduce and in
 | 60-day supply simulation | [script](scripts/simulate_60_days.py) and [CSV](docs/simulation/gembull-60-day-simulation.csv) | 180 rows regenerated and checked |
 | Judge walkthrough with live wallet actions | Testnet account, distribution, hosted demo, recorded transactions | First live check-in observed; full walkthrough/video pending |
 
-The [live hackathon instructions](https://nearhackathon.com/HACKATHON.md) require a public reproducible repository, a human-published X demo post, and one reviewed submission. Testnet-only projects are eligible. Publishing, posting, or submitting needs explicit human approval. The repo must be public by **2026-11-14 23:59 UTC** to enter judging.
+The [live hackathon instructions](https://nearhackathon.com/HACKATHON.md) require a public reproducible repository, a human-published X demo post, and one reviewed submission. Testnet-only projects are eligible. The repository is public; the X post and submission are pending. The development deadline is **2026-11-14 23:59 UTC**. Re-read the live rules before submission. No post or submission is sent by this repository.
 
 ## Ritual rules
 
@@ -124,6 +143,11 @@ scripts/                   Deterministic 60-day simulator
 docs/                      Product, contract, security, test, and design specifications
 docs/deployments/           GemBull Testnet evidence and historical RITL record
 docs/brand/                GemBull assets and creative prompts
+films/gembull-popup/        Lemo Opuscar paper pop-up film source, narration script and credits
 ```
 
 Start with [hackathon alignment](docs/HACKATHON_ALIGNMENT.md), [product requirements](docs/PRD.md), [tokenomics](docs/TOKENOMICS.md), [contract specification](docs/SMART_CONTRACT_SPEC.md), [security](docs/SECURITY_AND_RISK.md), [test plan](docs/TEST_PLAN.md), [roadmap details](docs/ROADMAP.md), and the [latest integration audit](docs/INTEGRATION_AUDIT.md). The approved landing logo, downloadable stickers, and commercial assets are documented in the [brand guide](docs/brand/BRAND_GUIDE.md).
+
+## Implementation and provenance
+
+The NEAR integration was developed during the 2026-11-01 to 2026-11-14 hackathon window; the repository's first commit is dated 2026-11-12. The older RITL deployment and StonkRitual naming are documented as historical work within this repository, not presented as the current token. The contract uses Rust, `near-sdk`, and NEAR fungible-token standards. The web app uses Next.js/React, NEAR wallet tooling, typed contract reads, TanStack Query, Zod, Zustand, and Axios. The supply simulation is a deterministic Python script. The submission film uses [Lemo Opuscar](films/gembull-popup/README.md) with ElevenLabs narration; no API credentials are committed. Third-party project packages are listed in the relevant `Cargo.toml`, `package.json`, and lockfiles.
