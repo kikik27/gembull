@@ -33,14 +33,15 @@ export function VaultSection() {
         </Reveal>
         <Reveal delay={0.05}>
           <h2 className="h2" id="vault-title">
-            Two possible paths. <em>One imagined reserve.</em>
+            Where could a future <em>reserve come from?</em>
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
           <p>
-            Explore how a future stock reserve might be funded. Adjust the two
-            proposed sources below and watch the 3D model respond. No trade
-            router, graduation flow, stock purchase, or reserve custody is live.
+            Try two proposed sources: purchases through a future GemBull app
+            router and a one-time graduation surplus. Move the sliders to see
+            each calculation and its path into the 3D vault. No router,
+            graduation flow, purchase, or custody is live.
           </p>
         </Reveal>
       </div>
@@ -51,25 +52,45 @@ export function VaultSection() {
             <span>SIMULATED FLOW</span>
             <span>NO LIVE FUNDS</span>
           </div>
+          <div className="vault-flow-formulas">
+            <div className="vault-flow-formula">
+              <span>01 · ELIGIBLE APP PURCHASES</span>
+              <strong>{currency.format(dailyRoutedVolume)} / day</strong>
+              <p>
+                <b>× proposed 1%</b> = {currency.format(outcome.routedPerDay)} / day
+              </p>
+              <p>
+                <b>× {RESERVE_SCENARIO_DAYS} days</b> = {currency.format(outcome.routedOverPeriod)}
+              </p>
+            </div>
+            <div className="vault-flow-formula vault-flow-formula-gold">
+              <span>02 · PROTECTED GRADUATION SURPLUS</span>
+              <strong>{currency.format(protectedNetSurplus)} / once</strong>
+              <p>
+                <b>× proposed 5%</b> = {currency.format(outcome.graduationOnce)}
+              </p>
+              <p>After protected obligations; zero surplus means zero input.</p>
+            </div>
+          </div>
           <VaultScene
             routedContribution={outcome.routedOverPeriod}
             graduationContribution={outcome.graduationOnce}
           />
           <div className="vault-model-labels" aria-hidden="true">
-            <span>01 / APP ROUTER</span>
-            <span>02 / GRADUATION</span>
-            <span>03 / RESERVE</span>
+            <span>GREEN / ROUTED TRADES</span>
+            <span>GOLD / GRADUATION</span>
+            <span>GLASS / COMBINED</span>
           </div>
         </div>
 
         <div className="vault-console">
           <div className="vault-console-head">
-            <span>Build a hypothetical scenario</span>
+            <span>Change the inputs</span>
             <strong>SIMULATED</strong>
           </div>
           <div className="vault-control">
             <label htmlFor="vault-routed-volume">
-              <span>Eligible routed volume / day</span>
+              <span>Eligible app-routed purchases / day</span>
               <output htmlFor="vault-routed-volume">
                 {currency.format(dailyRoutedVolume)}
               </output>
@@ -84,16 +105,16 @@ export function VaultSection() {
               onChange={(event) =>
                 setDailyRoutedVolume(Number(event.target.value))
               }
-              aria-valuetext={`${currency.format(dailyRoutedVolume)} eligible routed volume per day`}
+              aria-valuetext={`${currency.format(dailyRoutedVolume)} eligible app-routed purchases per day`}
             />
             <p>
-              Proposed 1% stock-reserve share from a future app router, shown
-              over {RESERVE_SCENARIO_DAYS} illustrative days.
+              Only hypothetical purchases through a future GemBull app router
+              count here. Ordinary transfers and unrelated DEX trades do not.
             </p>
           </div>
           <div className="vault-control vault-control-gold">
             <label htmlFor="vault-protected-surplus">
-              <span>Protected net graduation surplus</span>
+              <span>Surplus left after graduation obligations</span>
               <output htmlFor="vault-protected-surplus">
                 {currency.format(protectedNetSurplus)}
               </output>
@@ -111,25 +132,21 @@ export function VaultSection() {
               aria-valuetext={`${currency.format(protectedNetSurplus)} protected net surplus`}
             />
             <p>
-              Proposed 5% one-time share, only after refund, LP, settlement,
-              and reserve obligations are protected.
+              A one-time hypothetical amount left after refunds, LP seed,
+              settlement costs, and minimum reserve obligations.
             </p>
           </div>
           <dl className="vault-result" aria-live="polite">
             <div>
-              <dt>Router share / day</dt>
-              <dd>{currency.format(outcome.routedPerDay)}</dd>
-            </div>
-            <div>
-              <dt>Router share / {RESERVE_SCENARIO_DAYS} days</dt>
+              <dt>From app purchases / {RESERVE_SCENARIO_DAYS} days</dt>
               <dd>{currency.format(outcome.routedOverPeriod)}</dd>
             </div>
             <div>
-              <dt>Graduation share / once</dt>
+              <dt>From protected surplus / once</dt>
               <dd>{currency.format(outcome.graduationOnce)}</dd>
             </div>
             <div className="vault-result-total">
-              <dt>Illustrative reserve input</dt>
+              <dt>Total hypothetical contribution</dt>
               <dd>{currency.format(outcome.illustrativeTotal)}</dd>
             </div>
           </dl>

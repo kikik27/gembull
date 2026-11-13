@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import * as THREE from "three";
 
 type Props = {
@@ -8,21 +9,38 @@ type Props = {
   onSelect: (index: number) => void;
 };
 
-const COLORS = [0xb7ff16, 0xf4f7f2, 0x749579] as const;
-const DESKTOP_POINTS = [
-  new THREE.Vector3(-2.55, -0.42, 0.15),
-  new THREE.Vector3(0, 0.52, -0.35),
-  new THREE.Vector3(2.55, -0.3, 0.1),
-];
-const MOBILE_POINTS = [
-  new THREE.Vector3(-1.65, -0.25, 0.15),
-  new THREE.Vector3(0, 0.45, -0.35),
-  new THREE.Vector3(1.65, -0.2, 0.1),
-];
+const FLAG_COLORS = [0xb7ff16, 0xf4f7f2, 0xffc857] as const;
+const FLAG_STOPS = [0.12, 0.5, 0.98] as const;
+const CAR_STOPS = [0.02, 0.42, 0.9] as const;
 
-/** A small WebGL map of the three documented roadmap states. Text controls remain usable without WebGL. */
+function roadRibbon(curve: THREE.CatmullRomCurve3, width: number, height: number) {
+  const positions: number[] = [];
+  const indices: number[] = [];
+  const segments = 100;
+  for (let index = 0; index <= segments; index += 1) {
+    const t = index / segments;
+    const point = curve.getPoint(t);
+    const tangent = curve.getTangent(t).normalize();
+    const normal = new THREE.Vector3(-tangent.z, 0, tangent.x);
+    const left = point.clone().addScaledVector(normal, width / 2);
+    const right = point.clone().addScaledVector(normal, -width / 2);
+    positions.push(left.x, height, left.z, right.x, height, right.z);
+    if (index < segments) {
+      const start = index * 2;
+      indices.push(start, start + 1, start + 2, start + 1, start + 3, start + 2);
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setIndex(indices);
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+/** A small map: curved road, three flag pins, and the GemBull mascot driving to the selected stop. */
 export function RoadmapScene({ active, onSelect }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const carRef = useRef<HTMLImageElement>(null);
   const activeRef = useRef(active);
   const selectRef = useRef(onSelect);
   const redrawRef = useRef<(() => void) | null>(null);
@@ -49,129 +67,174 @@ export function RoadmapScene({ active, onSelect }: Props) {
     } catch {
       return;
     }
-
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 50);
-    scene.add(new THREE.AmbientLight(0xdcebdc, 1.45));
-    const light = new THREE.PointLight(0xb7ff16, 35, 14);
-    light.position.set(-2, 2, 5);
+    const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 60);
+    scene.add(new THREE.AmbientLight(0xe8ffe6, 1.7));
+    const light = new THREE.DirectionalLight(0xd4ff9d, 2.1);
+    light.position.set(-3, 7, 5);
     scene.add(light);
-    const group = new THREE.Group();
-    scene.add(group);
+    const map = new THREE.Group();
+    scene.add(map);
 
-    const nodes = COLORS.map((color, index) => {
-      const holder = new THREE.Group();
-      const coreMaterial = new THREE.MeshStandardMaterial({
-        color,
-        metalness: 0.62,
-        roughness: 0.24,
-        flatShading: true,
-        emissive: color,
-        emissiveIntensity: 0.16,
-      });
-      const geometry =
-        index === 0
-          ? new THREE.IcosahedronGeometry(0.52, 1)
-          : index === 1
-            ? new THREE.OctahedronGeometry(0.54, 1)
-            : new THREE.BoxGeometry(0.78, 0.78, 0.78);
-      const core = new THREE.Mesh(geometry, coreMaterial);
-      const ringMaterial = new THREE.MeshBasicMaterial({
-        color: index === 0 ? 0xb7ff16 : 0x6d8970,
+    const road = new THREE.CatmullRomCurve3([
+      new THREE.Vector3(-3.4, 0, 1.42),
+      new THREE.Vector3(-2.45, 0, 1.26),
+      new THREE.Vector3(-1.35, 0, -0.72),
+      new THREE.Vector3(0, 0, -0.85),
+      new THREE.Vector3(1.15, 0, 0.72),
+      new THREE.Vector3(2.18, 0, 1.02),
+      new THREE.Vector3(3.35, 0, -0.12),
+    ]);
+    const ground = new THREE.Mesh(
+      new THREE.PlaneGeometry(8.65, 5.1),
+      new THREE.MeshStandardMaterial({
+        color: 0x102016,
+        roughness: 1,
+        metalness: 0,
         transparent: true,
-        opacity: 0.42,
+        opacity: 0.64,
+        side: THREE.DoubleSide,
+      }),
+    );
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.065;
+    map.add(ground);
+    const grid = new THREE.GridHelper(8.5, 18, 0x345b39, 0x1e3a25);
+    grid.position.y = -0.043;
+    const gridMaterial = grid.material as THREE.Material;
+    gridMaterial.transparent = true;
+    gridMaterial.opacity = 0.32;
+    map.add(grid);
+    map.add(
+      new THREE.Mesh(
+        roadRibbon(road, 0.94, -0.015),
+        new THREE.MeshBasicMaterial({ color: 0x53794c, side: THREE.DoubleSide }),
+      ),
+      new THREE.Mesh(
+        roadRibbon(road, 0.8, 0.002),
+        new THREE.MeshBasicMaterial({ color: 0x18251b, side: THREE.DoubleSide }),
+      ),
+    );
+    const dashMaterial = new THREE.MeshBasicMaterial({
+      color: 0xe3efde,
+      transparent: true,
+      opacity: 0.52,
+    });
+    for (let index = 0; index < 19; index += 1) {
+      const t = 0.035 + index * 0.051;
+      const point = road.getPoint(t);
+      const tangent = road.getTangent(t);
+      const dash = new THREE.Mesh(
+        new THREE.BoxGeometry(0.16, 0.014, 0.025),
+        dashMaterial,
+      );
+      dash.position.set(point.x, 0.025, point.z);
+      dash.rotation.y = -Math.atan2(tangent.z, tangent.x);
+      map.add(dash);
+    }
+
+    const clickTargets: THREE.Object3D[] = [];
+    const flags = FLAG_STOPS.map((stop, index) => {
+      const point = road.getPoint(stop);
+      const holder = new THREE.Group();
+      holder.position.set(point.x, 0, point.z);
+      map.add(holder);
+      const color = FLAG_COLORS[index];
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color,
+        transparent: true,
+        opacity: 0.7,
         side: THREE.DoubleSide,
       });
       const ring = new THREE.Mesh(
-        new THREE.TorusGeometry(0.78, 0.014, 8, 64),
+        new THREE.TorusGeometry(0.37, 0.027, 8, 44),
         ringMaterial,
       );
-      ring.rotation.x = 0.35;
-      holder.add(core, ring);
-      group.add(holder);
-      return { holder, core, coreMaterial, ring, ringMaterial };
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = 0.035;
+      holder.add(ring);
+      const pole = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.024, 0.035, 1.13, 10),
+        new THREE.MeshStandardMaterial({
+          color: 0xdbe8da,
+          metalness: 0.6,
+          roughness: 0.32,
+        }),
+      );
+      pole.position.y = 0.62;
+      holder.add(pole);
+      const flagMaterial = new THREE.MeshStandardMaterial({
+        color,
+        emissive: color,
+        emissiveIntensity: 0.24,
+        metalness: 0.2,
+        roughness: 0.38,
+        side: THREE.DoubleSide,
+      });
+      const flagShape = new THREE.Shape();
+      flagShape.moveTo(0, 0);
+      flagShape.lineTo(0.54, 0);
+      flagShape.lineTo(0.4, -0.18);
+      flagShape.lineTo(0.54, -0.36);
+      flagShape.lineTo(0, -0.36);
+      flagShape.closePath();
+      const flag = new THREE.Mesh(
+        new THREE.ShapeGeometry(flagShape),
+        flagMaterial,
+      );
+      flag.position.set(0.02, 1.13, 0);
+      holder.add(flag);
+      for (const target of [ring, pole, flag]) {
+        target.userData.milestoneIndex = index;
+        clickTargets.push(target);
+      }
+      return { holder, ring, ringMaterial, flagMaterial };
     });
 
-    const trackMaterial = new THREE.MeshBasicMaterial({
-      color: 0x35553a,
-      transparent: true,
-      opacity: 0.9,
-    });
-    const glowMaterial = new THREE.MeshBasicMaterial({
-      color: 0xb7ff16,
-      transparent: true,
-      opacity: 0.1,
-    });
-    const track = new THREE.Mesh(new THREE.BufferGeometry(), trackMaterial);
-    const glow = new THREE.Mesh(new THREE.BufferGeometry(), glowMaterial);
-    group.add(glow, track);
-    const marker = new THREE.Mesh(
-      new THREE.SphereGeometry(0.085, 16, 12),
-      new THREE.MeshBasicMaterial({ color: 0xd4ff59 }),
-    );
-    group.add(marker);
-
-    let curve = new THREE.CatmullRomCurve3(DESKTOP_POINTS);
-    let width = 1;
-    let height = 1;
-    let pointerX = 0;
-    let pointerY = 0;
-    let progress = 0;
+    let progress = CAR_STOPS[activeRef.current] ?? CAR_STOPS[0];
     let frame = 0;
     let visible = false;
-
-    const layout = () => {
-      const rect = canvas.getBoundingClientRect();
-      width = Math.max(1, rect.width);
-      height = Math.max(1, rect.height);
-      const mobile = width < 620;
-      const points = mobile ? MOBILE_POINTS : DESKTOP_POINTS;
-      nodes.forEach((node, index) => node.holder.position.copy(points[index]));
-      curve = new THREE.CatmullRomCurve3(points);
-      track.geometry.dispose();
-      glow.geometry.dispose();
-      track.geometry = new THREE.TubeGeometry(curve, 80, 0.015, 6, false);
-      glow.geometry = new THREE.TubeGeometry(curve, 80, 0.085, 8, false);
-      camera.aspect = width / height;
-      camera.position.set(0, 0, mobile ? 9.7 : 9.2);
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height, false);
-      redrawRef.current?.();
-    };
-
+    let pointerX = 0;
+    let pointerY = 0;
     const draw = (time: number) => {
       const selected = activeRef.current;
-      const ease = reduced ? 1 : 0.08;
-      group.rotation.y += ((reduced ? 0 : pointerX * 0.13) - group.rotation.y) * ease;
-      group.rotation.x += ((reduced ? 0 : -pointerY * 0.08) - group.rotation.x) * ease;
-      nodes.forEach((node, index) => {
+      const target = CAR_STOPS[selected] ?? CAR_STOPS[0];
+      progress += (target - progress) * (reduced ? 1 : 0.055);
+      const point = road.getPoint(progress);
+      const carPosition = new THREE.Vector3(
+        point.x,
+        0.78 + (reduced ? 0 : Math.sin(time * 0.004) * 0.025),
+        point.z,
+      );
+      const projected = carPosition.project(camera);
+      if (carRef.current) {
+        carRef.current.style.left = `${(projected.x + 1) * 50}%`;
+        carRef.current.style.top = `${(1 - projected.y) * 50}%`;
+      }
+      flags.forEach((flag, index) => {
         const chosen = index === selected;
-        const size = chosen ? 1.16 : 0.9;
-        node.holder.scale.lerp(
-          new THREE.Vector3(size, size, size),
+        const scale = chosen ? 1.16 : 0.92;
+        flag.holder.scale.lerp(
+          new THREE.Vector3(scale, scale, scale),
           reduced ? 1 : 0.1,
         );
-        node.core.rotation.y = reduced ? 0.25 : time * 0.00022 * (index + 1);
-        node.core.rotation.z = reduced ? 0.1 : time * 0.00013;
-        node.ring.rotation.z = reduced ? 0 : time * 0.00012 * (index % 2 ? -1 : 1);
-        node.coreMaterial.emissiveIntensity +=
-          ((chosen ? 0.58 : 0.1) - node.coreMaterial.emissiveIntensity) * ease;
-        node.ringMaterial.opacity +=
-          ((chosen ? 0.9 : 0.28) - node.ringMaterial.opacity) * ease;
+        flag.ringMaterial.opacity +=
+          ((chosen ? 0.95 : 0.36) - flag.ringMaterial.opacity) *
+          (reduced ? 1 : 0.1);
+        flag.flagMaterial.emissiveIntensity +=
+          ((chosen ? 0.52 : 0.13) - flag.flagMaterial.emissiveIntensity) *
+          (reduced ? 1 : 0.1);
       });
-      progress += (selected / 2 - progress) * (reduced ? 1 : 0.08);
-      marker.position.copy(curve.getPoint(progress));
-      camera.position.x +=
-        ((selected - 1) * 0.13 - camera.position.x) * ease;
-      camera.lookAt(0, 0, 0);
+      const ease = reduced ? 1 : 0.06;
+      map.rotation.y += ((reduced ? 0 : pointerX * 0.055) - map.rotation.y) * ease;
+      map.rotation.x += ((reduced ? 0 : -pointerY * 0.025) - map.rotation.x) * ease;
       renderer.render(scene, camera);
     };
-
     redrawRef.current = () => {
       if (reduced) draw(0);
     };
@@ -193,7 +256,6 @@ export function RoadmapScene({ active, onSelect }: Props) {
       { threshold: 0.05 },
     );
     observer.observe(canvas);
-
     const onMove = (event: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       pointerX = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -212,15 +274,23 @@ export function RoadmapScene({ active, onSelect }: Props) {
         -((event.clientY - rect.top) / rect.height) * 2 + 1,
       );
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects(nodes.map((node) => node.core))[0];
-      if (hit) {
-        const index = nodes.findIndex((node) => node.core === hit.object);
-        if (index >= 0) selectRef.current(index);
-      }
+      const hit = raycaster.intersectObjects(clickTargets)[0];
+      if (hit && typeof hit.object.userData.milestoneIndex === "number")
+        selectRef.current(hit.object.userData.milestoneIndex);
     };
     canvas.addEventListener("pointermove", onMove);
     canvas.addEventListener("pointerleave", onLeave);
     canvas.addEventListener("click", onClick);
+    const layout = () => {
+      const rect = canvas.getBoundingClientRect();
+      renderer.setSize(Math.max(1, rect.width), Math.max(1, rect.height), false);
+      camera.aspect = Math.max(1, rect.width) / Math.max(1, rect.height);
+      const mobile = rect.width < 620;
+      camera.position.set(0, mobile ? 7.5 : 6.2, mobile ? 10.2 : 8.5);
+      camera.lookAt(0, 0.05, 0.2);
+      camera.updateProjectionMatrix();
+      redrawRef.current?.();
+    };
     const resizeObserver = new ResizeObserver(layout);
     resizeObserver.observe(canvas);
     layout();
@@ -234,27 +304,37 @@ export function RoadmapScene({ active, onSelect }: Props) {
       canvas.removeEventListener("pointerleave", onLeave);
       canvas.removeEventListener("click", onClick);
       redrawRef.current = null;
-      nodes.forEach((node) => {
-        node.core.geometry.dispose();
-        node.coreMaterial.dispose();
-        node.ring.geometry.dispose();
-        node.ringMaterial.dispose();
+      const geometries = new Set<THREE.BufferGeometry>();
+      const materials = new Set<THREE.Material>();
+      map.traverse((object) => {
+        if (object instanceof THREE.Mesh || object instanceof THREE.LineSegments) {
+          geometries.add(object.geometry);
+          const assigned = Array.isArray(object.material)
+            ? object.material
+            : [object.material];
+          assigned.forEach((material) => materials.add(material));
+        }
       });
-      track.geometry.dispose();
-      glow.geometry.dispose();
-      trackMaterial.dispose();
-      glowMaterial.dispose();
-      marker.geometry.dispose();
-      (marker.material as THREE.Material).dispose();
+      geometries.forEach((geometry) => geometry.dispose());
+      materials.forEach((material) => material.dispose());
       renderer.dispose();
     };
   }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="roadmap-canvas"
-      aria-hidden="true"
-    />
+    <>
+      <canvas ref={canvasRef} className="roadmap-canvas" aria-hidden="true" />
+      <Image
+        ref={carRef}
+        src="/brand/scene/gembull-roadster-mascot.png"
+        alt=""
+        aria-hidden="true"
+        className="roadmap-car"
+        width={1312}
+        height={1199}
+        priority
+        unoptimized
+      />
+    </>
   );
 }

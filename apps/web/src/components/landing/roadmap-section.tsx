@@ -46,9 +46,9 @@ export function RoadmapSection() {
         </Reveal>
         <Reveal delay={0.1}>
           <p>
-            Follow the path from a live contract to a public ritual demo, then
-            to an idea still in simulation. Select a milestone to see what it
-            actually means.
+            Ride with GemBull from the live contract to a public ritual demo,
+            then onward to a simulated idea. Select a flag or a stop to see
+            what each milestone really means.
           </p>
         </Reveal>
       </div>
@@ -56,8 +56,8 @@ export function RoadmapSection() {
       <Reveal className="roadmap-experience" delay={0.08} data-step={String(active)}>
         <div className="roadmap-visual">
           <div className="roadmap-visual-heading" aria-hidden="true">
-            <span>THE ROAD AHEAD</span>
-            <span>01 — 03</span>
+            <span>GEMBULL ROADMAP</span>
+            <span>SELECT A FLAG</span>
           </div>
           <RoadmapScene active={active} onSelect={setActive} />
           <ol className="roadmap-waypoints" aria-label="Roadmap milestones">

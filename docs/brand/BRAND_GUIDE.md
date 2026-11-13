@@ -26,6 +26,7 @@ The authoritative web file list is [`apps/web/public/brand/manifest.json`](../..
 | `/brand/stickers/gembull-checked-in.png` | Confirmed daily check-in / downloadable sticker |
 | `/brand/stickers/gembull-streak.png` | Streak celebration |
 | `/brand/stickers/gembull-target-hit.png` | Community target celebration / downloadable sticker |
+| `/brand/scene/gembull-roadster-mascot.png` | Transparent mascot in a lime roadster for the interactive landing roadmap |
 | `/brand/social/x-banner-1500x500.png` | X (Twitter) profile banner (1500×500) |
 | `/brand/social/discord-banner-1200x500.png` | Discord / Telegram header (1200×500) |
 | `/brand/gembull-open-graph.png` | Open Graph and X card |

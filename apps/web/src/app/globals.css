@@ -1502,6 +1502,17 @@ html[data-scrolled="true"] .nav-menu {
   cursor: pointer;
   touch-action: pan-y;
 }
+.roadmap-car {
+  position: absolute;
+  z-index: 1;
+  top: 58%;
+  left: 23%;
+  width: clamp(106px, 13vw, 148px);
+  height: auto;
+  transform: translate(-50%, -58%);
+  pointer-events: none;
+  filter: drop-shadow(0 14px 15px rgba(0, 0, 0, 0.65));
+}
 .roadmap-visual-heading {
   position: absolute;
   z-index: 1;
@@ -2242,7 +2253,7 @@ html[data-scrolled="true"] .nav-menu {
 }
 .vault-model {
   position: relative;
-  min-height: 560px;
+  min-height: 650px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 60% 42%, rgba(183, 255, 22, 0.1), transparent 60%),
@@ -2262,11 +2273,59 @@ html[data-scrolled="true"] .nav-menu {
 }
 .vault-canvas {
   position: absolute;
-  inset: 0;
+  top: 178px;
+  left: 0;
   display: block;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 178px);
   touch-action: pan-y;
+}
+.vault-flow-formulas {
+  position: absolute;
+  z-index: 1;
+  top: 56px;
+  right: 24px;
+  left: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  pointer-events: none;
+}
+.vault-flow-formula {
+  min-width: 0;
+  padding: 14px 15px;
+  border: 1px solid rgba(183, 255, 22, 0.26);
+  border-radius: 11px;
+  background: rgba(7, 14, 8, 0.88);
+}
+.vault-flow-formula-gold {
+  border-color: rgba(255, 200, 87, 0.3);
+}
+.vault-flow-formula > span {
+  display: block;
+  color: var(--sr-lime);
+  font-family: var(--sr-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+.vault-flow-formula-gold > span {
+  color: var(--sr-warning);
+}
+.vault-flow-formula strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+.vault-flow-formula p {
+  margin-top: 4px;
+  color: var(--sr-text-muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.vault-flow-formula b {
+  color: var(--sr-text);
+  font-weight: 650;
 }
 .vault-model-heading,
 .vault-model-labels {
@@ -2623,7 +2682,7 @@ html[data-scrolled="true"] .nav-menu {
     grid-template-columns: minmax(0, 1fr);
   }
   .vault-model {
-    min-height: 420px;
+    min-height: 620px;
   }
   .vault-console {
     border-top: 1px solid rgba(255, 200, 87, 0.18);
@@ -2661,7 +2720,25 @@ html[data-scrolled="true"] .nav-menu {
     border-radius: 18px;
   }
   .vault-model {
-    min-height: 340px;
+    min-height: 680px;
+  }
+  .vault-flow-formulas {
+    top: 54px;
+    right: 16px;
+    left: 16px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .vault-flow-formula {
+    padding: 10px 12px;
+  }
+  .vault-flow-formula strong {
+    margin-top: 3px;
+    font-size: 15px;
+  }
+  .vault-canvas {
+    top: 286px;
+    height: calc(100% - 286px);
   }
   .vault-model-heading,
   .vault-model-labels {
@@ -2683,6 +2760,9 @@ html[data-scrolled="true"] .nav-menu {
   }
   .roadmap-visual {
     min-height: 300px;
+  }
+  .roadmap-car {
+    width: 102px;
   }
   .roadmap-waypoints {
     right: 16px;

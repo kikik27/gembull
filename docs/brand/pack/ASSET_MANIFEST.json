@@ -82,7 +82,8 @@
     "marketing_and_concepts": [
       { "file": "05-marketing/gembull-campaign-coin.png", "description": "3D campaign artwork coin illustration (not on-chain token metadata)", "dimensions": "1254x1254", "format": "PNG" },
       { "file": "05-marketing/gembull-commercial-board-v1.png", "description": "Full 3x3 commercial campaign concept board", "dimensions": "1254x1254", "format": "PNG" },
-      { "file": "05-marketing/gembull-logo-concept-v1.png", "description": "Owner-approved initial raster concept", "dimensions": "1536x1024", "format": "PNG" }
+      { "file": "05-marketing/gembull-logo-concept-v1.png", "description": "Owner-approved initial raster concept", "dimensions": "1536x1024", "format": "PNG" },
+      { "file": "05-marketing/gembull-roadster-mascot.png", "description": "Transparent GemBull mascot driving a lime roadster for the interactive roadmap", "dimensions": "1312x1199", "format": "PNG" }
     ]
   }
 }
