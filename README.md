@@ -10,7 +10,7 @@ Built for **NEAR HACKATHON 2026**, track **`memecoins` — Memecoins With Mechan
 | Testnet contract | [`gembull-core.testnet`](https://testnet.nearblocks.io/address/gembull-core.testnet) |
 | Deployment transaction | [View on NEAR Testnet explorer](https://explorer.testnet.near.org/transactions/5rBtj3zDp9A7BrzuKQWYVzTN2wYnSsVcg8TcztXSaG9j) |
 | Deployment details | [Contract, genesis allocation, code hash, and upgrade key](docs/deployments/GEMBULL_TESTNET.md) |
-| Demo video | Local export prepared; public X post link pending |
+| Public X demo post | [@Zhend3y: GemBull at NEAR HACKATHON](https://x.com/Zhend3y/status/2121330322747068585) |
 
 ## Try it: action → result
 

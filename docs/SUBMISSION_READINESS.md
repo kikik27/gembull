@@ -10,21 +10,18 @@ Checked against the [live NEAR HACKATHON instructions](https://nearhackathon.com
 - [x] NEAR Testnet contract `gembull-core.testnet`: `pnpm verify:testnet` passed at finality on 2026-11-13, including metadata, supply, rules, code hash, and disclosure of one remaining FullAccess upgrade key.
 - [x] README leads with reproducible action → result steps, Testnet evidence, local commands, and explicit limitations.
 - [x] Contract tests and deterministic 60-day simulation are documented; the live and simulated paths are separated.
-- [x] The human selected the Lemo Opuscar paper pop-up film for the X demo post. Its local export, `films/gembull-popup/gembull-popup.mp4`, is 1920 × 1080, 24 fps, 54.5 seconds with ElevenLabs narration, AAC audio, and corrected English captions. The film folder is excluded from the judging repository; the MP4 awaits human review and X upload.
+- [x] The human published a [public X demo post](https://x.com/Zhend3y/status/2121330322747068585). Public X embed metadata confirms the NEAR HACKATHON wording, `@NEARProtocol`, `#NEARHackathon`, app and repo links, and an attached media URL. The local Lemo Opuscar export remains excluded from the repository; the embed metadata alone does not prove which file was attached.
 
 ## Still required before submission
 
-- [ ] Review the selected local paper pop-up demo film, its captions, and every spoken claim. The story and target counter illustrate the verified rules; they are not a recording of a signed wallet transaction or live 50-account milestone.
-- [ ] Human publishes a public X post with the video attached, says it was built at **NEAR HACKATHON**, tags **@NEARProtocol** and **#NEARHackathon**, and provides the post URL.
-- [ ] Human provides and confirms the team lead name, contact email, team size, mainnet NEAR payout account, selected track(s), public repo link, public X post link, and the exact project description. Do not infer these from a Testnet wallet.
+- [ ] Confirm that the attached X media is the intended demo and that its spoken claims and captions are accurate. The animated story and target counter illustrate verified rules; they are not a recording of a signed wallet transaction or live 50-account milestone.
+- [ ] Human provides and confirms the team lead name, contact email, team size, exact mainnet NEAR payout account, selected track(s), public repo link, public X post link, and the exact project description. The X display name and a similarly named Testnet wallet are not authorization to fill submission fields.
 - [ ] Read the organizer contact notice verbatim and obtain the human's consent.
 - [ ] Show the exact submission JSON to the human for explicit approval. Submit **once** only after that approval. Do not add a `website` field to the API payload.
 
-## Demo post draft for the human
+## Public demo post
 
-> GemBull asks you to show up daily. On NEAR Testnet, check-ins decide reward claims or a ritual-treasury burn. Stock concept: simulated. Built at NEAR HACKATHON. Try: https://gembull-testnet.vercel.app Code: https://github.com/kikik27/gembull @NEARProtocol #NEARHackathon
-
-Attach the video file to the post. The human must publish it and return its public URL. Do not describe the animated reconstruction as footage of a live wallet signature; a separate real wallet capture remains desirable evidence.
+<https://x.com/Zhend3y/status/2121330322747068585> — public embed metadata confirms the required event wording, account tag, hashtag, app link, repo link, and a media attachment. Do not describe the animated reconstruction as footage of a live wallet signature; a separate real wallet capture remains desirable evidence.
 
 ## Live evidence limit
 
