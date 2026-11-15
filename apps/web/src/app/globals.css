@@ -839,166 +839,277 @@ html[data-scrolled="true"] .nav-menu {
 }
 
 .rc-waitlist-action { width: 100%; }
-.waitlist-dialog-overlay { background: rgba(7, 10, 8, 0.85); backdrop-filter: blur(8px); }
+.waitlist-dialog-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 50 !important;
+  background: rgba(7, 10, 8, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
 .waitlist-dialog {
-  display: grid;
-  gap: 20px;
-  width: min(100% - 32px, 480px) !important;
-  max-width: 480px !important;
-  max-height: min(92dvh, 720px);
-  overflow-y: auto;
-  padding: 26px !important;
-  border: 1px solid var(--sr-border-strong);
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 50 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  width: min(calc(100% - 32px), 460px) !important;
+  max-width: 460px !important;
+  max-height: min(90dvh, 720px) !important;
+  overflow-y: auto !important;
+  padding: 28px !important;
+  border: 1px solid var(--sr-border) !important;
   border-radius: 20px !important;
   background: var(--sr-surface-1) !important;
+  background-image: linear-gradient(160deg, rgba(28, 40, 32, 0.85), rgba(16, 22, 17, 0.95)) !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.3) !important;
+  backdrop-filter: blur(24px) saturate(1.3) !important;
   color: var(--sr-text) !important;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
 }
-.waitlist-dialog-header { display: grid; gap: 8px; padding-right: 20px; }
-.waitlist-dialog-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
-.waitlist-dialog-brand .tag { align-self: center; }
-.waitlist-dialog-header [data-slot="dialog-title"] { font-size: 24px; font-weight: 700; line-height: 1.25; letter-spacing: -0.02em; color: var(--sr-text); }
-.waitlist-dialog-header [data-slot="dialog-description"] { color: var(--sr-text-muted); font-size: 14px; line-height: 1.5; }
-.waitlist-dialog-body { min-height: 60px; display: grid; gap: 18px; }
-.waitlist-content-flow { display: grid; gap: 18px; }
-.waitlist-step-group { display: grid; gap: 10px; }
-.waitlist-step-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--sr-text-muted);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.waitlist-dialog-header {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  padding-right: 28px !important;
+  text-align: left !important;
 }
-.waitlist-step-label::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--sr-border);
-}
-
-/* Telegram Card */
-.waitlist-tg-card {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 16px 18px;
-  border-radius: 14px;
-  background: linear-gradient(145deg, rgba(34, 158, 217, 0.14), rgba(183, 255, 22, 0.05));
-  border: 1px solid rgba(34, 158, 217, 0.35);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-}
-.waitlist-tg-header {
+.waitlist-dialog-brand {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-bottom: 2px;
 }
-.waitlist-tg-icon-wrap {
+.waitlist-dialog-brand .tag {
+  align-self: center;
+}
+.waitlist-dialog-title {
+  font-size: 24px !important;
+  font-weight: 750 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.03em !important;
+  color: var(--sr-text) !important;
+  margin: 0 !important;
+}
+.waitlist-dialog-desc {
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+  color: var(--sr-text-muted) !important;
+  margin: 0 !important;
+}
+.waitlist-dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 60px;
+}
+
+/* Telegram banner - sleek, integrated single row, matches site theme */
+.waitlist-telegram-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: var(--sr-surface-2);
+  border: 1px solid var(--sr-border);
+  color: var(--sr-text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.waitlist-telegram-banner:hover {
+  background: var(--sr-surface-3);
+  border-color: rgba(183, 255, 22, 0.4);
+  transform: translateY(-1px);
+}
+.waitlist-telegram-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.waitlist-telegram-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #229ed9;
-  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(34, 158, 217, 0.14);
+  color: #29b6f6;
+  border: 1px solid rgba(34, 158, 217, 0.25);
   flex-shrink: 0;
-  box-shadow: 0 4px 14px rgba(34, 158, 217, 0.4);
 }
-.waitlist-tg-titles {
-  display: grid;
+.waitlist-telegram-meta {
+  display: flex;
+  flex-direction: column;
   gap: 2px;
+  min-width: 0;
 }
-.waitlist-tg-title {
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
+.waitlist-telegram-title {
+  font-size: 14px;
+  font-weight: 650;
   color: var(--sr-text);
-  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
-.waitlist-tg-sub {
-  margin: 0;
+.waitlist-telegram-sub {
   font-size: 12px;
   color: var(--sr-text-muted);
-  line-height: 1.4;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.waitlist-tg-btn {
+.waitlist-telegram-pill {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 11px 16px;
-  border-radius: 10px;
-  background: #229ed9;
-  color: #fff !important;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-  transition: all 0.18s ease;
-  box-shadow: 0 4px 16px rgba(34, 158, 217, 0.35);
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(244, 247, 242, 0.08);
+  border: 1px solid var(--sr-border);
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--sr-text);
+  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
-.waitlist-tg-btn:hover {
-  background: #2ab2f3;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(34, 158, 217, 0.5);
-  color: #fff !important;
+.waitlist-telegram-banner:hover .waitlist-telegram-pill {
+  background: var(--sr-lime);
+  border-color: var(--sr-lime);
+  color: var(--sr-bg);
 }
 
-/* Form Styles */
-.waitlist-dialog-form { display: grid; gap: 14px; }
-.waitlist-input-group { display: grid; gap: 6px; }
-.waitlist-input-group label { color: var(--sr-text); font-size: 13px; font-weight: 600; }
-.waitlist-dialog-input {
-  min-height: 46px;
+/* Form */
+.waitlist-dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.waitlist-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.waitlist-field label {
+  color: var(--sr-text);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.waitlist-account-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
   padding: 10px 14px;
-  border: 1px solid var(--sr-border-strong);
-  border-radius: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--sr-border);
+  background: var(--sr-surface-2);
+}
+.waitlist-account-id {
+  font-size: 13.5px;
+  color: var(--sr-text);
+  font-family: var(--sr-font-mono);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.waitlist-account-tag {
+  flex-shrink: 0;
+}
+.waitlist-dialog-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--sr-border);
+  border-radius: 12px;
   background: var(--sr-surface-2);
   color: var(--sr-text);
-  font-size: 15px;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 .waitlist-dialog-input:focus {
   border-color: var(--sr-lime);
   outline: none;
+  box-shadow: 0 0 0 2px rgba(183, 255, 22, 0.2);
 }
-.waitlist-account-readonly {
+.waitlist-dialog-input::placeholder {
+  color: var(--sr-text-subtle);
+}
+.waitlist-dialog-error {
+  color: var(--sr-danger);
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+}
+.waitlist-dialog-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.waitlist-dialog-joined {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 46px;
-  padding: 10px 14px;
-  border: 1px solid var(--sr-border);
-  border-radius: 10px;
-  background: var(--sr-surface-2);
-  color: var(--sr-text);
-  font-size: 14px;
-  font-family: var(--sr-font-mono, monospace);
-}
-.waitlist-account-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--sr-green);
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(0, 184, 90, 0.4);
+  border-radius: 14px;
   background: var(--sr-green-soft);
-  padding: 3px 8px;
-  border-radius: 6px;
 }
-.waitlist-dialog-status, .waitlist-dialog-connect p { color: var(--sr-text-muted); font-size: 14px; line-height: 1.6; }
-.waitlist-dialog-retry { display: grid; justify-items: start; gap: 14px; }
-.waitlist-dialog-connect { display: grid; gap: 16px; }
-.waitlist-dialog-error { color: var(--sr-danger); font-size: 13px; line-height: 1.5; }
-.waitlist-dialog-honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.waitlist-dialog-joined { display: flex; align-items: flex-start; gap: 12px; padding: 18px; border: 1px solid var(--sr-green); border-radius: 14px; background: var(--sr-green-soft); }
-.waitlist-dialog-joined svg { flex: none; color: var(--sr-green); }
-.waitlist-dialog-joined strong { display: block; margin-bottom: 4px; color: var(--sr-text); font-size: 15px; }
-.waitlist-dialog-joined p { color: var(--sr-text-muted); font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; margin: 0; }
-.waitlist-dialog-disclosure { padding-top: 16px; border-top: 1px solid var(--sr-border); color: var(--sr-text-subtle); font-size: 12px; line-height: 1.6; }
-@media (max-width: 480px) { .waitlist-dialog { padding: 20px !important; } }
+.waitlist-dialog-joined svg {
+  flex: none;
+  color: var(--sr-green);
+  margin-top: 2px;
+}
+.waitlist-dialog-joined strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 3px;
+}
+.waitlist-dialog-joined p {
+  color: var(--sr-text-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-word;
+}
+.waitlist-dialog-connect {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 0;
+  text-align: center;
+}
+.waitlist-dialog-connect p {
+  color: var(--sr-text-muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 0;
+}
+.waitlist-dialog-disclosure {
+  padding-top: 14px;
+  border-top: 1px solid var(--sr-border);
+  color: var(--sr-text-subtle);
+  font-size: 11.5px;
+  line-height: 1.55;
+  margin: 0;
+}
+@media (max-width: 480px) {
+  .waitlist-dialog {
+    padding: 20px !important;
+  }
+}
 .loading-state {
   display: flex;
   align-items: center;

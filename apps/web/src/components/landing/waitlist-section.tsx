@@ -13,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { waitlistRequestSchema, type WaitlistRequest } from "@/schemas/waitlist";
 import { getWaitlistStatus, joinWaitlist } from "@/services/waitlist-service";
 import { BrandMark } from "./brand-mark";
@@ -82,166 +81,141 @@ export function WaitlistSection({ accountId, network, signIn }: Props) {
       </Button>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="max-w-[440px] w-[calc(100%-2rem)] rounded-2xl border border-[#2b382e] bg-[#101611] p-6 text-[#f4f7f2] shadow-2xl sm:max-w-[440px] gap-5"
-          overlayClassName="bg-black/80 backdrop-blur-md"
+          className="waitlist-dialog"
+          overlayClassName="waitlist-dialog-overlay"
         >
-          <DialogHeader className="gap-2 text-left pr-6">
-            <div className="flex items-center gap-3 mb-1">
-              <BrandMark size={34} />
-              <span className="tag tag-dot">TESTNET · 5,000 GEMBULL</span>
+          <DialogHeader className="waitlist-dialog-header">
+            <div className="waitlist-dialog-brand">
+              <BrandMark size={36} />
+              <span className="tag tag-dot tag-live">TESTNET · 5,000 GEMBULL</span>
             </div>
-            <DialogTitle className="text-2xl font-bold tracking-tight text-white">
-              Join the Herd.
+            <DialogTitle className="waitlist-dialog-title">
+              Join the Community
             </DialogTitle>
-            <DialogDescription className="text-sm text-[#a4aea6] leading-relaxed">
-              Join the official GemBull Telegram group & submit your wallet to claim 5,000 Testnet GEMBULL for the daily ritual.
+            <DialogDescription className="waitlist-dialog-desc">
+              Join our official GemBull Telegram and claim 5,000 Testnet GEMBULL to test the daily ritual.
             </DialogDescription>
           </DialogHeader>
 
-          <div className="flex flex-col gap-5 min-h-[60px]">
+          <div className="waitlist-dialog-body">
             {status.isPending ? (
-              <p className="text-sm text-[#a4aea6] py-2">Checking request status…</p>
+              <p className="waitlist-dialog-desc">Checking request status…</p>
             ) : connectedTestnet && status.data?.joined ? (
-              <div className="flex items-start gap-3 rounded-2xl border border-emerald-500/40 bg-emerald-950/40 p-4 text-emerald-200">
-                <CheckCircle2 aria-hidden="true" size={24} className="shrink-0 text-emerald-400 mt-0.5" />
-                <div className="flex flex-col gap-1">
-                  <strong className="text-sm font-bold text-white">You’re in the queue!</strong>
-                  <p className="text-xs text-[#a4aea6] leading-relaxed m-0">
-                    <span className="font-mono text-emerald-300">{accountId}</span> is recorded. Our team reviews community membership and distributes test GEMBULL shortly.
+              <div className="waitlist-dialog-joined">
+                <CheckCircle2 aria-hidden="true" size={24} />
+                <div>
+                  <strong>Request submitted!</strong>
+                  <p>
+                    <span className="font-mono text-white">{accountId}</span> is recorded. Our Telegram admin bot will distribute 5,000 GEMBULL shortly.
                   </p>
                 </div>
               </div>
             ) : !connectedTestnet ? (
-              <div className="flex flex-col gap-3 py-2 text-center">
+              <div className="waitlist-dialog-connect">
                 {accountId && network !== "testnet" ? (
-                  <p className="text-xs text-rose-400 font-medium">Switch your wallet to NEAR Testnet first.</p>
+                  <p className="waitlist-dialog-error">Switch your wallet to NEAR Testnet first.</p>
                 ) : (
                   <>
-                    <p className="text-sm text-[#a4aea6]">
-                      Connect your NEAR Testnet wallet first to automatically verify your account ID.
+                    <p>
+                      Connect your NEAR Testnet wallet first to automatically verify your account ID and claim tokens.
                     </p>
                     <Button
-                      className="btn btn-lime btn-block h-11 w-full text-sm font-bold cursor-pointer"
+                      className="btn btn-lime btn-block"
                       type="button"
                       onClick={() => {
                         setOpen(false);
                         signIn();
                       }}
                     >
-                      Connect wallet <ArrowUpRight aria-hidden="true" size={17} />
+                      Connect Wallet <ArrowUpRight aria-hidden="true" size={17} />
                     </Button>
                   </>
                 )}
               </div>
             ) : (
-              <div className="flex flex-col gap-5">
-                {/* Step 1: Telegram Community Card */}
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-[#a4aea6]">
-                    <span>Step 1 · Join Community</span>
-                    <div className="h-[1px] flex-1 bg-[#2b382e]" />
+              <>
+                <a
+                  href={TELEGRAM_COMMUNITY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="waitlist-telegram-banner"
+                >
+                  <div className="waitlist-telegram-left">
+                    <div className="waitlist-telegram-icon">
+                      <TelegramIcon size={20} />
+                    </div>
+                    <div className="waitlist-telegram-meta">
+                      <div className="waitlist-telegram-title">Official Telegram Group</div>
+                      <div className="waitlist-telegram-sub">Community chat, updates & daily alerts</div>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-3 rounded-2xl border border-[#229ed9]/30 bg-gradient-to-br from-[#229ed9]/15 via-[#151e18] to-[#101611] p-4 shadow-lg shadow-black/40">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#229ed9] text-white shadow-md shadow-[#229ed9]/30">
-                        <TelegramIcon size={22} />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-[15px] font-bold text-white tracking-tight m-0">
-                          GemBull Telegram Group
-                        </h4>
-                        <p className="text-xs text-[#a4aea6] leading-snug m-0 mt-0.5">
-                          Official community for daily ritual alerts & alpha
-                        </p>
-                      </div>
+                  <span className="waitlist-telegram-pill">
+                    Join <ArrowUpRight size={13} />
+                  </span>
+                </a>
+
+                <form
+                  className="waitlist-dialog-form"
+                  onSubmit={form.handleSubmit((value) => join.mutate(value))}
+                >
+                  <div className="waitlist-field">
+                    <label htmlFor="waitlist-account-display">NEAR Testnet Wallet</label>
+                    <div className="waitlist-account-box" id="waitlist-account-display">
+                      <span className="waitlist-account-id font-mono">{accountId}</span>
+                      <span className="tag tag-dot tag-live waitlist-account-tag">
+                        <ShieldCheck size={12} />
+                        Connected
+                      </span>
                     </div>
-                    <a
-                      href={TELEGRAM_COMMUNITY_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#229ed9] hover:bg-[#2ab2f3] active:scale-[0.99] py-3 px-4 text-sm font-bold text-white shadow-md shadow-[#229ed9]/25 transition-all cursor-pointer no-underline"
-                    >
-                      <span>Join Telegram Group</span>
-                      <ArrowUpRight aria-hidden="true" size={16} />
-                    </a>
+                    <input type="hidden" {...form.register("accountId")} />
                   </div>
-                </div>
 
-                {/* Step 2: Distribution Form */}
-                <div className="flex flex-col gap-2.5">
-                  <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-[#a4aea6]">
-                    <span>Step 2 · Submit Your Account</span>
-                    <div className="h-[1px] flex-1 bg-[#2b382e]" />
-                  </div>
-                  <form
-                    className="flex flex-col gap-3.5"
-                    onSubmit={form.handleSubmit((value) => join.mutate(value))}
-                  >
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="waitlist-account-display" className="text-xs font-semibold text-[#f4f7f2]">
-                        NEAR Testnet Wallet
-                      </label>
-                      <div
-                        className="flex items-center justify-between rounded-xl border border-[#2b382e] bg-[#151e18] px-3.5 py-2.5 font-mono text-sm text-[#f4f7f2]"
-                        id="waitlist-account-display"
-                      >
-                        <span className="truncate">{accountId}</span>
-                        <span className="flex shrink-0 items-center gap-1 rounded-md bg-[#123b27] border border-[#00b85a]/30 px-2 py-0.5 text-[11px] font-bold text-[#00b85a]">
-                          <ShieldCheck size={13} />
-                          Connected
-                        </span>
-                      </div>
-                      <input type="hidden" {...form.register("accountId")} />
-                    </div>
-
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="waitlist-telegram" className="text-xs font-semibold text-[#f4f7f2]">
-                        Your Telegram Username
-                      </label>
-                      <Input
-                        id="waitlist-telegram"
-                        className="h-11 rounded-xl border-[#435246] bg-[#151e18] px-3.5 text-sm text-white placeholder:text-[#78847b] focus-visible:border-[#b7ff16] focus-visible:ring-1 focus-visible:ring-[#b7ff16]"
-                        placeholder="@username"
-                        aria-invalid={Boolean(form.formState.errors.telegram)}
-                        {...form.register("telegram")}
-                      />
-                      {form.formState.errors.telegram && (
-                        <p className="text-xs text-rose-400 m-0" role="alert">
-                          {form.formState.errors.telegram.message}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="absolute w-[1px] h-[1px] overflow-hidden whitespace-nowrap" aria-hidden="true">
-                      <label htmlFor="waitlist-website">Website</label>
-                      <Input
-                        id="waitlist-website"
-                        tabIndex={-1}
-                        autoComplete="off"
-                        {...form.register("website")}
-                      />
-                    </div>
-
-                    <Button
-                      className="btn btn-lime btn-block h-12 w-full text-sm font-bold cursor-pointer mt-1"
-                      type="submit"
-                      disabled={join.isPending}
-                    >
-                      {join.isPending ? "Submitting request…" : "Claim 5,000 GEMBULL"}
-                      {!join.isPending && <ArrowUpRight aria-hidden="true" size={17} />}
-                    </Button>
-                    {join.isError && (
-                      <p className="text-xs text-rose-400 m-0" role="alert">
-                        {join.error instanceof Error ? join.error.message : "Request failed. Try again."}
+                  <div className="waitlist-field">
+                    <label htmlFor="waitlist-telegram">Telegram Username</label>
+                    <input
+                      id="waitlist-telegram"
+                      className="waitlist-dialog-input"
+                      placeholder="@username"
+                      autoComplete="off"
+                      aria-invalid={Boolean(form.formState.errors.telegram)}
+                      {...form.register("telegram")}
+                    />
+                    {form.formState.errors.telegram && (
+                      <p className="waitlist-dialog-error" role="alert">
+                        {form.formState.errors.telegram.message}
                       </p>
                     )}
-                  </form>
-                </div>
-              </div>
+                  </div>
+
+                  <div className="waitlist-dialog-honeypot" aria-hidden="true">
+                    <label htmlFor="waitlist-website">Website</label>
+                    <input
+                      id="waitlist-website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      {...form.register("website")}
+                    />
+                  </div>
+
+                  <Button
+                    className="btn btn-lime btn-block"
+                    type="submit"
+                    disabled={join.isPending}
+                  >
+                    {join.isPending ? "Submitting request…" : "Claim 5,000 GEMBULL"}
+                    {!join.isPending && <ArrowUpRight aria-hidden="true" size={17} />}
+                  </Button>
+                  {join.isError && (
+                    <p className="waitlist-dialog-error" role="alert">
+                      {join.error instanceof Error ? join.error.message : "Request failed. Try again."}
+                    </p>
+                  )}
+                </form>
+              </>
             )}
           </div>
 
-          <p className="border-t border-[#2b382e] pt-3 text-[11px] text-[#78847b] leading-relaxed m-0">
+          <p className="waitlist-dialog-disclosure">
             Community testnet faucet · manual review via Telegram admin bot · 5,000 GEMBULL per tester.
             Never share your seed phrase or private key.
           </p>
