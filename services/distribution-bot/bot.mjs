@@ -162,7 +162,7 @@ async function editMessageText(chatId, messageId, text, replyMarkup = null) {
       text,
       parse_mode: "HTML",
       disable_web_page_preview: true,
-      ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
+      ...(replyMarkup !== null ? { reply_markup: replyMarkup } : {}),
     });
   } catch (err) {
     log("error", `Failed to edit message: ${err.message}`);
@@ -346,56 +346,109 @@ async function handleUpdate(update) {
   if (update.callback_query) {
     const cq = update.callback_query;
     const fromId = String(cq.from?.id);
-
-    if (fromId !== ADMIN_CHAT_ID) {
-      await answerCallbackQuery(cq.id, "⛔ Akses ditolak. Anda bukan admin GemBull.", true);
-      return;
-    }
-
+    const fromUser = cq.from?.username ? `@${cq.from.username}` : (cq.from?.first_name || fromId);
     const data = cq.data || "";
     const msg = cq.message;
 
+    log("info", `[Button Click #${cq.id}] from ${fromId} (${fromUser}), data: "${data}"`);
+
+    if (fromId !== ADMIN_CHAT_ID) {
+      log("warn", `Unauthorized callback_query from ${fromId} (${fromUser}). Configured ADMIN_CHAT_ID: ${ADMIN_CHAT_ID}`);
+      await answerCallbackQuery(cq.id, `⛔ Akses ditolak. User ID Anda (${fromId}) bukan Admin terdaftar.`, true);
+      return;
+    }
+
     if (data.startsWith("approve:")) {
       const recipient = data.slice("approve:".length).trim();
-      await answerCallbackQuery(cq.id, `⏳ Memproses distribusi 5,000 GEMBULL ke ${recipient}...`);
+      log("info", `Admin ${fromUser} approving distribution for ${recipient}...`);
+
+      // Instantly acknowledge Telegram so the button stops spinning
+      await answerCallbackQuery(cq.id, `⏳ Sedang mendistribusikan 5,000 GEMBULL ke ${recipient}...`, false);
+
+      // Indicate progress in chat
+      if (msg) {
+        await editMessageText(
+          msg.chat.id,
+          msg.message_id,
+          `${msg.text}\n\n⏳ <i>Sedang mengirim transaksi ke NEAR Testnet...</i>`,
+          { inline_keyboard: [[{ text: "⏳ Processing On-Chain...", callback_data: "noop" }]] }
+        );
+      }
 
       try {
         const txHash = await executeDistribution(recipient, DEFAULT_DISTRIBUTION_AMOUNT);
         await updateRedisStatus(recipient, "distributed", txHash);
 
         const currentText = msg?.text || "";
+        const cleanText = currentText
+          .replace(/⚡ Status:.*(\n|$)/g, "")
+          .replace(/📋 Quick Distribute Command:[\s\S]*/g, "")
+          .replace(/⏳ <i>Sedang mengirim[\s\S]*/g, "")
+          .trim();
+
         const updatedText = [
-          currentText.replace(/⚡ Status:.*(\n|$)/, "").replace(/📋 Quick Distribute Command:[\s\S]*/, "").trim(),
+          cleanText,
           "",
           `⚡ <b>Status:</b> ✅ <b>DISTRIBUTED (5,000 GEMBULL)</b>`,
           `🔗 <b>Explorer:</b> <a href="https://testnet.nearblocks.io/txns/${txHash}">View Transaction on NearBlocks</a>`,
           `🕒 <b>Approved At:</b> <code>${new Date().toISOString().replace("T", " ").substring(0, 19)} UTC</code>`,
-          `👤 <i>Approved by Admin @${cq.from.username || cq.from.first_name}</i>`,
+          `👤 <i>Approved by Admin ${fromUser}</i>`,
         ].join("\n");
 
-        await editMessageText(msg.chat.id, msg.message_id, updatedText, null);
+        if (msg) {
+          await editMessageText(msg.chat.id, msg.message_id, updatedText, { inline_keyboard: [] });
+        }
+        await answerCallbackQuery(cq.id, `✅ Sukses! 5,000 GEMBULL terkirim ke ${recipient}`, true);
       } catch (err) {
         log("error", `Approval failed for ${recipient}: ${err.message}`);
         await answerCallbackQuery(cq.id, `❌ Gagal: ${err.message}`, true);
+        if (msg) {
+          await editMessageText(
+            msg.chat.id,
+            msg.message_id,
+            `${msg.text}\n\n❌ <b>Distribusi Gagal:</b> <code>${escapeHtml(err.message)}</code>`,
+            {
+              inline_keyboard: [
+                [
+                  { text: "🔄 Retry Approve", callback_data: `approve:${recipient}` },
+                  { text: "❌ Reject", callback_data: `reject:${recipient}` },
+                ],
+              ],
+            }
+          );
+        }
       }
       return;
     }
 
     if (data.startsWith("reject:")) {
       const recipient = data.slice("reject:".length).trim();
-      await answerCallbackQuery(cq.id, `Permohonan ${recipient} ditolak.`);
+      log("info", `Admin ${fromUser} rejected request for ${recipient}`);
+      await answerCallbackQuery(cq.id, `Permohonan ${recipient} ditolak.`, false);
       await updateRedisStatus(recipient, "rejected");
 
       const currentText = msg?.text || "";
+      const cleanText = currentText
+        .replace(/⚡ Status:.*(\n|$)/g, "")
+        .replace(/📋 Quick Distribute Command:[\s\S]*/g, "")
+        .trim();
+
       const updatedText = [
-        currentText.replace(/⚡ Status:.*(\n|$)/, "").replace(/📋 Quick Distribute Command:[\s\S]*/, "").trim(),
+        cleanText,
         "",
         `⚡ <b>Status:</b> ❌ <b>REJECTED</b>`,
         `🕒 <b>Rejected At:</b> <code>${new Date().toISOString().replace("T", " ").substring(0, 19)} UTC</code>`,
-        `👤 <i>Rejected by Admin @${cq.from.username || cq.from.first_name}</i>`,
+        `👤 <i>Rejected by Admin ${fromUser}</i>`,
       ].join("\n");
 
-      await editMessageText(msg.chat.id, msg.message_id, updatedText, null);
+      if (msg) {
+        await editMessageText(msg.chat.id, msg.message_id, updatedText, { inline_keyboard: [] });
+      }
+      return;
+    }
+
+    if (data === "noop") {
+      await answerCallbackQuery(cq.id, "Sedang diproses di blockchain, mohon tunggu sebentar...", false);
       return;
     }
   }
@@ -672,10 +725,18 @@ async function runBot() {
   log("info", "Starting GemBull Telegram Distribution Bot daemon...");
   log("info", `Admin Chat ID locked to: ${ADMIN_CHAT_ID}`);
 
+  // Guarantee clean polling state and unbind any leftover webhook
+  try {
+    await tgRequest("deleteWebhook", { drop_pending_updates: false });
+  } catch (err) {
+    log("warn", `deleteWebhook notice: ${err.message}`);
+  }
+
+  const allowedUpdatesParam = encodeURIComponent(JSON.stringify(["message", "callback_query"]));
   let offset = 0;
   while (true) {
     try {
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${offset}&timeout=25`;
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${offset}&timeout=25&allowed_updates=${allowedUpdatesParam}`;
       const res = await fetch(url, { signal: AbortSignal.timeout(35_000) });
       if (!res.ok) {
         log("warn", `Telegram getUpdates returned HTTP ${res.status}`);
@@ -686,6 +747,7 @@ async function runBot() {
       if (data.ok && Array.isArray(data.result)) {
         for (const update of data.result) {
           offset = update.update_id + 1;
+          log("info", `Update #${update.update_id} received: ${update.callback_query ? "callback_query" : update.message ? "message" : "other"}`);
           await handleUpdate(update).catch((err) => {
             log("error", `Error handling update ${update.update_id}:`, err.message);
           });
