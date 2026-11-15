@@ -378,18 +378,21 @@ export function RitualSection({
                 )}
 
                 <div className="rc-actions">
-                  {accountId && registered === true && (
+                  {!accountId ? (
                     <Button
-                      className="btn btn-quiet btn-block"
-                      disabled={true}
-                      aria-label="Storage deposit already registered"
+                      className="btn btn-lime btn-block"
+                      type="button"
+                      onClick={signIn}
                     >
-                      Storage registered ✓
+                      Connect wallet to check in
                     </Button>
-                  )}
-                  {accountId && registered === false && (
+                  ) : registered === null ? (
+                    <Button className="btn btn-quiet btn-block" disabled={true}>
+                      Checking storage…
+                    </Button>
+                  ) : registered === false ? (
                     <Button
-                      className="btn btn-quiet btn-block"
+                      className="btn btn-lime btn-block"
                       disabled={Boolean(busy) || !storageMin}
                       onClick={() =>
                         act({
@@ -403,23 +406,22 @@ export function RitualSection({
                         })
                       }
                     >
-                      Register token storage
+                      {busy === "Storage registration"
+                        ? "Registering storage…"
+                        : "Register token storage"}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="btn btn-lime btn-block"
+                      disabled={!canCheckIn || Boolean(busy)}
+                      onClick={() =>
+                        act({ label: "Check-in", method: "check_in" })
+                      }
+                    >
+                      {checkInLabel}
                     </Button>
                   )}
-                  {accountId && registered === null && (
-                    <Button className="btn btn-quiet btn-block" disabled={true}>
-                      Checking storage…
-                    </Button>
-                  )}
-                  <Button
-                    className="btn btn-lime btn-block"
-                    disabled={!canCheckIn || Boolean(busy)}
-                    onClick={() =>
-                      act({ label: "Check-in", method: "check_in" })
-                    }
-                  >
-                    {checkInLabel}
-                  </Button>
+
                   {awaitingSettlement && global && (
                     <Button
                       className="btn btn-quiet btn-block"
