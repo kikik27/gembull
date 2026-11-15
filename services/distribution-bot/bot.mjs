@@ -1,0 +1,536 @@
+#!/usr/bin/env node
+
+/**
+ * GemBull Automated Telegram Distribution Daemon
+ * Runs on VPS / server 24/7.
+ *
+ * Allows Admin to approve or reject community tester requests
+ * directly from Telegram with one tap (via inline buttons),
+ * automatically executing storage deposit and ft_transfer on NEAR Testnet.
+ */
+
+import fs from "node:fs";
+import path from "node:path";
+import {
+  Account,
+  JsonRpcProvider,
+  FailoverRpcProvider,
+  nearToYocto,
+  teraToGas,
+} from "near-api-js";
+
+// Load environment variables from .env or .env.local
+function loadEnv() {
+  const dir = typeof import.meta.dirname !== "undefined"
+    ? import.meta.dirname
+    : path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1"));
+
+  const envCandidates = [
+    path.resolve(process.cwd(), ".env"),
+    path.resolve(process.cwd(), ".env.local"),
+    path.resolve(process.cwd(), "apps", "web", ".env.local"),
+    path.resolve(dir, ".env"),
+    path.resolve(dir, ".env.local"),
+    path.resolve(dir, "..", "..", "apps", "web", ".env.local"),
+  ];
+  for (const target of envCandidates) {
+    if (fs.existsSync(target)) {
+      try {
+        const lines = fs.readFileSync(target, "utf-8").split("\n");
+        for (const raw of lines) {
+          const line = raw.trim();
+          if (!line || line.startsWith("#")) continue;
+          const eq = line.indexOf("=");
+          if (eq !== -1) {
+            const key = line.slice(0, eq).trim();
+            const val = line.slice(eq + 1).trim().replace(/^["']|["']$/g, "");
+            if (key && !(key in process.env)) {
+              process.env[key] = val;
+            }
+          }
+        }
+      } catch {}
+    }
+  }
+}
+loadEnv();
+
+// Configuration
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const ADMIN_CHAT_ID = String(process.env.TELEGRAM_ADMIN_CHAT_ID || "");
+const CONTRACT_ID = process.env.GEMBULL_CONTRACT_ID || "gembull-core.testnet";
+const DISTRIBUTOR_ACCOUNT_ID = process.env.DISTRIBUTOR_ACCOUNT_ID || "gembull-public.testnet";
+const DISTRIBUTOR_PRIVATE_KEY = process.env.DISTRIBUTOR_PRIVATE_KEY;
+const DEFAULT_DISTRIBUTION_AMOUNT = process.env.DISTRIBUTION_AMOUNT || "5000";
+const PRIMARY_RPC = process.env.NEAR_RPC_URL || "https://test.rpc.fastnear.com";
+const FALLBACK_RPCS = [
+  PRIMARY_RPC,
+  "https://rpc.testnet.near.org",
+  "https://testnet.neardata.xyz/v0/rpc",
+].filter((url, idx, arr) => arr.indexOf(url) === idx);
+
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const WAITLIST_KEY = "gembull:waitlist:testnet:v1";
+
+if (!BOT_TOKEN) {
+  console.error("❌ Fatal: TELEGRAM_BOT_TOKEN is not configured.");
+  process.exit(1);
+}
+if (!ADMIN_CHAT_ID) {
+  console.error("❌ Fatal: TELEGRAM_ADMIN_CHAT_ID is not configured.");
+  process.exit(1);
+}
+
+function log(level, msg, meta = null) {
+  const ts = new Date().toISOString();
+  const prefix = `[${ts}] [${level.toUpperCase()}] [GemBull-Distributor]`;
+  if (meta) {
+    console.log(`${prefix} ${msg}`, meta);
+  } else {
+    console.log(`${prefix} ${msg}`);
+  }
+}
+
+// Initialize NEAR RPC and Account
+const providers = FALLBACK_RPCS.map((url) => new JsonRpcProvider({ url }));
+const provider = new FailoverRpcProvider(providers);
+
+let distributorAccount = null;
+if (DISTRIBUTOR_ACCOUNT_ID && DISTRIBUTOR_PRIVATE_KEY) {
+  try {
+    distributorAccount = new Account(DISTRIBUTOR_ACCOUNT_ID, provider, DISTRIBUTOR_PRIVATE_KEY);
+    log("info", `Distributor signer ready: ${DISTRIBUTOR_ACCOUNT_ID}`);
+  } catch (err) {
+    log("error", `Failed to initialize distributor account: ${err.message}`);
+  }
+} else {
+  log("warn", "No DISTRIBUTOR_PRIVATE_KEY found in environment. Bot running in READ-ONLY mode (transactions will fail until private key is set).");
+}
+
+// Telegram API Wrapper
+async function tgRequest(method, payload) {
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/${method}`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Telegram API ${method} failed (${res.status}): ${errorText}`);
+  }
+  return res.json();
+}
+
+async function answerCallbackQuery(id, text = "", showAlert = false) {
+  try {
+    await tgRequest("answerCallbackQuery", {
+      callback_query_id: id,
+      text,
+      show_alert: showAlert,
+    });
+  } catch (err) {
+    log("error", `Failed to answer callback query: ${err.message}`);
+  }
+}
+
+async function editMessageText(chatId, messageId, text, replyMarkup = null) {
+  try {
+    await tgRequest("editMessageText", {
+      chat_id: chatId,
+      message_id: messageId,
+      text,
+      parse_mode: "HTML",
+      disable_web_page_preview: true,
+      ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
+    });
+  } catch (err) {
+    log("error", `Failed to edit message: ${err.message}`);
+  }
+}
+
+async function sendMessage(chatId, text, replyMarkup = null) {
+  try {
+    return await tgRequest("sendMessage", {
+      chat_id: chatId,
+      text,
+      parse_mode: "HTML",
+      disable_web_page_preview: true,
+      ...(replyMarkup ? { reply_markup: replyMarkup } : {}),
+    });
+  } catch (err) {
+    log("error", `Failed to send message: ${err.message}`);
+    return null;
+  }
+}
+
+function escapeHtml(text) {
+  return String(text || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+// Redis Upstash Helper
+async function redis(command) {
+  if (!REDIS_URL || !REDIS_TOKEN) return null;
+  try {
+    const res = await fetch(REDIS_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${REDIS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(command),
+      signal: AbortSignal.timeout(8_000),
+    });
+    if (!res.ok) return null;
+    const body = await res.json();
+    return body.result;
+  } catch {
+    return null;
+  }
+}
+
+async function updateRedisStatus(accountId, status, txHash = null) {
+  const raw = await redis(["HGET", WAITLIST_KEY, accountId]);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    const updated = {
+      ...data,
+      status,
+      ...(status === "distributed" ? { distributedAt: new Date().toISOString(), txHash } : {}),
+    };
+    await redis(["HSET", WAITLIST_KEY, accountId, JSON.stringify(updated)]);
+  } catch {}
+}
+
+async function getPendingRequests() {
+  const rawHash = await redis(["HGETALL", WAITLIST_KEY]);
+  if (!rawHash) return [];
+  const list = [];
+  if (Array.isArray(rawHash)) {
+    for (let i = 0; i < rawHash.length; i += 2) {
+      const accountId = rawHash[i];
+      const rawVal = rawHash[i + 1];
+      try {
+        const parsed = JSON.parse(rawVal);
+        if (parsed.status === "pending") {
+          list.push({ accountId, ...parsed });
+        }
+      } catch {}
+    }
+  } else if (typeof rawHash === "object") {
+    for (const [accountId, rawVal] of Object.entries(rawHash)) {
+      try {
+        const parsed = JSON.parse(rawVal);
+        if (parsed.status === "pending") {
+          list.push({ accountId, ...parsed });
+        }
+      } catch {}
+    }
+  }
+  return list;
+}
+
+// Blockchain Execution
+async function executeDistribution(recipient, amountTokens = DEFAULT_DISTRIBUTION_AMOUNT) {
+  if (!distributorAccount) {
+    throw new Error("Distributor private key is not configured. Set DISTRIBUTOR_PRIVATE_KEY in .env");
+  }
+
+  log("info", `Preflight check for ${recipient}...`);
+
+  // 1. Check if recipient account exists
+  await provider.callFunction({
+    contractId: CONTRACT_ID,
+    method: "get_rules",
+    args: {},
+  });
+
+  // 2. Check storage registration
+  const storage = await provider.callFunction({
+    contractId: CONTRACT_ID,
+    method: "storage_balance_of",
+    args: { account_id: recipient },
+  });
+
+  if (!storage) {
+    log("info", `Registering NEP-145 storage for ${recipient} (0.002 NEAR)...`);
+    await distributorAccount.callFunctionRaw({
+      contractId: CONTRACT_ID,
+      methodName: "storage_deposit",
+      args: {
+        account_id: recipient,
+        registration_only: true,
+      },
+      gas: teraToGas("50"),
+      deposit: nearToYocto("0.002"),
+    });
+    log("info", `✓ Storage registered for ${recipient}`);
+  }
+
+  // 3. Execute ft_transfer
+  const DECIMALS = 18n;
+  const baseUnits = (BigInt(amountTokens) * (10n ** DECIMALS)).toString();
+
+  log("info", `Transferring ${amountTokens} GEMBULL to ${recipient}...`);
+  const transferOutcome = await distributorAccount.callFunctionRaw({
+    contractId: CONTRACT_ID,
+    methodName: "ft_transfer",
+    args: {
+      receiver_id: recipient,
+      amount: baseUnits,
+      memo: "GemBull Community Distribution",
+    },
+    gas: teraToGas("100"),
+    deposit: "1", // 1 yoctoNEAR
+  });
+
+  const txHash = transferOutcome.transaction?.hash || transferOutcome.transaction_outcome?.id || "confirmed";
+  log("info", `✓ Successfully distributed to ${recipient}! Tx Hash: ${txHash}`);
+  return txHash;
+}
+
+async function getBalances() {
+  try {
+    const ftBalance = await provider.callFunction({
+      contractId: CONTRACT_ID,
+      method: "ft_balance_of",
+      args: { account_id: DISTRIBUTOR_ACCOUNT_ID },
+    });
+    const tokens = (BigInt(ftBalance) / (10n ** 18n)).toLocaleString();
+    return { ftTokens: tokens, rawFt: ftBalance };
+  } catch (err) {
+    return { ftTokens: "Error", rawFt: "0" };
+  }
+}
+
+// Telegram Updates Handler
+async function handleUpdate(update) {
+  // 1. Handle Callback Query (Button clicks)
+  if (update.callback_query) {
+    const cq = update.callback_query;
+    const fromId = String(cq.from?.id);
+
+    if (fromId !== ADMIN_CHAT_ID) {
+      await answerCallbackQuery(cq.id, "⛔ Akses ditolak. Anda bukan admin GemBull.", true);
+      return;
+    }
+
+    const data = cq.data || "";
+    const msg = cq.message;
+
+    if (data.startsWith("approve:")) {
+      const recipient = data.slice("approve:".length).trim();
+      await answerCallbackQuery(cq.id, `⏳ Memproses distribusi 5,000 GEMBULL ke ${recipient}...`);
+
+      try {
+        const txHash = await executeDistribution(recipient, DEFAULT_DISTRIBUTION_AMOUNT);
+        await updateRedisStatus(recipient, "distributed", txHash);
+
+        const currentText = msg?.text || "";
+        const updatedText = [
+          currentText.replace(/⚡ Status:.*(\n|$)/, "").replace(/📋 Quick Distribute Command:[\s\S]*/, "").trim(),
+          "",
+          `⚡ <b>Status:</b> ✅ <b>DISTRIBUTED (5,000 GEMBULL)</b>`,
+          `🔗 <b>Explorer:</b> <a href="https://testnet.nearblocks.io/txns/${txHash}">View Transaction on NearBlocks</a>`,
+          `🕒 <b>Approved At:</b> <code>${new Date().toISOString().replace("T", " ").substring(0, 19)} UTC</code>`,
+          `👤 <i>Approved by Admin @${cq.from.username || cq.from.first_name}</i>`,
+        ].join("\n");
+
+        await editMessageText(msg.chat.id, msg.message_id, updatedText, null);
+      } catch (err) {
+        log("error", `Approval failed for ${recipient}: ${err.message}`);
+        await answerCallbackQuery(cq.id, `❌ Gagal: ${err.message}`, true);
+      }
+      return;
+    }
+
+    if (data.startsWith("reject:")) {
+      const recipient = data.slice("reject:".length).trim();
+      await answerCallbackQuery(cq.id, `Permohonan ${recipient} ditolak.`);
+      await updateRedisStatus(recipient, "rejected");
+
+      const currentText = msg?.text || "";
+      const updatedText = [
+        currentText.replace(/⚡ Status:.*(\n|$)/, "").replace(/📋 Quick Distribute Command:[\s\S]*/, "").trim(),
+        "",
+        `⚡ <b>Status:</b> ❌ <b>REJECTED</b>`,
+        `🕒 <b>Rejected At:</b> <code>${new Date().toISOString().replace("T", " ").substring(0, 19)} UTC</code>`,
+        `👤 <i>Rejected by Admin @${cq.from.username || cq.from.first_name}</i>`,
+      ].join("\n");
+
+      await editMessageText(msg.chat.id, msg.message_id, updatedText, null);
+      return;
+    }
+  }
+
+  // 2. Handle Text Messages
+  if (update.message && update.message.text) {
+    const msg = update.message;
+    const fromId = String(msg.from?.id);
+    const text = msg.text.trim();
+
+    if (fromId !== ADMIN_CHAT_ID) {
+      await sendMessage(msg.chat.id, "⛔ <b>Akses Ditolak</b>\nBot ini hanya untuk Admin GemBull yang terverifikasi.");
+      return;
+    }
+
+    if (text === "/start" || text === "/help") {
+      const balances = await getBalances();
+      const helpMsg = [
+        `🐂 <b>GemBull Admin Distribution Control</b>`,
+        ``,
+        `Halo Admin! Bot ini berjalan 24/7 di server untuk memproses permohonan tester langsung dari Telegram.`,
+        ``,
+        `💰 <b>Distributor Balance:</b> <code>${balances.ftTokens} GEMBULL</code>`,
+        `🔑 <b>Signer Account:</b> <code>${DISTRIBUTOR_ACCOUNT_ID}</code>`,
+        `⚡ <b>Signer Status:</b> ${distributorAccount ? "🟢 Active & Ready" : "🔴 No Private Key Configured"}`,
+        ``,
+        `<b>Perintah yang tersedia:</b>`,
+        `• /status — Cek saldo distributor & status RPC`,
+        `• /queue — Lihat daftar pemohon yang menunggu persetujuan`,
+        `• /approve_all — Setujui & kirim ke semua antrian pending`,
+        `• <code>/distribute &lt;akun.testnet&gt; [jumlah]</code> — Kirim manual ke wallet tertentu`,
+      ].join("\n");
+      await sendMessage(msg.chat.id, helpMsg);
+      return;
+    }
+
+    if (text === "/status") {
+      const balances = await getBalances();
+      const pendingList = await getPendingRequests();
+      const statusMsg = [
+        `📊 <b>GemBull System Status</b>`,
+        ``,
+        `• <b>Signer Account:</b> <code>${DISTRIBUTOR_ACCOUNT_ID}</code>`,
+        `• <b>Signer Status:</b> ${distributorAccount ? "🟢 Active" : "🔴 Inactive (Need Key)"}`,
+        `• <b>Contract ID:</b> <code>${CONTRACT_ID}</code>`,
+        `• <b>GEMBULL Balance:</b> <code>${balances.ftTokens}</code>`,
+        `• <b>Pending Requests:</b> <code>${pendingList.length}</code>`,
+        `• <b>RPC Endpoint:</b> <code>${PRIMARY_RPC}</code>`,
+      ].join("\n");
+      await sendMessage(msg.chat.id, statusMsg);
+      return;
+    }
+
+    if (text === "/queue") {
+      const pendingList = await getPendingRequests();
+      if (pendingList.length === 0) {
+        await sendMessage(msg.chat.id, "✅ <b>Antrian Kosong</b>\nTidak ada permohonan pending saat ini.");
+        return;
+      }
+
+      await sendMessage(msg.chat.id, `📋 <b>Daftar Antrian Pending (${pendingList.length}):</b>`);
+      for (const item of pendingList.slice(0, 5)) {
+        const card = [
+          `👤 <b>NEAR Account:</b> <code>${escapeHtml(item.accountId)}</code>`,
+          `💬 <b>Telegram:</b> ${escapeHtml(item.telegram || "—")}`,
+          `🕒 <b>Requested:</b> <code>${new Date(item.joinedAt).toISOString().replace("T", " ").substring(0, 16)} UTC</code>`,
+        ].join("\n");
+
+        await sendMessage(msg.chat.id, card, {
+          inline_keyboard: [
+            [
+              { text: "✅ Approve (5,000 GEMBULL)", callback_data: `approve:${item.accountId}` },
+              { text: "❌ Reject", callback_data: `reject:${item.accountId}` },
+            ],
+          ],
+        });
+      }
+      return;
+    }
+
+    if (text === "/approve_all") {
+      const pendingList = await getPendingRequests();
+      if (pendingList.length === 0) {
+        await sendMessage(msg.chat.id, "Tidak ada permohonan pending.");
+        return;
+      }
+      if (!distributorAccount) {
+        await sendMessage(msg.chat.id, "❌ Gagal: Private key distributor belum disetel.");
+        return;
+      }
+
+      await sendMessage(msg.chat.id, `⏳ Mulai mendistribusikan ke ${pendingList.length} akun pending...`);
+      let success = 0;
+      for (const item of pendingList) {
+        try {
+          const txHash = await executeDistribution(item.accountId, DEFAULT_DISTRIBUTION_AMOUNT);
+          await updateRedisStatus(item.accountId, "distributed", txHash);
+          success++;
+        } catch (err) {
+          log("error", `Failed batch distribute to ${item.accountId}: ${err.message}`);
+        }
+      }
+      await sendMessage(msg.chat.id, `🎉 <b>Selesai!</b>\nBerhasil mendistribusikan ke ${success}/${pendingList.length} akun.`);
+      return;
+    }
+
+    if (text.startsWith("/distribute")) {
+      const parts = text.split(/\s+/);
+      const recipient = parts[1];
+      const amount = parts[2] || DEFAULT_DISTRIBUTION_AMOUNT;
+
+      if (!recipient || !recipient.endsWith(".testnet")) {
+        await sendMessage(msg.chat.id, "❌ Format salah. Contoh:\n<code>/distribute alice.testnet 5000</code>");
+        return;
+      }
+
+      await sendMessage(msg.chat.id, `⏳ Sedang mendistribusikan ${amount} GEMBULL ke <code>${recipient}</code>...`);
+      try {
+        const txHash = await executeDistribution(recipient, amount);
+        await updateRedisStatus(recipient, "distributed", txHash);
+        await sendMessage(
+          msg.chat.id,
+          `✅ <b>Berhasil!</b>\n${amount} GEMBULL terkirim ke <code>${recipient}</code>.\nTx: <a href="https://testnet.nearblocks.io/txns/${txHash}">NearBlocks Explorer</a>`
+        );
+      } catch (err) {
+        await sendMessage(msg.chat.id, `❌ Gagal mendistribusikan: ${err.message}`);
+      }
+      return;
+    }
+  }
+}
+
+// Long Polling Loop
+async function runBot() {
+  log("info", "Starting GemBull Telegram Distribution Bot daemon...");
+  log("info", `Admin Chat ID locked to: ${ADMIN_CHAT_ID}`);
+
+  let offset = 0;
+  while (true) {
+    try {
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates?offset=${offset}&timeout=25`;
+      const res = await fetch(url, { signal: AbortSignal.timeout(35_000) });
+      if (!res.ok) {
+        log("warn", `Telegram getUpdates returned HTTP ${res.status}`);
+        await new Promise((r) => setTimeout(r, 4_000));
+        continue;
+      }
+      const data = await res.json();
+      if (data.ok && Array.isArray(data.result)) {
+        for (const update of data.result) {
+          offset = update.update_id + 1;
+          await handleUpdate(update).catch((err) => {
+            log("error", `Error handling update ${update.update_id}:`, err.message);
+          });
+        }
+      }
+    } catch (err) {
+      if (err.name !== "TimeoutError") {
+        log("error", "Polling loop error:", err.message);
+      }
+      await new Promise((r) => setTimeout(r, 2_000));
+    }
+  }
+}
+
+runBot().catch((err) => {
+  console.error("Fatal Daemon Error:", err);
+  process.exit(1);
+});

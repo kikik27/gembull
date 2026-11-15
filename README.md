@@ -23,7 +23,7 @@ Built for **NEAR HACKATHON 2026**, track **`memecoins` — Memecoins With Mechan
 | After an epoch closes, call **Settle day N** if it is still unsettled | Success or missed result, streak change, and reward eligibility or treasury burn | Permissionless `finalize_day(day_id)` |
 | Run `python scripts/simulate_60_days.py --check` | 180 deterministic rows across optimistic, base, and pessimistic scenarios | Local model using published contract parameters; **not** live chain history |
 
-Wallet connection alone does not provide GEMBULL. There is **no in-app faucet or purchase route**. Token storage must be registered and test tokens must be distributed before check-in. Follow the [Testnet wallet guide](docs/TESTNET_USER_GUIDE.md), including the public-allocation transfer procedure. A single tester cannot reach the 50-account success target; the Sandbox test covers that path with time travel.
+Wallet connection alone does not provide GEMBULL. There is **no in-app faucet or purchase route**. The Testnet waitlist records interest when server-side storage is configured; joining does not transfer or reserve tokens. Token storage must be registered and test tokens must be distributed before check-in. Follow the [Testnet wallet guide](docs/TESTNET_USER_GUIDE.md), including the public-allocation transfer procedure. A single tester cannot reach the 50-account success target; the Sandbox test covers that path with time travel.
 
 ## The on-chain mechanic
 

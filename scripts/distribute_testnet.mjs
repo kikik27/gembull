@@ -58,9 +58,54 @@ try {
     view("storage_balance_of", recipient),
     view("ft_balance_of", "gembull-public.testnet"),
   ]);
-  if (!storage) throw new Error(`${recipient} has not registered GEMBULL storage`);
+  if (!storage) {
+    console.log(`Notice: ${recipient} has not registered GEMBULL storage.`);
+    if (dryRun) {
+      console.log(`DRY RUN: would register storage for ${recipient} with 0.002 NEAR deposit.`);
+    } else {
+      console.log(`Registering storage for ${recipient} via storage_deposit (0.002 NEAR)...`);
+      const storagePayload = JSON.stringify({
+        account_id: recipient,
+        registration_only: true,
+      });
+      const storageTmp = join(os.tmpdir(), `gembull-storage-${randomUUID()}.json`);
+      writeFileSync(storageTmp, storagePayload, "utf-8");
+      try {
+        const storageOut = execFileSync(
+          nearCli,
+          [
+            "contract",
+            "call-function",
+            "as-transaction",
+            "gembull-core.testnet",
+            "storage_deposit",
+            "file-args",
+            storageTmp,
+            "prepaid-gas",
+            "50.0 Tgas",
+            "attached-deposit",
+            "0.002 NEAR",
+            "sign-as",
+            "gembull-public.testnet",
+            "network-config",
+            "testnet",
+            "sign-with-keychain",
+            "send",
+          ],
+          { encoding: "utf-8" }
+        );
+        console.log(storageOut);
+        console.log(`✓ Storage registered for ${recipient}`);
+      } catch (storageErr) {
+        throw new Error(`Failed to deposit storage for ${recipient}: ${storageErr.message}`);
+      } finally {
+        try { unlinkSync(storageTmp); } catch {}
+      }
+    }
+  }
+
   if (BigInt(sourceBalance) < BigInt(baseUnits)) throw new Error("Public distribution balance is insufficient");
-  console.log(`Preflight passed: ${recipient} registered; public allocation has enough GEMBULL.`);
+  console.log(`Preflight passed: ${recipient} ready; public allocation has enough GEMBULL.`);
   if (dryRun) {
     console.log(`DRY RUN: would transfer ${tokenAmount} GEMBULL from gembull-public.testnet to ${recipient}. No transaction sent.`);
     process.exit(0);

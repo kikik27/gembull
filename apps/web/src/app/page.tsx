@@ -90,6 +90,7 @@ export default function Home() {
           error={error}
           loading={data.isLoading}
           act={act}
+          signIn={signIn}
         />
         <HowItWorks resolved={resolved} />
         <RitualCalculator

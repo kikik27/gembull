@@ -1,0 +1,13 @@
+{
+  "name": "gembull-distribution-bot",
+  "version": "1.0.0",
+  "description": "Automated Telegram Admin Distribution & Approval Bot for GemBull on NEAR",
+  "type": "module",
+  "main": "bot.mjs",
+  "scripts": {
+    "start": "node bot.mjs"
+  },
+  "dependencies": {
+    "near-api-js": "^7.5.1"
+  }
+}

@@ -36,6 +36,7 @@ import type {
 import { BrandMark } from "./brand-mark";
 import { EpochBars, OutcomeMix } from "./dashboard-charts";
 import { Reveal } from "./reveal";
+import { WaitlistSection } from "./waitlist-section";
 
 type Props = {
   /** Live get_rules() output; undefined until a configured contract answers. Gates every write. */
@@ -55,6 +56,7 @@ type Props = {
   error: string | null;
   loading: boolean;
   act: (action: RitualAction) => void;
+  signIn: () => void;
 };
 
 type SideItem = {
@@ -101,6 +103,7 @@ export function RitualSection({
   error,
   loading,
   act,
+  signIn,
 }: Props) {
   const [nowMs, setNowMs] = useState(0);
   useEffect(() => {
@@ -236,7 +239,7 @@ export function RitualSection({
             GemBull
           </span>
           <span className="dash-crumb">
-            Ritual <i>/</i> <b>Day {global?.current_day_id ?? "—"}</b>
+            Ritual <i>/</i> <b title="On-chain epoch IDs start at 0">Epoch {global?.current_day_id ?? "—"}</b>
           </span>
           <span className="dash-spacer" />
           <span
@@ -325,7 +328,7 @@ export function RitualSection({
                   </div>
                 </div>
 
-                <div>
+                <div className="rc-progress">
                   <div
                     className="meter"
                     role="progressbar"
@@ -440,28 +443,23 @@ export function RitualSection({
                     0.05 Testnet NEAR for contract storage; excess remains with
                     the contract.
                   </p>
+                  <WaitlistSection
+                    accountId={accountId}
+                    network={network}
+                    signIn={signIn}
+                  />
                 </div>
               </div>
 
-              <div className="kpis">
-                <div className="kpi kpi-streak">
-                  <div className="kpi-streak-content">
-                    <span className="kpi-label">
-                      <Flame aria-hidden="true" size={16} /> Current streak
-                    </span>
-                    <strong className="tabular">
-                      {global?.current_streak ?? "—"}
-                      <small>days</small>
-                    </strong>
-                    <p>Consecutive successful epochs. A miss resets it.</p>
-                  </div>
-                  <Image
-                    src="/brand/stickers/gembull-streak.png"
-                    width={64}
-                    height={64}
-                    alt="Streak celebration sticker"
-                    className="kpi-streak-sticker"
-                  />
+              <div className="kpis" aria-label="Ritual statistics">
+                <div className="kpi">
+                  <span className="kpi-label">
+                    <Flame aria-hidden="true" size={16} /> Current streak
+                  </span>
+                  <strong className="tabular">
+                    {global?.current_streak ?? "—"}
+                    <small>days</small>
+                  </strong>
                 </div>
                 <div className="kpi">
                   <span className="kpi-label">
@@ -471,7 +469,6 @@ export function RitualSection({
                     {global?.longest_streak ?? "—"}
                     <small>days</small>
                   </strong>
-                  <p>The best run so far, separate from the current one.</p>
                 </div>
                 <div className="kpi">
                   <span className="kpi-label">
@@ -481,7 +478,6 @@ export function RitualSection({
                     {formatRitl(shown.reward_per_checkin)}
                     <small>GEMBULL</small>
                   </strong>
-                  <p>Claimed after finalization. No bulk mint.</p>
                 </div>
               </div>
             </div>

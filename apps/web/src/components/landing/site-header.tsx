@@ -14,6 +14,7 @@ type Props = {
 
 const links = [
   { href: "#ritual", label: "Ritual" },
+  { href: "#waitlist", label: "Community" },
   { href: "#how", label: "How it works" },
   { href: "#treasury", label: "Supply" },
   { href: "#rules", label: "Rules" },

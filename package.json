@@ -10,6 +10,8 @@
     "typecheck": "pnpm --filter web exec tsc --noEmit",
     "check:sim": "python scripts/simulate_60_days.py --check",
     "verify:testnet": "node scripts/verify_gembull_testnet.mjs",
-    "distribute:testnet": "node scripts/distribute_testnet.mjs"
+    "distribute:testnet": "node scripts/distribute_testnet.mjs",
+    "distribute:queue": "node scripts/distribute_queue.mjs",
+    "bot:distribution": "node services/distribution-bot/bot.mjs"
   }
 }

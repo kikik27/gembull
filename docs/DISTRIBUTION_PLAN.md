@@ -45,4 +45,25 @@ The pool, quote asset, starting price, funding source, launch timing, LP control
 
 ## Current operational gap
 
-The contract supports `storage_deposit`, `ft_transfer`, and `check_in`, and the app supports storage registration and check-in. It does **not** provide a distribution button, claim distributor, purchase route, or LP. The next Testnet demo task is to register/fund real tester wallets from `gembull-public.testnet`, then record a live check-in. Do not publish or execute a mainnet launch/distribution policy until it is approved separately.
+The contract supports `storage_deposit`, `ft_transfer`, and `check_in`, and the app supports storage registration, check-in, and a request waitlist when configured. It does **not** provide a distribution button, claim distributor, purchase route, or LP. The next Testnet demo task is to register/fund real tester wallets from `gembull-public.testnet`, then record a live check-in. Do not publish or execute a mainnet launch/distribution policy until it is approved separately.
+
+## Community Testnet Faucet & Telegram Admin Workflow
+
+The web app includes a **"Join Community & Claim GEMBULL"** onboarding modal. Instead of a bare faucet, it integrates community-building with Sybil resistance:
+1. User connects their NEAR Testnet wallet (locking their `accountId`).
+2. User is directed to join the official Telegram group and follow @GemBull on X.
+3. User submits their Telegram username and optional X handle.
+4. The web server saves the record into Upstash Redis (`gembull:waitlist:testnet:v1`) and automatically pushes an instant notification to the admin via Telegram Bot (`TELEGRAM_BOT_TOKEN` & `TELEGRAM_ADMIN_CHAT_ID`).
+5. The admin receives the tester's details and a copy-pasteable distribution command.
+
+Environment configuration:
+- `UPSTASH_REDIS_REST_URL` & `UPSTASH_REDIS_REST_TOKEN`: server-only Redis database credentials.
+- `TELEGRAM_BOT_TOKEN` & `TELEGRAM_ADMIN_CHAT_ID`: server-only Telegram Bot credentials for instant admin alerts.
+- `NEXT_PUBLIC_TELEGRAM_COMMUNITY_URL` & `NEXT_PUBLIC_TWITTER_COMMUNITY_URL`: public community invitation links.
+
+Operator Distribution Tools:
+- Single account distribution: `node scripts/distribute_testnet.mjs <recipient.testnet> 5000` (automatically registers NEP-145 storage if not yet registered).
+- Queue manager:
+  - List requests: `node scripts/distribute_queue.mjs --list`
+  - Distribute to an account & mark distributed: `node scripts/distribute_queue.mjs <recipient.testnet>`
+  - Batch distribute all pending: `node scripts/distribute_queue.mjs --all`
