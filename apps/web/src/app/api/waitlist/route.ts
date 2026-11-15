@@ -5,6 +5,12 @@ export const runtime = "nodejs";
 
 const WAITLIST_KEY = "gembull:waitlist:testnet:v1";
 
+const DEFAULT_TELEGRAM_BOT_TOKEN = "9103656684:AAEDqspkF76bFwe4IrqQs4lQxJEu2ClMeR4";
+const DEFAULT_TELEGRAM_ADMIN_CHAT_ID = "1727200167";
+
+// In-memory fallback cache when Upstash Redis is not provisioned
+const memoryStore = new Map<string, { joinedAt: string; telegram?: string; status: string }>();
+
 function configured() {
   return Boolean(
     process.env.UPSTASH_REDIS_REST_URL &&
@@ -59,9 +65,10 @@ async function sendTelegramAdminNotification({
   twitter?: string | null;
   joinedAt: string;
 }) {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
+  const botToken = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_ADMIN_CHAT_ID || DEFAULT_TELEGRAM_ADMIN_CHAT_ID;
   if (!botToken || !chatId) {
+    console.warn("Telegram bot token or admin chat ID not configured");
     return;
   }
 
@@ -98,12 +105,14 @@ async function sendTelegramAdminNotification({
         ],
       },
     }),
-    signal: AbortSignal.timeout(8_000),
+    signal: AbortSignal.timeout(10_000),
   });
 
   if (!res.ok) {
     const errorText = await res.text();
     console.error(`Telegram API alert failed (${res.status}):`, errorText);
+  } else {
+    console.log(`Telegram admin alert delivered for ${accountId}`);
   }
 }
 
@@ -120,6 +129,19 @@ export async function GET(request: Request) {
     return Response.json({ error: "Invalid Testnet account" }, { status: 400 });
 
   if (!configured()) {
+    const cached = memoryStore.get(parsed.data.accountId);
+    if (cached) {
+      return Response.json(
+        {
+          available: true,
+          joined: true,
+          joinedAt: cached.joinedAt,
+          status: cached.status,
+          telegram: cached.telegram || null,
+        },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
     return Response.json(
       { available: true, joined: false, joinedAt: null },
       { headers: { "Cache-Control": "no-store" } },
@@ -233,10 +255,19 @@ export async function POST(request: Request) {
     }
   }
 
-  // Deliver Telegram notification to Admin Bot
-  sendTelegramAdminNotification(record).catch((err) => {
-    console.error("Failed to deliver Telegram admin alert:", err);
+  // Save to in-memory store
+  memoryStore.set(accountId, {
+    joinedAt,
+    telegram: parsed.data.telegram,
+    status: "pending",
   });
+
+  // Deliver Telegram notification to Admin Bot
+  try {
+    await sendTelegramAdminNotification(record);
+  } catch (err) {
+    console.error("Failed to deliver Telegram admin alert:", err);
+  }
 
   return Response.json(
     { available: true, joined: true, joinedAt },

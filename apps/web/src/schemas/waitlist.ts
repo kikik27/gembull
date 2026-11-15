@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const waitlistRequestSchema = z.object({
   accountId: z.string().trim().min(2).max(64).regex(
-    /^(?=.{2,64}$)(?:[a-z0-9]+(?:[-_.][a-z0-9]+)*)\.(?:testnet|[a-z0-9]+\.testnet)$/,
+    /^(?:(?=.{2,64}$)[a-z0-9]+(?:[-_.][a-z0-9]+)*\.(?:testnet|[a-z0-9]+\.testnet)|[0-9a-fA-F]{64})$/,
     "Enter a valid NEAR Testnet account, such as alice.testnet",
   ),
   telegram: z
