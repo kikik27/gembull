@@ -7,8 +7,26 @@ services:
       - .env
     environment:
       - NODE_ENV=production
+      - PORT=4001
+      - REDIS_URL=redis://redis:6379
+    networks:
+      - default
+      - jangkau_default
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.gembull-bot.rule=Host(`gembull.mulalabs.biz.id`)
+      - traefik.http.routers.gembull-bot.entrypoints=web
+      - traefik.http.services.gembull-bot.loadbalancer.server.port=4001
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
+
+networks:
+  jangkau_default:
+    external: true
+  proxy:
+    external: true

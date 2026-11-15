@@ -10,7 +10,9 @@
  */
 
 import fs from "node:fs";
+import http from "node:http";
 import path from "node:path";
+import Redis from "ioredis";
 import {
   Account,
   JsonRpcProvider,
@@ -69,9 +71,25 @@ const FALLBACK_RPCS = [
   "https://testnet.neardata.xyz/v0/rpc",
 ].filter((url, idx, arr) => arr.indexOf(url) === idx);
 
-const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
-const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const REDIS_TCP_URL = process.env.REDIS_URL || "redis://redis:6379";
+const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL;
+const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
 const WAITLIST_KEY = "gembull:waitlist:testnet:v1";
+
+let redisClient = null;
+if (REDIS_TCP_URL) {
+  try {
+    redisClient = new Redis(REDIS_TCP_URL, {
+      lazyConnect: false,
+      maxRetriesPerRequest: 3,
+      retryStrategy: (times) => Math.min(times * 200, 3000),
+    });
+    redisClient.on("connect", () => log("info", `Connected to Redis at ${REDIS_TCP_URL}`));
+    redisClient.on("error", (err) => log("warn", `Redis connection warning: ${err.message}`));
+  } catch (err) {
+    log("warn", `Could not initialize Redis client: ${err.message}`);
+  }
+}
 
 if (!BOT_TOKEN) {
   console.error("❌ Fatal: TELEGRAM_BOT_TOKEN is not configured.");
@@ -173,25 +191,38 @@ function escapeHtml(text) {
     .replace(/>/g, "&gt;");
 }
 
-// Redis Upstash Helper
+// Redis Helper (Native TCP Redis or Upstash REST fallback)
 async function redis(command) {
-  if (!REDIS_URL || !REDIS_TOKEN) return null;
-  try {
-    const res = await fetch(REDIS_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${REDIS_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(command),
-      signal: AbortSignal.timeout(8_000),
-    });
-    if (!res.ok) return null;
-    const body = await res.json();
-    return body.result;
-  } catch {
-    return null;
+  if (redisClient) {
+    try {
+      const [cmd, ...args] = command;
+      return await redisClient.call(cmd, ...args);
+    } catch (err) {
+      log("error", `Redis command [${command[0]}] failed: ${err.message}`);
+      return null;
+    }
   }
+
+  if (UPSTASH_URL && UPSTASH_TOKEN) {
+    try {
+      const res = await fetch(UPSTASH_URL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${UPSTASH_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(command),
+        signal: AbortSignal.timeout(8_000),
+      });
+      if (!res.ok) return null;
+      const body = await res.json();
+      return body.result;
+    } catch {
+      return null;
+    }
+  }
+
+  return null;
 }
 
 async function updateRedisStatus(accountId, status, txHash = null) {
@@ -497,6 +528,145 @@ async function handleUpdate(update) {
   }
 }
 
+// Built-in HTTP API Server for Webhook & Web API
+function startHttpServer() {
+  const port = Number(process.env.PORT || 4001);
+  const server = http.createServer(async (req, res) => {
+    // CORS headers
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+    if (req.method === "OPTIONS") {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+
+    const parsedUrl = new URL(req.url, `http://${req.headers.host || "localhost"}`);
+    const pathname = parsedUrl.pathname;
+
+    // Health / Status check
+    if (pathname === "/health" || pathname === "/status") {
+      const balances = await getBalances();
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({
+        ok: true,
+        distributor: DISTRIBUTOR_ACCOUNT_ID,
+        signerReady: Boolean(distributorAccount),
+        balance: balances.ftTokens,
+        redisReady: Boolean(redisClient && redisClient.status === "ready"),
+      }));
+      return;
+    }
+
+    // GET /api/waitlist?accountId=...
+    if (pathname === "/api/waitlist" && req.method === "GET") {
+      const accountId = parsedUrl.searchParams.get("accountId");
+      if (!accountId) {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ available: true, joined: false, joinedAt: null }));
+        return;
+      }
+
+      const raw = await redis(["HGET", WAITLIST_KEY, accountId]);
+      if (!raw) {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ available: true, joined: false, joinedAt: null }));
+        return;
+      }
+
+      try {
+        const data = JSON.parse(raw);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({
+          available: true,
+          joined: true,
+          joinedAt: data.joinedAt || new Date().toISOString(),
+          status: data.status || "pending",
+          telegram: data.telegram || null,
+        }));
+      } catch {
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ available: true, joined: true, joinedAt: raw, status: "pending" }));
+      }
+      return;
+    }
+
+    // POST /api/waitlist
+    if (pathname === "/api/waitlist" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => { body += chunk; });
+      req.on("end", async () => {
+        try {
+          const input = JSON.parse(body || "{}");
+          const { accountId, telegram, website } = input;
+          if (website) {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ available: true, joined: false, joinedAt: null }));
+            return;
+          }
+          if (!accountId || typeof accountId !== "string") {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ error: "Invalid accountId" }));
+            return;
+          }
+
+          const joinedAt = new Date().toISOString();
+          const record = {
+            accountId,
+            telegram: telegram || "",
+            joinedAt,
+            status: "pending",
+          };
+
+          // Save to Redis
+          await redis(["HSET", WAITLIST_KEY, accountId, JSON.stringify(record)]);
+
+          // Deliver notification to Telegram Admin
+          const tgHandle = telegram ? (telegram.startsWith("@") ? telegram : `@${telegram}`) : "—";
+          const dateFormatted = joinedAt.replace("T", " ").substring(0, 19) + " UTC";
+          const message = [
+            `🐂 <b>New GemBull Community Tester!</b>`,
+            ``,
+            `👤 <b>NEAR Account:</b> <code>${escapeHtml(accountId)}</code>`,
+            `💬 <b>Telegram:</b> ${escapeHtml(tgHandle)}`,
+            `🕒 <b>Time:</b> <code>${dateFormatted}</code>`,
+            `⚡ <b>Status:</b> ⏳ <i>Pending Review</i>`,
+            ``,
+            `📋 <b>Quick Distribute Command:</b>`,
+            `<code>node scripts/distribute_testnet.mjs ${escapeHtml(accountId)} 5000</code>`,
+          ].join("\n");
+
+          await sendMessage(ADMIN_CHAT_ID, message, {
+            inline_keyboard: [
+              [
+                { text: "✅ Approve (5,000 GEMBULL)", callback_data: `approve:${accountId}` },
+                { text: "❌ Reject", callback_data: `reject:${accountId}` },
+              ],
+            ],
+          });
+
+          res.writeHead(201, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ available: true, joined: true, joinedAt }));
+        } catch (err) {
+          log("error", `Failed to handle /api/waitlist: ${err.message}`);
+          res.writeHead(500, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: err.message }));
+        }
+      });
+      return;
+    }
+
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ error: "Not Found" }));
+  });
+
+  server.listen(port, "0.0.0.0", () => {
+    log("info", `GemBull HTTP API Server listening on port ${port}`);
+  });
+}
+
 // Long Polling Loop
 async function runBot() {
   log("info", "Starting GemBull Telegram Distribution Bot daemon...");
@@ -530,6 +700,7 @@ async function runBot() {
   }
 }
 
+startHttpServer();
 runBot().catch((err) => {
   console.error("Fatal Daemon Error:", err);
   process.exit(1);

@@ -7,6 +7,7 @@ const WAITLIST_KEY = "gembull:waitlist:testnet:v1";
 
 const DEFAULT_TELEGRAM_BOT_TOKEN = "9103656684:AAEDqspkF76bFwe4IrqQs4lQxJEu2ClMeR4";
 const DEFAULT_TELEGRAM_ADMIN_CHAT_ID = "1727200167";
+const DISTRIBUTION_API_URL = process.env.DISTRIBUTION_API_URL || "https://gembull.mulalabs.biz.id";
 
 // In-memory fallback cache when Upstash Redis is not provisioned
 const memoryStore = new Map<string, { joinedAt: string; telegram?: string; status: string }>();
@@ -127,6 +128,23 @@ export async function GET(request: Request) {
   const parsed = waitlistRequestSchema.pick({ accountId: true }).safeParse({ accountId });
   if (!parsed.success)
     return Response.json({ error: "Invalid Testnet account" }, { status: 400 });
+
+  // 1. Check VPS Distribution Daemon (backed by VPS Redis)
+  try {
+    const vpsRes = await fetch(
+      `${DISTRIBUTION_API_URL}/api/waitlist?accountId=${encodeURIComponent(parsed.data.accountId)}`,
+      {
+        cache: "no-store",
+        signal: AbortSignal.timeout(3_000),
+      },
+    );
+    if (vpsRes.ok) {
+      const vpsData = await vpsRes.json();
+      if (vpsData.joined) {
+        return Response.json(vpsData, { headers: { "Cache-Control": "no-store" } });
+      }
+    }
+  } catch {}
 
   if (!configured()) {
     const cached = memoryStore.get(parsed.data.accountId);
@@ -262,11 +280,27 @@ export async function POST(request: Request) {
     status: "pending",
   });
 
-  // Deliver Telegram notification to Admin Bot
+  // Try VPS Distribution Daemon (which writes to VPS Redis & alerts Telegram)
+  let vpsDelivered = false;
   try {
-    await sendTelegramAdminNotification(record);
-  } catch (err) {
-    console.error("Failed to deliver Telegram admin alert:", err);
+    const vpsRes = await fetch(`${DISTRIBUTION_API_URL}/api/waitlist`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(record),
+      signal: AbortSignal.timeout(4_000),
+    });
+    if (vpsRes.ok) {
+      vpsDelivered = true;
+    }
+  } catch {}
+
+  // If VPS didn't handle it, fallback to direct Telegram Bot API
+  if (!vpsDelivered) {
+    try {
+      await sendTelegramAdminNotification(record);
+    } catch (err) {
+      console.error("Failed to deliver Telegram admin alert:", err);
+    }
   }
 
   return Response.json(
