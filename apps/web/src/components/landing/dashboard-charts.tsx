@@ -37,7 +37,7 @@ export function EpochBars({
   const summary = data
     .map(
       (row) =>
-        `Day ${row.day_id}: ${row.checkin_count} of ${row.target}, ${row.status.toLowerCase()}`,
+        `Day ${row.day_id + 1} (Epoch #${row.day_id}): ${row.checkin_count} of ${row.target}, ${row.status.toLowerCase()}`,
     )
     .join(". ");
 
@@ -84,13 +84,14 @@ export function EpochBars({
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.9, delay: index * 0.04, ease }}
             />
+            <title>{`Day ${row.day_id + 1} (On-chain Epoch #${row.day_id}): ${row.checkin_count}/${row.target} check-ins (${row.status})`}</title>
             <text
               x={x + barWidth / 2}
               y={H - 8}
               textAnchor="middle"
               className="chart-axis"
             >
-              {row.day_id}
+              Day {row.day_id + 1}
             </text>
           </g>
         );

@@ -117,7 +117,7 @@ export default function Home() {
             onLoadMoreEvents={eventFeed.loadMore}
             onClaim={(dayId) =>
               act({
-                label: `Claim day ${dayId}`,
+                label: `Claim Day ${dayId + 1} (Epoch ${dayId})`,
                 method: "claim_reward",
                 args: { day_id: dayId },
               })

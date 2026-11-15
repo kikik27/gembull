@@ -74,7 +74,14 @@ export function HistorySection({
       {
         accessorKey: "day_id",
         header: "Day",
-        cell: (info) => `#${info.getValue<number>()}`,
+        cell: (info) => {
+          const dayId = info.getValue<number>();
+          return (
+            <span title={`On-chain Epoch #${dayId}`}>
+              Day {dayId + 1} <small className="opacity-60 text-[11px] font-mono">(Epoch #{dayId})</small>
+            </span>
+          );
+        },
       },
       {
         accessorKey: "status",
@@ -252,7 +259,11 @@ export function HistorySection({
                   </div>
                   <div className="event-feed-detail">
                     <span>{item.accountId ?? "Contract"}</span>
-                    {item.dayId !== null ? <span>Day {item.dayId}</span> : null}
+                    {item.dayId !== null ? (
+                      <span title={`On-chain Epoch #${item.dayId}`}>
+                        Day {item.dayId + 1} <small className="opacity-60 text-[11px] font-mono">(#{item.dayId})</small>
+                      </span>
+                    ) : null}
                     {item.amount && BigInt(item.amount) > 0n ? <span>{formatRitl(item.amount)} GEMBULL</span> : null}
                     {item.outcome ? <span>{item.outcome}</span> : null}
                   </div>

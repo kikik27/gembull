@@ -239,7 +239,7 @@ export function RitualSection({
             GemBull
           </span>
           <span className="dash-crumb">
-            Ritual <i>/</i> <b title="On-chain epoch IDs start at 0">Epoch {global?.current_day_id ?? "—"}</b>
+            Ritual <i>/</i> <b title={`On-chain Epoch #${global?.current_day_id ?? 0}`}>{global?.current_day_id !== undefined ? `Day ${global.current_day_id + 1}` : "—"}</b>
           </span>
           <span className="dash-spacer" />
           <span
@@ -370,7 +370,7 @@ export function RitualSection({
                     <div>
                       <strong>Your check-in is on-chain.</strong>
                       <p>
-                        Day {global?.current_day_id ?? "—"} recorded. The streak
+                        Day {global?.current_day_id !== undefined ? global.current_day_id + 1 : "—"} recorded (Epoch {global?.current_day_id ?? "—"}). The streak
                         updates when the epoch is finalized.
                       </p>
                     </div>
@@ -436,7 +436,7 @@ export function RitualSection({
                         })
                       }
                     >
-                      Settle day {(global.last_finalized_day ?? -1) + 1}
+                      Settle Day {(global.last_finalized_day ?? -1) + 2} (Epoch {(global.last_finalized_day ?? -1) + 1})
                     </Button>
                   )}
                   <p className="rc-help">
