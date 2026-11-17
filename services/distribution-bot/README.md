@@ -46,8 +46,8 @@ Layanan bot otomatis yang berjalan di server / VPS secara non-stop (24/7). Bot i
    ```
    Isi konfigurasi berikut:
    ```env
-   TELEGRAM_BOT_TOKEN=9103656684:AAEDqspkF76bFwe4IrqQs4lQxJEu2ClMeR4
-   TELEGRAM_ADMIN_CHAT_ID=1727200167
+   TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here
+   TELEGRAM_ADMIN_CHAT_ID=your_chat_id_here
 
    DISTRIBUTOR_ACCOUNT_ID=gembull-public.testnet
    DISTRIBUTOR_PRIVATE_KEY=ed25519:masukkan_private_key_disini

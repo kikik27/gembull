@@ -5,8 +5,6 @@ export const runtime = "nodejs";
 
 const WAITLIST_KEY = "gembull:waitlist:testnet:v1";
 
-const DEFAULT_TELEGRAM_BOT_TOKEN = "9103656684:AAEDqspkF76bFwe4IrqQs4lQxJEu2ClMeR4";
-const DEFAULT_TELEGRAM_ADMIN_CHAT_ID = "1727200167";
 const DISTRIBUTION_API_URL = process.env.DISTRIBUTION_API_URL || "https://gembull.mulalabs.biz.id";
 
 // In-memory fallback cache when Upstash Redis is not provisioned
@@ -66,8 +64,8 @@ async function sendTelegramAdminNotification({
   twitter?: string | null;
   joinedAt: string;
 }) {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN || DEFAULT_TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_ADMIN_CHAT_ID || DEFAULT_TELEGRAM_ADMIN_CHAT_ID;
+  const botToken = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_ADMIN_CHAT_ID;
   if (!botToken || !chatId) {
     console.warn("Telegram bot token or admin chat ID not configured");
     return;
